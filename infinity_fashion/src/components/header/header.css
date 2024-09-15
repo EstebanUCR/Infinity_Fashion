@@ -1,0 +1,23 @@
+
+/* Asegúrate de que la fuente esté aplicada */
+body, .navbar, .nav-link {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Centraliza los enlaces con espacio entre ellos */
+.nav-links {
+  display: flex;
+  justify-content: center; /* Centraliza los enlaces */
+  gap: 2rem; /* Espacio entre los enlaces */
+}
+
+.nav-link {
+  text-transform: uppercase; /* Poner el texto en mayúsculas */
+  font-size: 1.2rem; /* Ajusta el tamaño de la fuente */
+  color: #000; /* Color de los enlaces */
+  text-decoration: none; /* Elimina el subrayado */
+}
+
+.nav-link:hover {
+  color: #555; /* Cambia el color en hover */
+}
