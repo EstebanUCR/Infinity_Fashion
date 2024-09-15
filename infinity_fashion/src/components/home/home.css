@@ -1,0 +1,25 @@
+.carousel-caption-left {
+  position: absolute; /* Fijar la posición */
+  bottom: 25%; /* Mover el texto hacia arriba */
+  left: 5%; /* Mover el texto hacia la izquierda */
+  text-align: left; /* Alinear el texto a la izquierda */
+  color: white; /* Asegurar que el texto sea legible */
+  max-width: 40%; /* Limitar el ancho del área del texto */
+  margin: 20px;
+}
+
+.carousel-caption-left h3 {
+  font-size: 3.2rem;
+  font-family: 'Playfair Display', serif; 
+  font-weight: bold; 
+}
+
+.carousel-caption-left p {
+  font-size: 1.2rem; /* Ajustar el tamaño del texto del párrafo */
+}
+
+.magaain {
+  margin-bottom: 200px;
+ 
+}
+
