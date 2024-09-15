@@ -1,0 +1,35 @@
+.elegant-title {
+  font-family: 'Playfair Display', serif; /* Puedes cambiar la fuente */
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333; /* Cambia el color si lo deseas */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-card {
+  width: 30rem;
+  margin-right: 50px;
+  margin-bottom: 30px;
+}
+
+.custom-card:last-child {
+  margin-right: 0;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #e1e1e1;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
