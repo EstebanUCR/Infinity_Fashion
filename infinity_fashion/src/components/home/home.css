@@ -1,0 +1,18 @@
+.carouselImage {
+  width: 500px;
+}
+
+.bestSellersCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+}
+
+h1 {
+  margin: 20px;
+}
+
+.viewMoreButton {
+  margin: 10px;
+}
