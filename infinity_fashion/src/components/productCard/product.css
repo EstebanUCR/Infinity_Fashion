@@ -1,0 +1,84 @@
+/* Contenedor de la tarjeta del producto */
+/* Contenedor de la cuadrícula de productos */
+/* Contenedor de la cuadrícula de productos */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Mantén 4 productos por fila */
+  gap: 10px;
+  /* Espaciado reducido entre los productos */
+  padding: 10px;
+  /* Ajusta el padding externo */
+  justify-items: center;
+}
+
+/* Asegúrate de que cada tarjeta de producto no tenga márgenes grandes */
+.product-card {
+  margin: 0;
+  /* Elimina el margen adicional */
+  padding: 10px;
+  /* Ajusta el padding si es necesario */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  /* Asegura que padding no afecte el tamaño total */
+  width: 100%;
+  /* Asegúrate de que la tarjeta use el 100% del espacio disponible */
+  text-align: center;
+}
+
+/* Asegúrate de que las imágenes no tengan márgenes grandes */
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  margin: 0;
+  padding: 0;
+}
+
+/* Detalles del producto */
+.product-details {
+  margin-top: 10px;
+}
+
+.product-details h3 {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Precio con descuento (rojo) */
+.price-discount {
+  color: red;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Precio sin descuento (negro) */
+.price-regular {
+  color: black;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+
+.old-price {
+  text-decoration: line-through;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.discount {
+  color: #e60023;
+  font-size: 0.9rem;
+}
+
+.sitewide {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.exclusive {
+  font-size: 0.8rem;
+  color: #007bff;
+  font-weight: bold;
+}

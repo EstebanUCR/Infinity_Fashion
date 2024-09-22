@@ -11,6 +11,9 @@ import NewArrival from './components/newArrival/NewArrival';
 import Top from './components/pages/Top';
 import Bottom from './components/pages/Bottom';
 import Outwear from './components/pages/Outwear';
+import SignIn from './components/pages/SignIn';
+import ShoppingBag from './components/pages/ShoppingBag';
+import Product from './components/productCard/Product';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,6 +27,10 @@ function App() {
           <Route path="/top" element={<Top />} />
           <Route path="/bottom" element={<Bottom />} />
           <Route path="/outwear" element={<Outwear />} />
+          <Route path="/signIn" element={<SignIn />} />
+          <Route path="/shoppingBag" element={<ShoppingBag />} />
+          <Route path="/product" element={<Product image={''} name={''} price={''} isExclusive={false} />} />
+          <Route path=":productId" element={<Product image={''} name={''} price={''} isExclusive={false} />} /> 
         </Routes>
       </Router>
     </div>

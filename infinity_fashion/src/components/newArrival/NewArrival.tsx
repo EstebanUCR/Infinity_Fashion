@@ -5,11 +5,12 @@ import { Carousel, Card, Button } from 'react-bootstrap';
 const NewArrival = () => {
   return (
     <div>
+      <div className="title-container">
+        <h2 className="elegant-title">New Arrivals</h2>
+      </div>
 
-    <h2 className="elegant-title">New Arrivals</h2>
-    
       <Carousel>
-    
+
         <Carousel.Item>
           <div className="carousel-container">
             <Card className="custom-card">
@@ -69,7 +70,7 @@ const NewArrival = () => {
       </Carousel>
 
       <div className="centered-button">
-        <Button variant="primary">Learn More</Button>
+        <Button variant="outline-light" className="btn-lg terracotta-btn">Show More</Button>
       </div>
     </div>
   );

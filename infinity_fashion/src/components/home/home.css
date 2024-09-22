@@ -1,12 +1,13 @@
 .carousel-caption-left {
   position: absolute; /* Fijar la posición */
-  bottom: 25%; /* Mover el texto hacia arriba */
+  bottom: 50%; /* Mover el texto hacia arriba */
   left: 5%; /* Mover el texto hacia la izquierda */
   text-align: left; /* Alinear el texto a la izquierda */
   color: white; /* Asegurar que el texto sea legible */
   max-width: 40%; /* Limitar el ancho del área del texto */
   margin: 20px;
 }
+
 
 .carousel-caption-left h3 {
   font-size: 3.2rem;
@@ -18,8 +19,28 @@
   font-size: 1.2rem; /* Ajustar el tamaño del texto del párrafo */
 }
 
+/* Ajustar el tamaño del carrusel */
 .magaain {
-  margin-bottom: 200px;
- 
+  height: 700px;  /* Ajusta la altura total del carrusel */
+  width: 100%;  /* El carrusel ocupará todo el ancho de la pantalla */
+  overflow: hidden;  /* Evita que el contenido se salga del contenedor */
+  margin-bottom: 200px;  /* Ajusta el espacio debajo del carrusel */
 }
+
+/* Ajustar las imágenes dentro del carrusel */
+.carousel-item img {
+  height: 100%;  /* La imagen ocupará el 100% de la altura del carrusel */
+  width: 100%;   /* La imagen ocupará el 100% del ancho del carrusel */
+  object-fit: contain;  /* Ajusta la imagen para que cubra todo el contenedor sin deformarse */
+  object-position: center;  /* Centra la imagen dentro del contenedor */
+}
+
+.terracotta-btn {
+  background-color: #E2725B;
+  border-color: #E2725B;
+  color: white;
+  font-size: 18px;
+  padding: 15px 20px; /* Aumenta el tamaño del botón */
+}
+
 
