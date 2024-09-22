@@ -6,7 +6,9 @@ const BestSeller = () => {
   return (
     <div>
 
-    <h2 className="elegant-title">Best Sellers</h2>
+      <div className="title-container">
+        <h2 className="elegant-title">Best Sellers</h2>
+      </div>
 
       <Carousel>
 
@@ -69,7 +71,7 @@ const BestSeller = () => {
       </Carousel>
 
       <div className="centered-button">
-        <Button variant="primary">Learn More</Button>
+        <Button variant="outline-light" className="btn-lg terracotta-btn">Show More</Button>
       </div>
     </div>
   );
