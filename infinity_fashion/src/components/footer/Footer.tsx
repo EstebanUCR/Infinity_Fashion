@@ -7,7 +7,7 @@ import { Col } from "react-bootstrap";
 const Footer = () => {
   return (
     <div>
-      <Container className="footer">
+      <Container className="footer" fluid>
         <Row className="mt-auto bg-body-tertiary">
           <Col>
             <h3>Help & Support</h3>

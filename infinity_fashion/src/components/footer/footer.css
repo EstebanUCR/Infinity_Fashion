@@ -1,5 +1,10 @@
 .footer {
   margin-top: 20px;
+  background-color: aqua;
+}
+
+.bg-body-tertiary {
+  background-color: #EDE9E3 !important;
 }
 
 h3 {
