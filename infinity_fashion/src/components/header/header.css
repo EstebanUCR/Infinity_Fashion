@@ -1,23 +1,100 @@
-
-/* Asegúrate de que la fuente esté aplicada */
-body, .navbar, .nav-link {
-  font-family: 'Playfair Display', serif;
+/* Contenedor del logo, centrado */
+.logo-container {
+  display: flex;
+  justify-content: center;
 }
 
-/* Centraliza los enlaces con espacio entre ellos */
+.logo {
+  max-width: 200px;
+  height: auto;
+  pointer-events: none; /* Evita cualquier interacción del mouse */
+}
+
+/* Estilos para la barra de navegación */
+.navbar-custom {
+  border-top: 1px solid #E2725B;
+  padding: 10px 0;
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos a los lados */
+  align-items: center;
+}
+
+/* Enlaces de navegación centrados a la derecha */
 .nav-links {
   display: flex;
-  justify-content: center; /* Centraliza los enlaces */
-  gap: 2rem; /* Espacio entre los enlaces */
+  justify-content: flex-end; /* Alinea los enlaces a la derecha */
+  flex-grow: 1;
+   font-size: 1.2rem;
+  gap: 3rem; /* Espacio entre los enlaces */
+  text-align: center;
+  margin-right: 150px;; /* Asegura que no haya margen adicional */
 }
 
 .nav-link {
-  text-transform: uppercase; /* Poner el texto en mayúsculas */
-  font-size: 1.2rem; /* Ajusta el tamaño de la fuente */
-  color: #000; /* Color de los enlaces */
-  text-decoration: none; /* Elimina el subrayado */
+  text-transform: uppercase;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #555; /* Cambia el color en hover */
+  color: #FF5757;
+}
+
+/* Sección de la derecha: búsqueda y autenticación */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Estilos para el formulario de búsqueda */
+.search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 300px; /* Alargado del campo de búsqueda */
+  height: 40px;
+  font-size: 0.95rem;
+  border-radius: 20px;
+  padding-left: 15px;
+  border: 1px solid #ddd;
+}
+
+.search-button {
+  height: 40px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  padding: 0 15px;
+  border: 1px solid #FF5757;
+  color: #FF5757;
+  background-color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #FF5757;
+  color: #fff;
+}
+
+/* Enlaces de autenticación */
+.auth-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.auth-links .nav-link {
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: #555;
+}
+
+.auth-links .nav-link:hover {
+  color: #FF5757;
 }
