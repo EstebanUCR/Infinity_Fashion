@@ -1,0 +1,108 @@
+/* Contenedor principal */
+.login-container {
+  display: flex; /* Activa Flexbox para el contenedor principal */
+  justify-content: center; /* Los hijos se alinean en el centro horizontalmente */
+  align-items: center; /* Los hijos se alinean en el centro verticalmente */
+  height: 100vh; /* La altura del contenedor ocupa toda la pantalla */
+  width: 100vw; /* El ancho del contenedor ocupa toda la pantalla */
+  background-color: #f8f9fa; /* Color de fondo gris claro */
+}
+
+.login-box {
+  display: flex; /* Distribuye los elementos hijos usando Flexbox */
+  max-width: 1600px; /* Ancho máximo limitado a 1600px */
+  width: 100%; /* El ancho del contenedor ocupa el 100% del espacio disponible */
+  border-radius: 10px; /* Bordes redondeados de 10px en todas las esquinas */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra sutil debajo del contenedor */
+  overflow: hidden; /* Cualquier contenido que sobresalga se oculta */
+}
+
+.login-left, .login-right {
+  flex: 1; /* Ambos lados ocuparán el mismo espacio (1 fracción del contenedor) */
+  padding: 50px; /* Espaciado interno de 50px en todos los lados */
+  min-height: 500px; /* Altura mínima para ambas secciones de 500px */
+}
+
+.mb-4 {
+  color: #ffffff; /* Texto en color blanco */
+}
+
+/* Sección izquierda: Sign In */
+.login-left {
+  background-color: #fff; /* Fondo blanco en el lado izquierdo */
+  display: flex; /* Flexbox para organizar elementos internamente */
+  flex-direction: column; /* Coloca los elementos hijos en una columna */
+  justify-content: center; /* Centra verticalmente el contenido en la columna */
+}
+
+.login-left h2 {
+  font-weight: bold; /* Título en negrita */
+  font-size: 2rem; /* Tamaño de fuente del título de 2rem (32px aproximadamente) */
+}
+
+.form-control {
+  border: 2px solid #ddd; /* Bordes de 2px de grosor en color gris claro */
+  border-radius: 8px; /* Bordes redondeados de 8px */
+  padding: 12px; /* Espaciado interno de 12px dentro del input */
+}
+
+.form-control:focus {
+  border-color: #ff4b2b; /* Cambia el color del borde a un rojo fuerte al enfocar */
+  box-shadow: none; /* Elimina el efecto de sombra azul predeterminado al enfocar */
+}
+
+.btn-danger {
+  background-color: #ff4b2b; /* Fondo rojo del botón */
+  border-color: #ff4b2b; /* Color del borde del botón coincide con el fondo */
+  border-radius: 8px; /* Bordes redondeados de 8px */
+  padding: 12px; /* Espaciado interno del botón de 12px */
+  transition: background-color 0.3s ease; /* Transición suave del color de fondo en 0.3 segundos */
+}
+
+.btn-danger:hover {
+  background-color: #ff416c; /* Cambia el fondo del botón a un tono más oscuro de rojo al pasar el ratón */
+}
+
+.text-danger:hover {
+  color: #ff416c; /* Cambia el color del texto a un tono más oscuro de rojo al pasar el ratón */
+}
+
+/* Sección derecha: Welcome */
+.login-right {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c); /* Gradiente de rojo a rojo oscuro */
+  display: flex; /* Flexbox para organizar el contenido */
+  flex-direction: column; /* Alinea los elementos en una columna */
+  justify-content: center; /* Centra verticalmente el contenido */
+  align-items: center; /* Centra horizontalmente el contenido */
+  text-align: center; /* El texto estará centrado en la sección */
+}
+
+.login-right h2 {
+  font-size: 2.5rem; /* Tamaño de fuente del título de 2.5rem (40px aproximadamente) */
+  font-weight: bold; /* Título en negrita */
+}
+
+.login-right p {
+  font-size: 1.2rem; /* Tamaño de fuente del párrafo de 1.2rem (19px aproximadamente) */
+  margin-bottom: 20px; /* Margen inferior de 20px para separar el texto de otros elementos */
+}
+
+.btn-outline-light {
+  padding: 12px 24px; /* Espaciado interno de 12px arriba/abajo y 24px izquierda/derecha */
+  border-radius: 8px; /* Bordes redondeados de 8px */
+  transition: all 0.3s ease; /* Transición suave de todas las propiedades en 0.3 segundos */
+}
+
+.btn-outline-light:hover {
+  background-color: #fff; /* Fondo blanco al pasar el ratón */
+  color: #ff416c; /* Texto cambia a color rojo oscuro al pasar el ratón */
+  border-color: #fff; /* Borde cambia a blanco */
+}
+
+/* Ajustamos las etiquetas para que estén más alineadas a la izquierda */
+.form-label {
+  text-align: left; /* Alinea el texto de las etiquetas a la izquierda */
+  display: block; /* Las etiquetas ocupan todo el ancho disponible */
+  font-weight: bold; /* Texto en negrita */
+  margin-left: 0; /* Elimina cualquier margen a la izquierda */
+}
