@@ -28,9 +28,11 @@ const Header: React.FC = () => {
 
             <Nav className="nav-links">
               <Link className="nav-link" to='/'>HOME</Link>
-              <Link className="nav-link" to='/top'>TOPS</Link>
-              <Link className="nav-link" to='/bottom'>BOTTOMS</Link>
-              <Link className="nav-link" to='/outwear'>OUTWEARS</Link>
+              <Link className="nav-link" to='/tops'>TOPS</Link>
+              <Link className="nav-link" to='/bottoms'>BOTTOMS</Link>
+              <Link className="nav-link" to='/outerwear'>OUTERWEAR</Link>
+              <Link className="nav-link" to='/accessories'>ACCESSORIES</Link>
+              <Link className="nav-link" to='/shoes'>SHOES</Link>
             </Nav>
 
             <div className="nav-right">
