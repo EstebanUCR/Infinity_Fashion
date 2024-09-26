@@ -1,4 +1,5 @@
 /* Contenedor del logo, centrado */
+
 .logo-container {
   display: flex;
   justify-content: center;
@@ -12,7 +13,7 @@
 
 /* Estilos para la barra de navegación */
 .navbar-custom {
-  border-top: 1px solid #E2725B;
+  border-top: 1px solid #BF665E;
   padding: 10px 0;
 }
 
@@ -27,10 +28,11 @@
   display: flex;
   justify-content: flex-end; /* Alinea los enlaces a la derecha */
   flex-grow: 1;
-   font-size: 1.2rem;
+  font-size: 1.2rem;
   gap: 3rem; /* Espacio entre los enlaces */
   text-align: center;
-  margin-right: 150px;; /* Asegura que no haya margen adicional */
+  margin-right: 150px; /* Asegura que no haya margen adicional */
+  
 }
 
 .nav-link {
@@ -42,7 +44,7 @@
 }
 
 .nav-link:hover {
-  color: #FF5757;
+  color: #BF665E;
 }
 
 /* Sección de la derecha: búsqueda y autenticación */
@@ -72,14 +74,15 @@
   font-size: 0.9rem;
   border-radius: 20px;
   padding: 0 15px;
-  border: 1px solid #FF5757;
-  color: #FF5757;
+  border: 1px solid #BF665E;
+  color: #BF665E;
   background-color: #fff;
   transition: background-color 0.3s ease, color 0.3s ease;
+   margin-top: -5px; /* Ajusta el botón de búsqueda hacia arriba */
 }
 
 .search-button:hover {
-  background-color: #FF5757;
+  background-color: #BF665E;
   color: #fff;
 }
 
@@ -96,5 +99,5 @@
 }
 
 .auth-links .nav-link:hover {
-  color: #FF5757;
+  color: #BF665E;
 }
