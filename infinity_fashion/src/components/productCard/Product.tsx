@@ -25,7 +25,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, price, oldPrice,
           <span className="old-price">{oldPrice}</span>{' '}
           <span className="discount">{discount}</span>
         </p>
-        {isExclusive && <p className="exclusive">WEB EXCLUSIVE</p>}
       </div>
     </div>
   );

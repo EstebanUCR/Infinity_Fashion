@@ -1,42 +1,74 @@
-import React from 'react';
-import './signIn.css';
+import React, { useState } from 'react';
+import styles from './signIn.module.css'; // Import your CSS module
+import googleLogo from '../../assets/SignInSignUp/googleLogo.png';
+import infinityLogo from '../../assets/Home/logoWithOutBackground.png'; ///
+// reference of: https://codepen.io/technext/pen/PoprgzP
 
-const SignIn: React.FC = () => {
+const SignIn = () => {
+  const [isRightPanelActive, setIsRightPanelActive] = useState(false);
+
+  const handleSignUpClick = () => {
+    setIsRightPanelActive(true);
+  };
+
+  const handleSignInClick = () => {
+    setIsRightPanelActive(false);
+  };
+
   return (
-    <div className="login-container">
-      <div className="login-box">
-        {/* Sección Izquierda */}
-        <div className="login-left">
-          <h2 className="mb-4">Sign In</h2>
-          <form>
-            <div className="mb-3">
-              <label htmlFor="username" className="form-label">USERNAME</label>
-              <input type="text" className="form-control form-control-lg" id="username" placeholder="Username" />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">PASSWORD</label>
-              <input type="password" className="form-control form-control-lg" id="password" placeholder="Password" />
-            </div>
-            <button type="submit" className="btn btn-danger btn-lg w-100">Sign In</button>
-            <div className="d-flex justify-content-between align-items-center mt-3">
-              <div>
-                <input type="checkbox" id="rememberMe" className="me-1" />
-                <label htmlFor="rememberMe">Remember Me</label>
-              </div>
-              <a href="/" className="text-danger">Forgot Password?</a>
-            </div>
-          </form>
-        </div>
+    <div className={`${styles.container} ${isRightPanelActive ? styles.rightPanelActive : ''}`} id="container">
+      {/* Contenedor de Sign Up */}
+      <div className={`${styles.formContainer} ${styles.signUpContainer}`}>
+        <form action="#">
+          <h1>Create Account</h1>
+          <div className={styles.socialContainer}>
+            <a href="#" className={styles.social}>
+              <img src={googleLogo} alt="Google" className={styles.googleLogo} />
+            </a>
+          </div>
+          <span>or use your email for registration</span>
+          <input type="text" placeholder="Name" />
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <button>Sign Up</button>
+        </form>
+      </div>
 
-        {/* Sección Derecha */}
-        <div className="login-right">
-          <h2 className="mb-4">Welcome to login</h2>
-          <p>Don't have an account?</p>
-          <button className="btn btn-outline-light btn-lg">Sign Up</button>
+      {/* Contenedor de Sign In */}
+      <div className={`${styles.formContainer} ${styles.signInContainer}`}>
+        <form action="#">
+          <h1>Sign in</h1>
+          <div className={styles.socialContainer}>
+            <a href="#" className={styles.social}>
+              <img src={googleLogo} alt="Google" className={styles.googleLogo} />
+            </a>
+          </div>
+          <span>or use your account</span>
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <button>Sign In</button>
+        </form>
+      </div>
+
+      {/* Overlay */}
+      <div className={styles.overlayContainer}>
+        <div className={styles.overlay}>
+          <div className={`${styles.overlayPanel} ${styles.overlayLeft}`}>
+            <img src={infinityLogo} alt="Infinity" className={styles.companyLogo} />
+            <h1>Welcome Back!</h1>
+            <p>To keep connected with us please login with your personal info</p>
+            <button className={styles.ghost} onClick={handleSignInClick}>Sign In</button>
+          </div>
+          <div className={`${styles.overlayPanel} ${styles.overlayRight}`}>
+            <img src={infinityLogo} alt="Infinity" className={styles.companyLogo} />
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start your journey with us</p>
+            <button className={styles.ghost} onClick={handleSignUpClick}>Sign Up</button>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default SignIn;
