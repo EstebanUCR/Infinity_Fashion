@@ -1,57 +1,121 @@
-/* Estilos para el contenedor del título */
-.title-container {
+.bestseller-section .title-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff; /* Fondo blanco */
-  border: 3px solid #a34f4ec4; /* Borde terracota */
-  padding: 10px 20px; /* Menos padding vertical, más corto en altura */
-  margin-bottom: 50px; /* Espaciado debajo del cuadro */
-  width: 20%; /* Ajusta el ancho según sea necesario */
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 60px; /* Mueve el título más abajo */
+  border: solid #BF665E; /* Border around the title */
+  padding: 10px; /* Padding inside the rectangle */
+  width: fit-content; /* Make the rectangle wrap around the text */
+  margin: 0 auto 20px; /* Center the rectangle horizontally */
+  position: relative;
+  top: -30px; /* Move the rectangle upwards */
+  height: 90px;
 }
 
-/* Estilos para el texto del título */
-.elegant-title {
+.bestseller-section .elegant-title {
   font-family: 'Playfair Display', serif;
-  color: #a34f4ec4 !important; /* Color terracota, con !important para asegurarnos de que no se sobrescriba */
-  font-size: 1.9rem !important;
+  font-size: 2.5rem;
   font-weight: bold;
   text-align: center;
+  margin-bottom: 30px;
+  color: #333;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: 10px;
-  margin-top: 30px; /* Ajuste adicional para margen superior */
+  margin-top: 30px;
 }
 
+/* Estilos específicos para Best Sellers */
+.bestseller-section .product-grid {
+  display: grid;
+  gap: 20px; /* Ajustar espacio entre las tarjetas */
+  padding: 20px; /* Padding alrededor de la cuadrícula */
+  justify-items: center; /* Centrar las tarjetas horizontalmente */
+}
 
-.carousel-container {
+.bestseller-section .product-card {
+  width: 400px; /* Ancho fijo para cada tarjeta */
+  height: 600px;
+  border: 1px solid #ddd; /* Borde ligero para cada tarjeta */
+  padding: 15px; /* Agregar padding dentro de la tarjeta */
+  text-align: center; /* Centrar el contenido */
+  transition: transform 0.2s; /* Transición suave para hover */
+   margin-right: 10px;
+   margin-bottom: 150px;
+}
+
+.bestseller-section .product-card:hover {
+  transform: translateY(-5px); /* Elevar ligeramente la tarjeta al hacer hover */
+}
+
+.bestseller-section .image-container img {
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho de la tarjeta */
+  height: 470px; /* Altura fija para las imágenes */
+  object-fit: cover; /* Ajusta la imagen para que encaje bien */
+  border-radius: 4px; /* Bordes redondeados en las imágenes */
+}
+
+.bestseller-section .product-details {
+  margin-top: 15px;
+}
+
+.bestseller-section .product-details h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Precio con descuento */
+.bestseller-section .price-discount {
+  color: #b63729;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Precio regular */
+.bestseller-section .price-regular {
+  color: #333;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.bestseller-section .old-price {
+  text-decoration: line-through;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.bestseller-section .discount {
+  color: #b63729;
+  font-size: 0.9rem;
+}
+
+.bestseller-section .exclusive {
+  font-size: 0.8rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.bestseller-section .carousel-container {
   display: flex;
   justify-content: center;
 }
 
-.custom-card {
+.bestseller-section .custom-card {
   width: 30rem;
   margin-right: 50px;
   margin-bottom: 30px;
 }
 
-.custom-card:last-child {
+.bestseller-section .custom-card:last-child {
   margin-right: 0;
 }
 
-.carousel-control-prev,
+.bestseller-section .carousel-control-prev,
 .carousel-control-next {
-  background-color: #e1e1e1;
+  background-color: #903b3b;
   width: 5vh;
   height: 5vh;
   border-radius: 50%;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.centered-button {
-  margin-bottom: 90px; 
 }

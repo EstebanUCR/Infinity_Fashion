@@ -1,78 +1,38 @@
 import React from 'react';
-import './bestSeller.css';
-import { Carousel, Card, Button } from 'react-bootstrap';
+import './bestSeller.css'; // Mantén este archivo CSS
+import bestsellers_products from '../../assets/bestSellerProducts';
+import { Carousel, Button } from 'react-bootstrap';
+import ProductCard from '../productCard/Product';
 
 const BestSeller = () => {
-  return (
-    <div>
+  // Agrupar productos de 3 en 3
+  const groupedProducts = bestsellers_products.reduce((acc, curr, index) => {
+    if (index % 4 === 0) {
+      acc.push([curr]);
+    } else {
+      acc[acc.length - 1].push(curr);
+    }
+    return acc;
+  }, [] as any[][]);
 
+  return (
+    <div className="bestseller-section">
       <div className="title-container">
         <h2 className="elegant-title">Best Sellers</h2>
       </div>
 
       <Carousel>
-
-        <Carousel.Item>
-          <div className="carousel-container">
-            <Card className="custom-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/200" />
-              <Card.Body>
-                <Card.Title>Card 1</Card.Title>
-                <Card.Text>Lorem ipsum dolor 1.</Card.Text>
-              </Card.Body>
-            </Card>
-
-            <Card className="custom-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/200" />
-              <Card.Body>
-                <Card.Title>Card 2</Card.Title>
-                <Card.Text>Lorem ipsum dolor 2.</Card.Text>
-              </Card.Body>
-            </Card>
-
-            <Card className="custom-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/200" />
-              <Card.Body>
-                <Card.Title>Card 2</Card.Title>
-                <Card.Text>Lorem ipsum dolor 2.</Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        </Carousel.Item>
-
-
-        <Carousel.Item>
-          <div className="carousel-container">
-            <Card className="custom-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/200" />
-              <Card.Body>
-                <Card.Title>Card 3</Card.Title>
-                <Card.Text>Lorem ipsum dolor 3.</Card.Text>
-              </Card.Body>
-            </Card>
-
-            <Card className="custom-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/200" />
-              <Card.Body>
-                <Card.Title>Card 4</Card.Title>
-                <Card.Text>Lorem ipsum dolor 4.</Card.Text>
-              </Card.Body>
-            </Card>
-
-            <Card className="custom-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/200" />
-              <Card.Body>
-                <Card.Title>Card 2</Card.Title>
-                <Card.Text>Lorem ipsum dolor 2.</Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        </Carousel.Item>
+        {groupedProducts.map((group, i) => (
+          <Carousel.Item key={i}>
+            <div className="carousel-container">
+              {group.map((item) => (
+                <ProductCard key={item.id} {...item} />
+              ))}
+            </div>
+          </Carousel.Item>
+        ))}
       </Carousel>
 
-      <div className="centered-button">
-        <Button variant="outline-light" className="btn-lg terracotta-btn">Show More</Button>
-      </div>
     </div>
   );
 }
