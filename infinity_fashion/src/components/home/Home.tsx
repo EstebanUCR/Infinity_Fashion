@@ -24,8 +24,8 @@ export const Home = () => {
             />
             <Carousel.Caption className="carousel-caption-left">
               <h3>ON SALE ONLY FOR THIS MONTH</h3>
-              <p>Take advantage of these limited-time promotions</p>
-              <Button variant="outline-light" className="btn-lg terracotta-btn">Shop Now</Button>
+              <p className="home-p">Take advantage of these limited-time promotions</p>
+              <Button variant="outline-light" className="terracotta-btn">Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -37,7 +37,7 @@ export const Home = () => {
             <Carousel.Caption className="carousel-caption-left">
               <h3>ON SALE ONLY FOR THIS MONTH</h3>
               <p>Take advantage of these limited-time promotions</p>
-              <Button variant="outline-light" className="btn-lg terracotta-btn">Shop Now</Button>
+              <Button variant="outline-light" className="terracotta-btn">Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -49,7 +49,7 @@ export const Home = () => {
             <Carousel.Caption className="carousel-caption-left">
               <h3>ON SALE ONLY FOR THIS MONTH</h3>
               <p>Take advantage of these limited-time promotions</p>
-              <Button variant="outline-light" className="btn-lg terracotta-btn">Shop Now</Button>
+              <Button variant="outline-light" className="terracotta-btn">Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>

@@ -1,6 +1,6 @@
 .carousel-caption-left {
   position: absolute; /* Fijar la posición */
-  bottom: 50%; /* Mover el texto hacia arriba */
+  bottom: 30%; /* Mover el texto hacia arriba */
   left: 5%; /* Mover el texto hacia la izquierda */
   text-align: left; /* Alinear el texto a la izquierda */
   color: white; /* Asegurar que el texto sea legible */
@@ -8,6 +8,9 @@
   margin: 20px;
 }
 
+.home-p {
+     font-family: 'Montserrat', sans-serif;
+}
 
 .carousel-caption-left h3 {
   font-size: 3.2rem;
@@ -36,11 +39,22 @@
 }
 
 .terracotta-btn {
-  background-color: #E2725B;
-  border-color: #E2725B;
+  background-color: #BF665E;
+  border-color: #BF665E;
   color: white;
   font-size: 18px;
   padding: 15px 20px; /* Aumenta el tamaño del botón */
+  margin-bottom: 150px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #903b3b;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
