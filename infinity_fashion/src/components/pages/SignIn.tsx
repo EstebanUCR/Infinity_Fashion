@@ -56,13 +56,13 @@ const SignIn = () => {
           <div className={`${styles.overlayPanel} ${styles.overlayLeft}`}>
             <img src={infinityLogo} alt="Infinity" className={styles.companyLogo} />
             <h1>Welcome Back!</h1>
-            <p>To keep connected with us please login with your personal info</p>
+            <h2>To keep connected with us please login with your personal info</h2>
             <button className={styles.ghost} onClick={handleSignInClick}>Sign In</button>
           </div>
           <div className={`${styles.overlayPanel} ${styles.overlayRight}`}>
             <img src={infinityLogo} alt="Infinity" className={styles.companyLogo} />
             <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start your journey with us</p>
+            <h2>Enter your personal details and start your journey with us</h2>
             <button className={styles.ghost} onClick={handleSignUpClick}>Sign Up</button>
           </div>
         </div>
