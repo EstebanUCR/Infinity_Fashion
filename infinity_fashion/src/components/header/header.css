@@ -1,0 +1,169 @@
+/* Contenedor del logo, centrado */
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+  pointer-events: none; /* Evita cualquier interacción del mouse */
+}
+
+/* Estilos para la barra de navegación */
+.navbar-custom {
+  border-top: 1px solid #BF665E;
+  padding: 1px 0;
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos a los lados */
+  align-items: center;
+}
+
+/* Enlaces de navegación centrados a la derecha */
+.nav-links {
+  display: flex;
+  justify-content: flex-end; /* Alinea los enlaces a la derecha */
+  /*flex-grow: 1;*/
+  font-size: 1.2rem;
+  gap: 2rem; /* Espacio entre los enlaces */
+  text-align: center;
+  margin-right: 150px; /* Asegura que no haya margen adicional */
+  
+}
+
+.nav-link {
+  text-transform: uppercase;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #BF665E;
+}
+
+.nav-titles {
+  font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
+  font-size: 1rem;
+}
+
+/* Sección de la derecha: búsqueda y autenticación */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Estilos para el formulario de búsqueda */
+.search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 300px; /* Alargado del campo de búsqueda */
+  height: 40px;
+  font-size: 0.95rem;
+  border-radius: 20px;
+  padding-left: 15px;
+  border: 1px solid #ddd;
+}
+
+.search-button {
+  height: 40px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  padding: 0 15px;
+  border: 1px solid #BF665E;
+  color: #BF665E;
+  background-color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+   margin-top: -5px; /* Ajusta el botón de búsqueda hacia arriba */
+}
+
+.search-button:hover {
+  background-color: #BF665E;
+  color: #fff;
+}
+
+/* Enlaces de autenticación */
+.auth-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.auth-links .nav-link {
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: #555;
+}
+
+.auth-links .nav-link:hover {
+  color: #BF665E;
+}
+
+/*Carrito */
+.btn-dark {
+  text-transform: uppercase;
+}
+
+.carrito {
+  background-color: transparent;
+  border: none;
+  max-width: 2rem;
+  position: relative;
+  z-index: 100;
+}
+
+.carrito #carrito {
+  display: none;
+  position: absolute;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.carrito:hover #carrito {
+  display: block;
+  background-color: white;
+  padding: 10px;
+  height: fit-content;
+  min-width: 350px;
+  width: fit-content;
+  top: 100%;
+  right: 0;
+  left: unset;
+  margin-left: unset;
+  margin-right: unset;
+}
+
+#carrito img {
+  width: 30px;
+}
+
+#carrito .btn-danger {
+  font-size: 10px;
+  border-radius: 50%;
+  padding: 5px 9px;
+}
+
+#carrito .btn-dark {
+  padding: 2px;
+  margin: 0 3px;
+}
+
+#carrito .btn-pay {
+  padding: 0 2px;
+  margin: 0 3px;
+  background: rgba(8, 174, 39, 0.7);
+  color: #FFF;
+  font-weight: bold;
+}
+
+.cart-titles {
+  font-family: 'Playfair Display';
+  font-weight: 200;
+}
+

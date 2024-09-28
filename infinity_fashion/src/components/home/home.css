@@ -1,0 +1,60 @@
+.carousel-caption-left {
+  position: absolute; /* Fijar la posición */
+  bottom: 30%; /* Mover el texto hacia arriba */
+  left: 5%; /* Mover el texto hacia la izquierda */
+  text-align: left; /* Alinear el texto a la izquierda */
+  color: white; /* Asegurar que el texto sea legible */
+  max-width: 40%; /* Limitar el ancho del área del texto */
+  margin: 20px;
+}
+
+.home-p {
+     font-family: 'Montserrat', sans-serif;
+}
+
+.carousel-caption-left h3 {
+  font-size: 3.2rem;
+  font-family: 'Playfair Display', serif; 
+  font-weight: bold; 
+}
+
+.carousel-caption-left p {
+  font-size: 1.2rem; /* Ajustar el tamaño del texto del párrafo */
+}
+
+/* Ajustar el tamaño del carrusel */
+.magaain {
+  height: 700px;  /* Ajusta la altura total del carrusel */
+  width: 100%;  /* El carrusel ocupará todo el ancho de la pantalla */
+  overflow: hidden;  /* Evita que el contenido se salga del contenedor */
+  margin-bottom: 200px;  /* Ajusta el espacio debajo del carrusel */
+}
+
+/* Ajustar las imágenes dentro del carrusel */
+.carousel-item img {
+  height: 100%;  /* La imagen ocupará el 100% de la altura del carrusel */
+  width: 100%;   /* La imagen ocupará el 100% del ancho del carrusel */
+  object-fit: contain;  /* Ajusta la imagen para que cubra todo el contenedor sin deformarse */
+  object-position: center;  /* Centra la imagen dentro del contenedor */
+}
+
+.terracotta-btn {
+  background-color: #BF665E;
+  border-color: #BF665E;
+  color: white;
+  font-size: 18px;
+  padding: 15px 20px; /* Aumenta el tamaño del botón */
+  margin-bottom: 150px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #903b3b;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
