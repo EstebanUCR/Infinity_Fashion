@@ -1,10 +1,14 @@
-import React from 'react';
 import './bestSeller.css'; // Mantén este archivo CSS
 import bestsellers_products from '../../assets/bestSellerProducts';
-import { Carousel, Button } from 'react-bootstrap';
+import { Carousel } from 'react-bootstrap';
 import ProductCard from '../productCard/Product';
+import { Product } from '../../types/types';
 
-const BestSeller = () => {
+type BestSellerProps = {
+  addToCart: (item: Product) => void
+}
+
+export default function BestSeller({addToCart} : BestSellerProps) {
   // Agrupar productos de 3 en 3
   const groupedProducts = bestsellers_products.reduce((acc, curr, index) => {
     if (index % 4 === 0) {
@@ -13,7 +17,7 @@ const BestSeller = () => {
       acc[acc.length - 1].push(curr);
     }
     return acc;
-  }, [] as any[][]);
+  }, [] as Product[][]);
 
   return (
     <div className="bestseller-section">
@@ -26,7 +30,7 @@ const BestSeller = () => {
           <Carousel.Item key={i}>
             <div className="carousel-container">
               {group.map((item) => (
-                <ProductCard key={item.id} {...item} />
+                <ProductCard key={item.id} product={item} addToCart={addToCart} />
               ))}
             </div>
           </Carousel.Item>
@@ -36,5 +40,3 @@ const BestSeller = () => {
     </div>
   );
 }
-
-export default BestSeller;

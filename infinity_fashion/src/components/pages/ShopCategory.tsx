@@ -1,21 +1,38 @@
-import React from 'react'
+import type { Product, CartItem, ProductID } from '../../types/types';
 import './shopCategory.css';
 import ProductCard from '../productCard/Product';
-import all_products from '../../assets/all_products';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import { Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-interface MyProps {
-  filterName: string;
-  category: string;
+type ShopCategoryProps = {
+  cart: CartItem[]
+  removeFromCart: (id: ProductID) => void
+  increaseQuantity: (id: ProductID) => void
+  decreaseQuantity: (id: ProductID) => void
+  clearCart: () => void
+  isEmpty: boolean
+  cartTotal: number
+  data: Product[]
+  addToCart: (item: Product) => void
+  filterName: string
+  category: string
 }
 
-const ShopCategory: React.FC<MyProps> = ({ filterName, category }) => {
+
+export default function ShopCategory ({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, data, addToCart, filterName, category } : ShopCategoryProps) {
   return (
     <div className='shop-category'>
-      <Header />
+      <Header 
+        cart={cart} 
+        removeFromCart={removeFromCart}
+        increaseQuantity={increaseQuantity}
+        decreaseQuantity={decreaseQuantity}
+        clearCart={clearCart}
+        isEmpty={isEmpty}
+        cartTotal={cartTotal}
+      />
       <Container>
         <Row>
           <h1>{filterName}</h1>
@@ -34,9 +51,9 @@ const ShopCategory: React.FC<MyProps> = ({ filterName, category }) => {
           <Col>
             <div className='shopcategory-products'>
             
-            {all_products.map((item, i)=>{
+            {data.map((item)=>{
               if (category===item.category) {
-                return <ProductCard key={i} {...item} />
+                return <ProductCard key={item.id} product={item} addToCart={addToCart}  />
               }
               else {
                 return null;
@@ -51,6 +68,3 @@ const ShopCategory: React.FC<MyProps> = ({ filterName, category }) => {
     </div>
   )
 }
-
-
-export default ShopCategory

@@ -1,33 +1,36 @@
-import React from 'react';
+import type { Product } from '../../types/types';
 import './Product.css';
 
-interface ProductCardProps {
-  image: string;
-  name: string;
-  price: string;
-  oldPrice?: string;
-  discount?: string;
-  isExclusive: boolean;
+
+type ProductProps = {
+  product: Product,
+  addToCart: (item: Product) => void
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ image, name, price, oldPrice, discount, isExclusive }) => {
+export default function ProductCard ({product, addToCart} : ProductProps)  {
   return (
     <div className="product-card">
       <div className="image-container">
-        <img src={image} alt={name} />
+        <img src={product.image} alt={product.name} />
       </div>
       <div className="product-details">
-        <h3>{name}</h3>
+        <h3>{product.name}</h3>
         <p>
-          <span className={`price ${discount ? 'price-discount' : 'price-regular'}`}>
-            {price}
+          <span className={`price ${product.discount} ? 'price-discount' : 'price-regular'}`}>
+            ${product.price}
           </span>{' '}
-          <span className="old-price">{oldPrice}</span>{' '}
-          <span className="discount">{discount}</span>
+          <span className="old-price">{product.oldPrice}</span>{' '}
+          <span className="discount">{product.discount}</span>
         </p>
       </div>
+      <div className='d-flex justify-content-end'>
+        <button
+          className='w-100 mt-3 p-2'
+          onClick={() => addToCart(product)}
+        >Agregar</button>
+      </div>
+      
     </div>
   );
 };
 
-export default ProductCard;

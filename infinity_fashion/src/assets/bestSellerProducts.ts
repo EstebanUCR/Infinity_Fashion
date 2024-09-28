@@ -1,3 +1,5 @@
+import { Product } from "../types/types";
+
 import p1_img from "./productImages/long-sleeve-plain-shirt.png";
 import p2_img from "./productImages/lace-trim-bow-accent-cami.png";
 import p3_img from "./productImages/long-sleeve-ribbed-knit-top.png";
@@ -7,13 +9,13 @@ import p6_img from "./productImages/high-waist-wide-leg-jeans.png";
 import p7_img from "./productImages/corduroy-loose-fit-crop-jacket.png";
 import p8_img from "./productImages/oversized-blazer.png";
 
-let bestsellers_products = [
+let bestsellers_products : Product[] = [
   {
     id: 1,
     category: "tops",
     image: p1_img,
     name: 'Long-Sleeve Plain Shirt',
-    price: '$13.60',
+    price: 13.60,
     isExclusive: true,
   },
   {
@@ -21,7 +23,7 @@ let bestsellers_products = [
     category: "tops",
     image: p2_img,
     name: 'Lace/Trim Bow Accent Crop Cami Top',
-    price: '$9.49',
+    price: 9.49,
     isExclusive: false,
   },
   {
@@ -29,7 +31,7 @@ let bestsellers_products = [
     category: "tops",
     image: p3_img,
     name: 'Long-Sleeve Ribbed Knit Top',
-    price: '$18.99',
+    price: 18.99,
     isExclusive: false,
   },
   {
@@ -37,7 +39,7 @@ let bestsellers_products = [
     category: "bottoms",
     image: p4_img,
     name: 'High-Waist Wide-Leg Suit Pants',
-    price: '$12.59',
+    price: 12.59,
     isExclusive: false,
   },
   {
@@ -45,7 +47,7 @@ let bestsellers_products = [
     category: "bottoms",
     image: p5_img,
     name: 'Satin Long Mermaid Skirt',
-    price: '$25.49',
+    price: 25.49,
     isExclusive: true,
   },
   {
@@ -53,7 +55,7 @@ let bestsellers_products = [
     category: "bottoms",
     image: p6_img,
     name: 'High-Waist Wide-Leg Jeans',
-    price: '$17.49',
+    price: 17.49,
     oldPrice: '$24.99',
     discount: '30% OFF',
     isExclusive: true,
@@ -63,7 +65,7 @@ let bestsellers_products = [
     category: "outerwear",
     image: p7_img,
     name: 'Corduroy Loose-Fit Crop Jacket',
-    price: '$17.49',
+    price: 17.49,
     oldPrice: '$24.99',
     discount: '30% OFF',
     isExclusive: true,
@@ -73,7 +75,7 @@ let bestsellers_products = [
     category: "outerwear",
     image: p8_img,
     name: 'Oversized Blazer',
-    price: '$24.49',
+    price: 24.49,
     isExclusive: true,
   },
 ];

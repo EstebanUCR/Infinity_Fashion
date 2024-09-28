@@ -34,7 +34,7 @@
 
 .newArrival .product-card {
   width: 400px; /* Ancho fijo para cada tarjeta */
-  height: 600px;
+  height: auto;
   border: 1px solid #ddd; /* Borde ligero para cada tarjeta */
   padding: 15px; /* Agregar padding dentro de la tarjeta */
   text-align: center; /* Centrar el contenido */

@@ -1,8 +1,8 @@
-import React from 'react'
+import { Product, CartItem, ProductID } from "../../types/types";
+
 import "./home.css"
 import Carousel from 'react-bootstrap/Carousel';
 import img1 from '../../assets/Home/Picture1.png';
-import img2 from '../../assets/Home/Picture2.png';
 import { Container } from 'react-bootstrap';
 import Header from '../header/Header';
 import BestSeller from '../bestSeller/BestSeller';
@@ -10,10 +10,29 @@ import NewArrival from '../newArrival/NewArrival';
 import Footer from '../footer/Footer';
 import Button from 'react-bootstrap/Button';
 
-export const Home = () => {
+type HomeProps = {
+  cart: CartItem[]
+  removeFromCart: (id: ProductID) => void
+  increaseQuantity: (id: ProductID) => void
+  decreaseQuantity: (id: ProductID) => void
+  clearCart: () => void
+  isEmpty: boolean
+  cartTotal: number
+  addToCart: (item: Product) => void
+}
+
+export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, addToCart} : HomeProps) {
   return (
     <div className="container-fluid">
-      <Header />
+      <Header
+        cart={cart} 
+        removeFromCart={removeFromCart}
+        increaseQuantity={increaseQuantity}
+        decreaseQuantity={decreaseQuantity}
+        clearCart={clearCart}
+        isEmpty={isEmpty}
+        cartTotal={cartTotal}
+      />
       <Container fluid>
         <Carousel className="magaain">
           <Carousel.Item className="carousel-item">
@@ -53,12 +72,14 @@ export const Home = () => {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-        <BestSeller />
-        <NewArrival />
+        <BestSeller 
+          addToCart={addToCart}
+        />
+        <NewArrival 
+          addToCart={addToCart}
+        />
         <Footer />
       </Container >
     </div>
   )
 }
-
-export default Home

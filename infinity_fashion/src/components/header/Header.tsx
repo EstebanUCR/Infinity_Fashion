@@ -1,4 +1,5 @@
-import React from 'react';
+import { CartItem, ProductID } from '../../types/types';
+
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -10,7 +11,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  cart: CartItem[]
+  removeFromCart: (id: ProductID) => void
+  increaseQuantity: (id: ProductID) => void
+  decreaseQuantity: (id: ProductID) => void
+  clearCart: () => void
+  isEmpty: boolean
+  cartTotal: number
+}
+
+export default function Header({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal} : HeaderProps){
   return (
     <header>
       <Container className="logo-container">
@@ -27,12 +38,12 @@ const Header: React.FC = () => {
           <Navbar.Collapse id="navbarScroll">
 
             <Nav className="nav-links">
-              <Link className="nav-link" to='/'>HOME</Link>
-              <Link className="nav-link" to='/tops'>TOPS</Link>
-              <Link className="nav-link" to='/bottoms'>BOTTOMS</Link>
-              <Link className="nav-link" to='/outerwear'>OUTERWEAR</Link>
-              <Link className="nav-link" to='/accessories'>ACCESSORIES</Link>
-              <Link className="nav-link" to='/shoes'>SHOES</Link>
+              <Link className="nav-link nav-titles" to='/'>HOME</Link>
+              <Link className="nav-link nav-titles" to='/tops'>TOPS</Link>
+              <Link className="nav-link nav-titles" to='/bottoms'>BOTTOMS</Link>
+              <Link className="nav-link nav-titles" to='/outerwear'>OUTERWEAR</Link>
+              <Link className="nav-link nav-titles" to='/accessories'>ACCESSORIES</Link>
+              <Link className="nav-link nav-titles" to='/shoes'>SHOES</Link>
             </Nav>
 
             <div className="nav-right">
@@ -46,10 +57,73 @@ const Header: React.FC = () => {
                 <Button variant="outline-dark" className="search-button">Search</Button>
               </Form>
               <Nav className="auth-links">
-                <Link className="nav-link" to='/signIn'>Sign In</Link>
-                <Link className="nav-link" to='/shoppingBag'>
-                  <FontAwesomeIcon icon={faShoppingBag} size="xl" />
-                </Link>
+                <Link className="nav-link" to='/signIn'>Sign In</Link>                
+                <div className='carrito'>
+                  <Link className="nav-link" to='#'>
+                    <FontAwesomeIcon icon={faShoppingBag} size="xl" />
+                  </Link>
+                  <div id='carrito' className='bg-white p-3'>
+                    {isEmpty ? (
+                      <h3 className='text-center'>El carrito está vacio</h3>
+                    ) : (
+                      <>
+                        <table className='w-100 table'>
+                          <thead>
+                            <tr>
+                              <th className='cart-titles'>Imagen</th>
+                              <th className='cart-titles'>Nombre</th>
+                              <th className='cart-titles'>Precio</th>
+                              <th className='cart-titles'>Cantidad</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {cart.map(product => (
+                              <tr key={product.id}>
+                                <td>
+                                  <img className='img-fluid' src={product.image} />
+                                </td>
+                                <td>{product.name}</td>
+                                <td className='fw-bold'>
+                                  ${product.price}
+                                </td>
+                                <td className='flex align-items-start gap-4'>
+                                  <button
+                                    type='button'
+                                    className='btn btn-dark'
+                                    onClick={() => decreaseQuantity(product.id)}
+                                  >-</button>
+                                    {product.quantity}
+                                  <button
+                                    type='button'
+                                    className='btn btn-dark'
+                                    onClick={() => increaseQuantity(product.id)}
+                                  >+</button>
+                                </td>
+                                <td>
+                                  <button
+                                    className='btn btn-danger'
+                                    type='button'
+                                    onClick={() => removeFromCart(product.id)}
+                                  >X</button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        <p className='text-end'>Total pagar: <span className='fw-bold'>${cartTotal.toFixed(2)}</span></p>
+                        
+                        <button
+                          className='btn btn-dark'
+                          onClick={clearCart}
+                        >Vaciar Carrito</button>
+                        <button
+                          className='btn btn-pay w-100 mt-3 p-2'
+                        >Finalizar Compra</button>
+                    </>
+                    )}
+                  </div>
+                </div>
               </Nav>
             </div>
 
@@ -59,5 +133,3 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
-export default Header;

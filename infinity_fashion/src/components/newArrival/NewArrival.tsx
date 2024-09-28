@@ -1,10 +1,14 @@
-import React from 'react';
 import './newArrival.css';
-import { Carousel, Card, Button } from 'react-bootstrap';
+import { Carousel } from 'react-bootstrap';
 import newArrivals_products from '../../assets/newArrivalProducts';
 import ProductCard from '../productCard/Product';
+import { Product } from '../../types/types';
 
-const NewArrival = () => {
+type NewArrivalProps = {
+  addToCart: (item: Product) => void
+}
+
+export default function NewArrival ({addToCart} : NewArrivalProps)  {
      // Agrupar productos de 3 en 3
   const groupedProducts = newArrivals_products.reduce((acc, curr, index) => {
     if (index % 4 === 0) {
@@ -13,7 +17,7 @@ const NewArrival = () => {
       acc[acc.length - 1].push(curr);
     }
     return acc;
-  }, [] as any[][]);
+  }, [] as Product[][]);
 
   return (
     <div className="newArrival">
@@ -26,7 +30,7 @@ const NewArrival = () => {
           <Carousel.Item key={i}>
             <div className="carousel-container">
               {group.map((item) => (
-                <ProductCard key={item.id} {...item} />
+                <ProductCard key={item.id} product={item} addToCart={addToCart}/>
               ))}
             </div>
           </Carousel.Item>
@@ -36,5 +40,3 @@ const NewArrival = () => {
     </div>
   );
 }
-
-export default NewArrival;
