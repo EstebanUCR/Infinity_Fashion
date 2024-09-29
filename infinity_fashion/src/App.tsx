@@ -7,7 +7,7 @@ import ShoppingBag from './components/pages/ShoppingBag';
 import ShopCategory from './components/pages/ShopCategory';
 import './index.css'
 import useCart from './hooks/useCart';
-
+import Product from './components/pages/Product';
 
 function App() {
   const {data, cart, addToCart, removeFromCart, decreaseQuantity, increaseQuantity, clearCart, isEmpty, cartTotal} = useCart()
@@ -25,6 +25,7 @@ function App() {
           <Route path='/shoes' element={<ShopCategory cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} data={data} addToCart={addToCart} filterName="Shoes" category="shoes"/>} />
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/shoppingBag" element={<ShoppingBag />} />
+          <Route path="/product/:productId" element={<Product />} />
         </Routes>
       </Router>
     </div>
