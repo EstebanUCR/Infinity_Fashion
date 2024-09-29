@@ -1,0 +1,126 @@
+.productDisplay {
+    display: flex;
+    margin-top: 100px 170px;
+}
+
+.productDisplayLeft {
+    display: flex;
+    gap: 70px;
+    height: auto;
+    width: auto;
+}
+
+.productDisplayImgList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.productDisplayImgList img {
+    height: 163px;
+}
+
+.productDisplayImgMain {
+    max-width: 400px;
+    max-height: auto;
+}
+
+.productDisplayRight {
+    margin: 0px 90px;
+    display: flex;
+    flex-direction: column;
+}
+
+.productDisplayRight h1 {
+    display: flex;
+    color: rgb(197, 101, 101);
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.productDisplayRightPrices {
+    display: flex;
+    margin: 40px 0px;
+    gap: 30px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.productDisplayRightPriceOld {
+    color: #000000;
+    text-decoration: line-through;
+    font-size: 20px;
+    
+}
+
+.productDisplayRightPriceNew {
+    color: #ff4141;
+    font-size: 20px;
+}
+
+.productDisplayRightPriceDiscount {
+    color: #ff4141;
+    font-size: 20px;
+}
+
+.productDisplayRightSize h1{
+    display: flex;
+    margin-top: 55px;
+    color: darkgrey;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.productDisplayRightSizes {
+    display: flex;
+    margin: 30px 0px;
+    gap: 20px;
+}
+
+.productDisplayRightSizes div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    background: rgb(172, 157, 157);
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.productDisplayRight button{
+    padding: 20px 40px;
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #ff4141;
+    margin-bottom: 40px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.productDisplayRightDetails {
+    display: flex;
+    gap: 20px;
+    text-align: left;
+    max-width: 500px;
+    font-size: 20px;
+}
+
+.productDisplayRightCategory {
+    display: flex;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.productDisplayRightExclusive {
+    color: #007bff;
+    display: flex;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 400;
+}

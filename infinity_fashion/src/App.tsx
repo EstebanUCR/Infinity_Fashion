@@ -10,8 +10,9 @@ import BestSeller from './components/bestSeller/BestSeller';
 import NewArrival from './components/newArrival/NewArrival';
 import SignIn from './components/pages/SignIn';
 import ShoppingBag from './components/pages/ShoppingBag';
-import Product from './components/productCard/Product';
 import ShopCategory from './components/pages/ShopCategory';
+import Product from './components/pages/Product';
+import ProductCard from './components/productCard/Product';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -29,8 +30,7 @@ function App() {
           <Route path='/shoes' element={<ShopCategory filterName="Shoes" category="shoes"/>} />
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/shoppingBag" element={<ShoppingBag />} />
-          <Route path="/product" element={<Product image={''} name={''} price={''} isExclusive={false} />} />
-          <Route path=":productId" element={<Product image={''} name={''} price={''} isExclusive={false} />} /> 
+          <Route path="/product/:productId" element={<Product />} />
         </Routes>
       </Router>
     </div>
