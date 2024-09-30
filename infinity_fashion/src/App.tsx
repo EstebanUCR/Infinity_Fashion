@@ -25,7 +25,7 @@ function App() {
           <Route path='/shoes' element={<ShopCategory cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} data={data} addToCart={addToCart} filterName="Shoes" category="shoes"/>} />
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/shoppingBag" element={<ShoppingBag />} />
-          <Route path="/product/:productId" element={<Product />} />
+          <Route path="/product/:productId" element={<Product cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} data={data} addToCart={addToCart} filterName="" category="" />} />
         </Routes>
       </Router>
     </div>
