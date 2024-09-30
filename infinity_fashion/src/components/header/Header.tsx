@@ -8,9 +8,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import img1 from '../../assets/Home/logoWithOutBackground.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faSearch } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, useState } from 'react';
+import { useState } from 'react';
 
 type HeaderProps = {
   cart: CartItem[]
@@ -24,6 +24,13 @@ type HeaderProps = {
 
 export default function Header({ cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal }: HeaderProps) {
   const [search, setSearch] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Función para alternar la visibilidad del cuadro de búsqueda
+  const toggleSearch = () => {
+    setIsSearchOpen((prev) => !prev);
+  };
+
   return (
     <header>
       <Container className="logo-container">
@@ -49,32 +56,44 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
             </Nav>
 
             <div className="nav-right">
-              <Form className="search-form">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="search-input"
-                  aria-label="Search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                <Button variant="outline-dark" className="search-button">Search</Button>
+  
+              <FontAwesomeIcon 
+                icon={faSearch} 
+                className="search-icon" 
+                size="lg" 
+                onClick={toggleSearch} 
+                style={{ cursor: 'pointer', marginTop: '5px', marginRight: '-10px' }}
+              />
 
-                {/* Contenedor de Resultados de Búsqueda */}
-                {search !== '' && (
-                  <div className="search-results">
-                    {all_products.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
-                      .map((item, index) => (
-                        <div key={index} className="search-result-item">
-                          {/* Mostrar la imagen del producto */}
-                          <img src={item.image} alt={item.name} className="search-result-image" />
-                          {/* Mostrar el nombre del producto */}
-                          <span>{item.name}</span>
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </Form>
+              {isSearchOpen && (
+                <Form className="search-form">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="search-input"
+                    aria-label="Search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <Button variant="outline-dark" className="search-button">Search</Button>
+
+      
+                  {search !== '' && (
+                    <div className="search-results">
+                      {all_products.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
+                        .map((item, index) => (
+                          <div key={index} className="search-result-item">
+                            {/* Mostrar la imagen del producto */}
+                            <img src={item.image} alt={item.name} className="search-result-image" />
+                            {/* Mostrar el nombre del producto */}
+                            <span>{item.name}</span>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </Form>
+              )}
+              
               <Nav className="auth-links">
                 <Link className="nav-link" to='/signIn'>Sign In</Link>
                 <div className='carrito'>
