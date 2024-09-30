@@ -65,13 +65,14 @@
 }
 
 .search-input {
-  width: 300px; /* Alargado del campo de búsqueda */
+  width: 600px; /* Alargado del campo de búsqueda */
   height: 40px;
   font-size: 0.95rem;
   border-radius: 20px;
-  padding-left: 15px;
+  padding-left: 20px;
+  padding: 0 10px;
   border: 1px solid #ddd;
-    margin-top: 15px; /* Ajusta este valor según sea necesario */
+  margin-top: 15px; /* Ajusta este valor según sea necesario */
 }
 
 .search-button {
@@ -175,12 +176,12 @@
 
 .search-results {
   position: absolute; /* Posiciona el contenedor de resultados respecto a .search-form */
-  top: 50px; /* Ajusta la posición vertical debajo del campo de búsqueda */
+  top: 55px; /* Ajusta la posición vertical debajo del campo de búsqueda */
   left: 0; /* Alinea con el borde izquierdo del contenedor */
-  width: 75%; /* Asegúrate de que tenga el mismo ancho que el contenedor */
+  width: 86%; /* Asegúrate de que tenga el mismo ancho que el contenedor */
   background-color: #fff;
   border: 1px solid #ddd;
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
   z-index: 1000; /* Asegura que se muestre sobre otros elementos */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -197,8 +198,8 @@
 
 /* Estilos para la imagen dentro del resultado */
 .search-result-image {
-  width: 40px; /* Ajusta el ancho de la imagen */
-  height: 40px; /* Ajusta la altura de la imagen */
+  width: 70px; /* Ajusta el ancho de la imagen */
+  height: 70px; /* Ajusta la altura de la imagen */
   object-fit: cover; /* Recorta la imagen si es necesario */
   border-radius: 5px; /*añade bordes redondeados */
   margin-right: 10px; /* Espacio entre la imagen y el texto */
