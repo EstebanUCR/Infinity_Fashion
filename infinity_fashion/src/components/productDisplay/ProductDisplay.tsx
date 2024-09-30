@@ -6,7 +6,7 @@ interface ProductDisplayProps {
     id: number;
     image: string;
     name: string;
-    price: string;
+    price: number;
     isExclusive: boolean;
     oldPrice?: string;
     discount?: string;

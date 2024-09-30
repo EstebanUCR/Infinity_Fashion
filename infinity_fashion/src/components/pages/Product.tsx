@@ -1,19 +1,41 @@
 import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom';
-import all_products from '../../assets/all_products';
+import type { Product, CartItem, ProductID } from '../../types/types';
 import ProductDisplay from '../productDisplay/ProductDisplay';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 
-const Product = () => {
-  const allProduct = all_products;
+type ProductProps = {
+  cart: CartItem[]
+  removeFromCart: (id: ProductID) => void
+  increaseQuantity: (id: ProductID) => void
+  decreaseQuantity: (id: ProductID) => void
+  clearCart: () => void
+  isEmpty: boolean
+  cartTotal: number
+  data: Product[]
+  addToCart: (item: Product) => void
+  filterName: string
+  category: string
+}
+
+const Product = ({ data, addToCart, cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, filterName, category }: ProductProps) => {
+  const allProduct = data;
   const { productId } = useParams();
   const product = allProduct.find((product) => product.id === parseInt(productId || '', 10));
 
   if (!product) {
     return (
       <div>
-        <Header />
+        <Header 
+          cart={cart} 
+          removeFromCart={removeFromCart}
+          increaseQuantity={increaseQuantity}
+          decreaseQuantity={decreaseQuantity}
+          clearCart={clearCart}
+          isEmpty={isEmpty}
+          cartTotal={cartTotal}
+        />
         <h1>Product not found</h1>
         <Footer />
       </div>
@@ -27,7 +49,15 @@ stock={product?.stock}
 */
   return (
     <div>
-      <Header />
+      <Header 
+          cart={cart} 
+          removeFromCart={removeFromCart}
+          increaseQuantity={increaseQuantity}
+          decreaseQuantity={decreaseQuantity}
+          clearCart={clearCart}
+          isEmpty={isEmpty}
+          cartTotal={cartTotal}
+        />
       <ProductDisplay 
         id={product.id} 
         image={product.image} 
