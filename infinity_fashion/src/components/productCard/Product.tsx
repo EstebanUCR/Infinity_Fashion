@@ -1,6 +1,6 @@
 import type { Product } from '../../types/types';
 import './Product.css';
-
+import { Link } from 'react-router-dom';
 
 type ProductProps = {
   product: Product,
@@ -24,10 +24,12 @@ export default function ProductCard ({product, addToCart} : ProductProps)  {
         </p>
       </div>
       <div className='d-flex justify-content-end'>
-        <button
-          className='w-100 mt-3 p-2'
-          onClick={() => addToCart(product)}
-        >Agregar</button>
+        <Link className='w-100 mt-3 p-2' to={`/product/${product.id}`}>
+          <button
+            className='w-100 mt-3 p-2'
+            onClick={() => addToCart(product)}
+          >Agregar</button>
+        </Link>
       </div>
       
     </div>

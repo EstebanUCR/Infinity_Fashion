@@ -83,10 +83,12 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                       {all_products.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
                         .map((item, index) => (
                           <div key={index} className="search-result-item">
+                            <Link to={`/product/${item.id}`}>
                             {/* Mostrar la imagen del producto */}
                             <img src={item.image} alt={item.name} className="search-result-image" />
                             {/* Mostrar el nombre del producto */}
                             <span>{item.name}</span>
+                            </Link>
                           </div>
                         ))}
                     </div>
