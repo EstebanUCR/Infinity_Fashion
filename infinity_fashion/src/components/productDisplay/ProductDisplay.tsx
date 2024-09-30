@@ -1,5 +1,5 @@
-import React from 'react'
-import './ProductDisplay.css'
+import React, { useState } from 'react';
+import './ProductDisplay.css';
 
 /* TODO agregar los datos faltantes para mejorar la descripcion y el stock*/
 interface ProductDisplayProps {
@@ -14,33 +14,43 @@ interface ProductDisplayProps {
 }
 
 const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, price, oldPrice, discount, isExclusive, category }) => {
+    const [selectedImage, setSelectedImage] = useState(image);
+    /*Logica para actualizar la imagen cuando se toca*/
+    /*TODO: se ocupa implementar una lsita de imagenes y probar*/
+    const handleImageClick = (newImage: string) => {
+        setSelectedImage(newImage);
+    };
+
     return (
         <div className="productDisplay">
             <div className="productDisplayLeft">
-                <div className='productDisplayImgList'>
-                    <img src={image} alt='' />
-                    <img src={image} alt='' />
-                    <img src={image} alt='' />
+                <div className="productDisplayImgList">
+                    <img src={image} alt='' onClick={() => handleImageClick(image)} />
+                    <img src={image} alt='' onClick={() => handleImageClick(image)} />
+                    <img src={image} alt='' onClick={() => handleImageClick(image)} />
                 </div>
+            </div>
+
+            <div className="productDisplayMiddle">
                 <div className="productDisplayImg">
-                    <img className='productDisplayImgMain' src={image} alt='' />
+                    <img className='productDisplayImgMain' src={selectedImage} alt='' />
                 </div>
             </div>
 
             <div className="productDisplayRight">
                 <h1>{name}</h1>
                 <div className="productDisplayRightPrices">
-                    <div className="productDisplayRightPriceNew">Price: {price}</div>
-                    <div className="productDisplayRightPriceOld">{oldPrice}</div>
-                    <div className="productDisplayRightPriceDiscount">{discount}</div>
+                    <div>{price}</div>
+                    <div>{oldPrice}</div>
+                    <div>{discount}</div>
                 </div>
 
                 <div className="productDisplayRightDetails">
-                    <p>This is a high-quality product that meets all your fashion needs. Perfect for any occasion, it combines style and comfort effortlessly.</p>
+                    <p>Product details go here.</p>
                 </div>
 
                 <div className="productDisplayRightSize">
-                    <h1>Select size</h1>
+                    <h1>Select Size</h1>
                     <div className="productDisplayRightSizes">
                         <div>S</div>
                         <div>M</div>
@@ -49,11 +59,11 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, price,
                     </div>
                 </div>
                 <button>ADD TO CART</button>
-                <div className='productDisplayRightCategory'>Category: {category}</div>
-                {isExclusive && <div className='productDisplayRightExclusive'>WEB EXCLUSIVE</div>}
+                <div className="productDisplayRightCategory">{category}</div>
+                {isExclusive && <div className="productDisplayRightExclusive">WEB EXCLUSIVE</div>}
             </div>
         </div>
     );
-}
+};
 
 export default ProductDisplay
