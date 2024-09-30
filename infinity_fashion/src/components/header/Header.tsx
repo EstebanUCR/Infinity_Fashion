@@ -1,5 +1,5 @@
 import { CartItem, ProductID } from '../../types/types';
-
+import { all_products } from "../../assets/all_products";
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -10,6 +10,7 @@ import img1 from '../../assets/Home/logoWithOutBackground.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, useState } from 'react';
 
 type HeaderProps = {
   cart: CartItem[]
@@ -21,7 +22,8 @@ type HeaderProps = {
   cartTotal: number
 }
 
-export default function Header({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal} : HeaderProps){
+export default function Header({ cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal }: HeaderProps) {
+  const [search, setSearch] = useState('');
   return (
     <header>
       <Container className="logo-container">
@@ -53,11 +55,28 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                   placeholder="Search"
                   className="search-input"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
                 <Button variant="outline-dark" className="search-button">Search</Button>
+
+                {/* Contenedor de Resultados de Búsqueda */}
+                {search !== '' && (
+                  <div className="search-results">
+                    {all_products.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
+                      .map((item, index) => (
+                        <div key={index} className="search-result-item">
+                          {/* Mostrar la imagen del producto */}
+                          <img src={item.image} alt={item.name} className="search-result-image" />
+                          {/* Mostrar el nombre del producto */}
+                          <span>{item.name}</span>
+                        </div>
+                      ))}
+                  </div>
+                )}
               </Form>
               <Nav className="auth-links">
-                <Link className="nav-link" to='/signIn'>Sign In</Link>                
+                <Link className="nav-link" to='/signIn'>Sign In</Link>
                 <div className='carrito'>
                   <Link className="nav-link" to='#'>
                     <FontAwesomeIcon icon={faShoppingBag} size="xl" />
@@ -93,7 +112,7 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                                     className='btn btn-dark'
                                     onClick={() => decreaseQuantity(product.id)}
                                   >-</button>
-                                    {product.quantity}
+                                  {product.quantity}
                                   <button
                                     type='button'
                                     className='btn btn-dark'
@@ -112,7 +131,7 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                           </tbody>
                         </table>
                         <p className='text-end'>Total pagar: <span className='fw-bold'>${cartTotal.toFixed(2)}</span></p>
-                        
+
                         <button
                           className='btn btn-dark'
                           onClick={clearCart}
@@ -120,7 +139,7 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                         <button
                           className='btn btn-pay w-100 mt-3 p-2'
                         >Finalizar Compra</button>
-                    </>
+                      </>
                     )}
                   </div>
                 </div>

@@ -167,3 +167,42 @@
   font-weight: 200;
 }
 
+/* Posicionar el contenedor de búsqueda de manera relativa */
+.search-form {
+  position: relative; /* Contenedor de búsqueda principal */
+}
+
+.search-results {
+  position: absolute; /* Posiciona el contenedor de resultados respecto a .search-form */
+  top: 50px; /* Ajusta la posición vertical debajo del campo de búsqueda */
+  left: 0; /* Alinea con el borde izquierdo del contenedor */
+  width: 75%; /* Asegúrate de que tenga el mismo ancho que el contenedor */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000; /* Asegura que se muestre sobre otros elementos */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px; /* Añade redondeado a toda la tabla */
+}
+/* Estilos para el contenedor de resultados */
+.search-result-item {
+  display: flex; /* Coloca la imagen y el texto en línea */
+  align-items: center; /* Centra verticalmente la imagen y el texto */
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* Estilos para la imagen dentro del resultado */
+.search-result-image {
+  width: 40px; /* Ajusta el ancho de la imagen */
+  height: 40px; /* Ajusta la altura de la imagen */
+  object-fit: cover; /* Recorta la imagen si es necesario */
+  border-radius: 5px; /*añade bordes redondeados */
+  margin-right: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.search-result-item:hover {
+  background-color: #ffffff;
+}
