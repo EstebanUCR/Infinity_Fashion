@@ -40,7 +40,7 @@ export default function ShopCategory ({cart, removeFromCart, increaseQuantity, d
         <Row>
           <Col md="auto">
             <div className='filters'>
-              <h2>Filters</h2>
+              <h2 className='filterTitle'>Filters</h2>
               <Link className="filter-link" to='/tops'>Tops</Link>
               <Link className="filter-link" to='/bottoms'>Bottoms</Link>
               <Link className="filter-link" to='/outerwear'>Outerwear</Link>

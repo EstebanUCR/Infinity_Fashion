@@ -34,6 +34,7 @@
   object-fit: cover;
   margin: 0;
   padding: 0;
+  border-radius: 4px; /* Bordes redondeados en las imágenes */
 }
 
 /* Detalles del producto */

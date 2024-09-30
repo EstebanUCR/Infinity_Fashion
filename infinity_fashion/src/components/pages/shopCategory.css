@@ -5,8 +5,12 @@ h1 {
   font-weight: 500;
 }
 
-.filters {
-
+.filterTitle {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: flex-start; /* Alinea los enlaces a la derecha */
+  font-weight: 600;
 }
 
 .filter-link {
@@ -21,9 +25,9 @@ h1 {
 
 .shopcategory-products {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   /* Mantén 4 productos por fila */
-  gap: 10px;
+  gap: 20px;
   /* Espaciado reducido entre los productos */
   padding: 10px;
   /* Ajusta el padding externo */
@@ -32,56 +36,17 @@ h1 {
 
 /* Tarjeta del producto */
 .product-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
   padding: 15px;
-  width: 200px;
-  text-align: center;
+  width: 95%;
 }
 
 /* Imagen del producto */
 .image-container img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-/* Detalles del producto */
-.product-details {
-  margin-top: 10px;
+  height: 40vh;
 }
 
 .product-details h3 {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-/* Estilos de los precios */
-.price {
-  color: #e60023; /* Rojo para el precio con descuento */
-  font-weight: bold;
   font-size: 1.2rem;
-}
-
-.old-price {
-  text-decoration: line-through;
-  color: #777;
-  font-size: 0.9rem;
-}
-
-.discount {
-  color: #e60023;
-  font-size: 0.9rem;
-}
-
-.sitewide {
-  font-size: 0.9rem;
-  color: #333;
-}
-
-.exclusive {
-  font-size: 0.8rem;
-  color: #007bff;
   font-weight: bold;
+  margin-bottom: 10px;
 }
