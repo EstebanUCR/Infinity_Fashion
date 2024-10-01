@@ -111,7 +111,6 @@
 /*Carrito */
 .btn-dark {
   text-transform: uppercase;
-  margin-top: 0;
 }
 
 .carrito {
@@ -163,7 +162,6 @@
   background: rgba(8, 174, 39, 0.7);
   color: #FFF;
   font-weight: bold;
-  text-transform: uppercase;
 }
 
 .cart-titles {

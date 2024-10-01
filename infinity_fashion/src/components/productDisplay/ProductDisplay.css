@@ -56,7 +56,7 @@
 
 .productDisplayRightPrices {
     display: flex;
-    margin: 20px 0px;
+    margin: 40px 0px;
     gap: 30px;
     font-size: 24px;
     font-weight: 700;
@@ -81,6 +81,7 @@
 
 .productDisplayRightSize h1{
     display: flex;
+    margin-top: 55px;
     color: darkgrey;
     font-size: 20px;
 }
@@ -119,6 +120,7 @@
 .productDisplayRightDetails {
     display: block;
     text-align: left;
+    margin-top: 55px;
     color: darkgrey;
     font-size: 20px;
 }
@@ -143,10 +145,4 @@
     gap: 10px;
     font-size: 15px;
     font-weight: 400;
-}
-
-.btn-add:hover {
-    background-color: #df3535;
-    color: #000000;
-    font-weight: bold;
 }
