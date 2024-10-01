@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './ProductDisplay.css'
 
 /* TODO agregar los datos faltantes para mejorar la descripcion y el stock*/
@@ -7,13 +7,17 @@ interface ProductDisplayProps {
     image: string;
     name: string;
     price: number;
+    description?: string;
     isExclusive: boolean;
     oldPrice?: string;
     discount?: string;
     category: string;
 }
 
-const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, price, oldPrice, discount, isExclusive, category }) => {
+const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category }) => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
     return (
         <div className="productDisplay">
             <div className="productDisplayLeft">
@@ -36,7 +40,8 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, price,
                 </div>
 
                 <div className="productDisplayRightDetails">
-                    <p>This is a high-quality product that meets all your fashion needs. Perfect for any occasion, it combines style and comfort effortlessly.</p>
+                    <h1>Product details</h1>
+                    <h2 >{description}</h2>
                 </div>
 
                 <div className="productDisplayRightSize">
@@ -50,6 +55,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, price,
                 </div>
                 <button>ADD TO CART</button>
                 <div className='productDisplayRightCategory'>Category: {category}</div>
+                <div className='productDisplayRightProductCode'> Product code: {id}</div>
                 {isExclusive && <div className='productDisplayRightExclusive'>WEB EXCLUSIVE</div>}
             </div>
         </div>

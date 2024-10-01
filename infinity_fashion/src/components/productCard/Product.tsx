@@ -27,8 +27,7 @@ export default function ProductCard ({product, addToCart} : ProductProps)  {
         <Link className='w-100 mt-3 p-2' to={`/product/${product.id}`}>
           <button
             className='w-100 mt-3 p-2'
-            onClick={() => addToCart(product)}
-          >Agregar</button>
+          >Quick view</button>
         </Link>
       </div>
       
