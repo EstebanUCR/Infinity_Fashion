@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import './ProductDisplay.css'
+import { Product } from '../../types/types';
 
 /* TODO agregar los datos faltantes para mejorar la descripcion y el stock*/
 interface ProductDisplayProps {
@@ -12,9 +13,11 @@ interface ProductDisplayProps {
     oldPrice?: string;
     discount?: string;
     category: string;
+    addToCart: (item: Product) => void;
+    product: Product
 }
 
-const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category }) => {
+const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category, addToCart, product}) => {
     useEffect(() => {
         window.scrollTo(0, 0);
       }, []);
@@ -53,7 +56,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
                         <div>XL</div>
                     </div>
                 </div>
-                <button>ADD TO CART</button>
+                <button onClick={() => addToCart(product)} >ADD TO CART</button>
                 <div className='productDisplayRightCategory'>Category: {category}</div>
                 <div className='productDisplayRightProductCode'> Product code: {id}</div>
                 {isExclusive && <div className='productDisplayRightExclusive'>WEB EXCLUSIVE</div>}

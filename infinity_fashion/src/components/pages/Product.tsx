@@ -68,6 +68,8 @@ stock={product?.stock}
         discount={product.discount}
         isExclusive={product.isExclusive} 
         category={product.category} 
+        addToCart={addToCart}
+        product={product}
       />
       <Footer />
     </div>
