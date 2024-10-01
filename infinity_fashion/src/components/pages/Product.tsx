@@ -1,4 +1,3 @@
-import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import type { Product, CartItem, ProductID } from '../../types/types';
 import ProductDisplay from '../productDisplay/ProductDisplay';
@@ -19,7 +18,7 @@ type ProductProps = {
   category: string
 }
 
-const Product = ({ data, addToCart, cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, filterName, category }: ProductProps) => {
+const Product = ({ data, addToCart, cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal }: ProductProps) => {
   const allProduct = data;
   const { productId } = useParams();
   const product = allProduct.find((product) => product.id === parseInt(productId || '', 10));

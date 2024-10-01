@@ -65,7 +65,7 @@
 }
 
 .search-input {
-  width: 600px; /* Alargado del campo de búsqueda */
+  width: 300px; /* Alargado del campo de búsqueda */
   height: 40px;
   font-size: 0.95rem;
   border-radius: 20px;

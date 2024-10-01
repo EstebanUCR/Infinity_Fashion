@@ -1,4 +1,3 @@
-import React from "react";
 import "./footer.css"
 import Container from 'react-bootstrap/Container';
 import { Row } from "react-bootstrap";

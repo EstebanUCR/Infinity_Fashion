@@ -7,7 +7,7 @@ type ProductProps = {
   addToCart: (item: Product) => void
 }
 
-export default function ProductCard ({product, addToCart} : ProductProps)  {
+export default function ProductCard ({product} : ProductProps)  {
   return (
     <div className="product-card">
       <div className="image-container">

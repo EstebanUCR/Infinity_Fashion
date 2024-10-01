@@ -24,10 +24,10 @@
 
 /* Ajustar el tamaño del carrusel */
 .magaain {
-  height: 700px;  /* Ajusta la altura total del carrusel */
+  height: 500px;  /* Ajusta la altura total del carrusel */
   width: 100%;  /* El carrusel ocupará todo el ancho de la pantalla */
   overflow: hidden;  /* Evita que el contenido se salga del contenedor */
-  margin-bottom: 200px;  /* Ajusta el espacio debajo del carrusel */
+  margin-bottom: 10rem;  /* Ajusta el espacio debajo del carrusel */
 }
 
 /* Ajustar las imágenes dentro del carrusel */
