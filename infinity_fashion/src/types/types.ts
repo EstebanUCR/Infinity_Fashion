@@ -7,6 +7,7 @@ export type Product = {
     oldPrice?: string
     discount?: string
     isExclusive: boolean
+    description?: string
   }
 
   export type CartItem = Product & {

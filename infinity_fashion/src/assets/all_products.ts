@@ -15,6 +15,16 @@ import p12_img from "./productImages/sparkle-clover-bracelet.png";
 import p13_img from "./productImages/platform-lace-up-oxford-shoes.png";
 import p14_img from "./productImages/casual-shoes-with-buckle-closure.png";
 import p15_img from "./productImages/black-loafers.png";
+import p16_img from "./productImages/long-sleeve-henley-t-shirt.png";
+import p17_img from "./productImages/balloon-sleeve-mandarin-collar-blouse.png";
+import p18_img from "./productImages/casual-pants.png";
+import p19_img from "./productImages/satin-maxi-skirt.png";
+import p20_img from "./productImages/herringbone-coat.png";
+import p21_img from "./productImages/double-breasted-trench-coat.png";
+import p22_img from "./productImages/infinity-choker.png";
+import p23_img from "./productImages/ribbon-ring.png";
+import p24_img from "./productImages/pointed-toe-heels.png";
+import p25_img from "./productImages/flat-sandals.png";
 
 
 export const all_products : Product[] = [
@@ -25,6 +35,7 @@ export const all_products : Product[] = [
     name: 'Long-Sleeve Plain Shirt',
     price: 13.60,
     isExclusive: true,
+    description: 'A plain long-sleeve shirt perfect for any occassion.',
   },
   {
     id: 2,
@@ -33,6 +44,7 @@ export const all_products : Product[] = [
     name: 'Lace/Trim Bow Accent Crop Cami',
     price: 9.49,
     isExclusive: false,
+    description: 'This crop cami top is cute yet elegant.',
   },
   {
     id: 3,
@@ -41,6 +53,7 @@ export const all_products : Product[] = [
     name: 'Long-Sleeve Ribbed Knit Top',
     price: 18.99,
     isExclusive: false,
+    description: 'This high-quality knit top is perfect for colder weather.',
   },
   {
     id: 4,
@@ -49,6 +62,7 @@ export const all_products : Product[] = [
     name: 'High-Waist Wide-Leg Suit Pants',
     price: 12.59,
     isExclusive: false,
+    description: 'A pair of suit pants ideal for everyday wear.',
   },
   {
     id: 5,
@@ -57,6 +71,7 @@ export const all_products : Product[] = [
     name: 'Satin Long Mermaid Skirt',
     price: 25.49,
     isExclusive: true,
+    description: 'This elegant mermaid skirt exudes an elegant and romantic air.',
   },
   {
     id: 6,
@@ -67,6 +82,7 @@ export const all_products : Product[] = [
     oldPrice: '$24.99',
     discount: '30% OFF',
     isExclusive: true,
+    description: 'A sturdy pair of jeans that pair well with anything.',
   },
   {
     id: 7,
@@ -77,6 +93,7 @@ export const all_products : Product[] = [
     oldPrice: '$24.99',
     discount: '30% OFF',
     isExclusive: true,
+    description: 'This crop jacket is the perfect addition to your closet.',
   },
   {
     id: 8,
@@ -85,6 +102,7 @@ export const all_products : Product[] = [
     name: 'Oversized Blazer',
     price: 24.49,
     isExclusive: true,
+    description: 'An oversized blazer ideal for a casual business look.',
   },
   {
     id: 9,
@@ -93,14 +111,16 @@ export const all_products : Product[] = [
     name: 'Open-Front Eyelet-Knit Cardigan',
     price: 17.99,
     isExclusive: false,
+    description: 'This cute cardigan is made of the softest materials.',
   },
   {
     id: 10,
     category: "accessories",
     image: p10_img,
     name: 'Starfish Stud Earrings',
-    price: 24.00,
+    price: 24.50,
     isExclusive: false,
+    description: 'These starfish stud earrings make the perfect statement piece',
   },
   {
     id: 11,
@@ -111,6 +131,7 @@ export const all_products : Product[] = [
     oldPrice: '$27.00',
     discount: '20% OFF',
     isExclusive: false,
+    description: 'A delicate and simple necklace with an eye-catching heart charm.',
   },
   {
     id: 12,
@@ -119,6 +140,7 @@ export const all_products : Product[] = [
     name: 'Sparkle Clover Bracelet',
     price: 26.00,
     isExclusive: true,
+    description: 'This gorgeous bracelet pairs well with any look.',
   },
   {
     id: 13,
@@ -127,6 +149,7 @@ export const all_products : Product[] = [
     name: 'Platform Lace-Up Oxford Shoes',
     price: 29.49,
     isExclusive: true,
+    description: 'These oxford shoes offer a sturdy, classic look.',
   },
   {
     id: 14,
@@ -135,6 +158,7 @@ export const all_products : Product[] = [
     name: 'Casual Shoes with Buckle',
     price: 17.49,
     isExclusive: true,
+    description: 'Casual shoes that are perfect for everyday wear.',
   },
   {
     id: 15,
@@ -143,131 +167,102 @@ export const all_products : Product[] = [
     name: 'Black Loafers',
     price: 25.99,
     isExclusive: false,
+    description: 'Comfortable and elegant, these shoes are a great addition to your closet.',
   },
   {
     id: 16,
     category: "tops",
-    image: 'https://via.placeholder.com/200',
-    name: 'Fleece Drawstring Sweatshorts',
+    image: p16_img,
+    name: 'Long-Sleeve Henley T-Shirt',
     price: 12.59,
     isExclusive: false,
+    description: 'A casual t-shirt perfect for warmer weather.',
   },
   {
     id: 17,
     category: "tops",
-    image: 'https://via.placeholder.com/200',
-    name: 'Striped Twill Pleated Mini Skirt',
+    image: p17_img,
+    name: 'Ballon-Sleeve Blouse',
     price: 17.49,
     oldPrice: '$24.99',
     discount: '30% OFF',
     isExclusive: true,
+    description: 'An elegant blouse that combines style and comfort.',
   },
   {
     id: 18,
-    category: "tops",
-    image: 'https://via.placeholder.com/200',
-    name: 'High-Rise Corduroy Flare Pants',
+    category: "bottoms",
+    image: p18_img,
+    name: 'Casual Pants',
     price: 24.49,
     isExclusive: true,
+    description: 'Casual, elegant pants that pair well with anything.',
   },
   {
     id: 19,
     category: "bottoms",
-    image: 'https://via.placeholder.com/200',
-    name: 'Ribbed Knit Crop Top',
+    image: p19_img,
+    name: 'Satin Maxi Skirt',
     price: 10.99,
     isExclusive: false,
+    description: 'A stylish, comfortable skirt perfect for any occassion.',
   },
   {
     id: 20,
-    category: "bottoms",
-    image: 'https://via.placeholder.com/200',
-    name: 'Printed Wrap Skirt',
+    category: "outerwear",
+    image: p20_img,
+    name: 'Herringbone Coat',
     price: 15.49,
     isExclusive: false,
+    description: 'A sturdy, fashionable coat that will keep you perfectly warm.',
   },
   {
     id: 21,
-    category: "bottoms",
-    image: 'https://via.placeholder.com/200',
-    name: 'Plaid Pleated Skirt',
+    category: "outerwear",
+    image: p21_img,
+    name: 'Double Breasted Trench Coat',
     price: 18.99,
     isExclusive: false,
+    description: 'This trench coat offers a classic, elegant look.',
   },
   {
     id: 22,
-    category: "outerwear",
-    image: 'https://via.placeholder.com/200',
-    name: 'Mesh Insert Bodycon Dress',
+    category: "accessories",
+    image: p22_img,
+    name: 'Infinity Choker',
     price: 22.49,
     oldPrice: '$29.99',
     discount: '30% OFF',
     isExclusive: true,
+    description: 'A colorful statement piece that can elevate a simple outfit.',
   },
   {
     id: 23,
-    category: "outerwear",
-    image: 'https://via.placeholder.com/200',
-    name: 'Leopard-Trim Flare Leg',
+    category: "accessories",
+    image: p23_img,
+    name: 'Ribbon Ring',
     price: 17.49,
     isExclusive: true,
+    description: 'A classy ring perfect for any occassion.',
   },
   {
     id: 24,
-    category: "outerwear",
-    image: 'https://via.placeholder.com/200',
-    name: 'Leopard Print Flare Pants',
+    category: "shoes",
+    image: p24_img,
+    name: 'Pointed-Toe Heels',
     price: 17.49,
     oldPrice: '$24.99',
     discount: '30% OFF',
     isExclusive: true,
+    description: 'These beautiful heels offer a classy look.',
   },
   {
     id: 25,
-    category: "accessories",
-    image: 'https://via.placeholder.com/200',
-    name: 'Jacquard Baroque Mini Skirt',
-    price: 13.99,
-    isExclusive: false,
-  },
-  {
-    id: 26,
-    category: "accessories",
-    image: 'https://via.placeholder.com/200',
-    name: 'Jacquard Baroque Mini Skirt',
-    price: 13.99,
-    isExclusive: false,
-  },
-  {
-    id: 27,
-    category: "accessories",
-    image: 'https://via.placeholder.com/200',
-    name: 'Jacquard Baroque Mini Skirt',
-    price: 13.99,
-    isExclusive: false,
-  },
-  {
-    id: 28,
     category: "shoes",
-    image: 'https://via.placeholder.com/200',
-    name: 'Jacquard Baroque Mini Skirt',
+    image: p25_img,
+    name: 'Flat Sandals',
     price: 13.99,
     isExclusive: false,
-  },
-  {
-    id: 29,
-    category: "shoes",
-    image: 'https://via.placeholder.com/200',
-    name: 'Jacquard Baroque Mini Skirt',
-    price: 13.99,
-    isExclusive: false,
-  },
-  {
-    id: 30,
-    category: "shoes",
-    image: 'https://via.placeholder.com/200',
-    name: 'Jacquard Baroque Mini Skirt',
-    price: 13.99,
-    isExclusive: false,
+    description: 'Comfortable sandals perfect for everyday use.',
   },
 ];
