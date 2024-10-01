@@ -15,6 +15,8 @@ const useCart = () => {
 
   const [data] = useState(all_products)
 
+  const [shipping, setShipping] = useState(0)
+
   //Const
   const MIN_ITEMS = 1
   const MAX_ITEMS = 5
@@ -72,6 +74,10 @@ const useCart = () => {
     setCart([])
   }
 
+  function shippingValue(value : number) {
+    setShipping(value)
+  }
+
   //useMemo
   const isEmpty = useMemo(() => cart.length === 0, [cart])
   const cartTotal = useMemo(() => cart.reduce((total, item) => total + (item.quantity * item.price), 0), [cart])
@@ -85,7 +91,9 @@ const useCart = () => {
     increaseQuantity,
     clearCart,
     isEmpty,
-    cartTotal
+    cartTotal,
+    shipping,
+    shippingValue
   }
 }
 

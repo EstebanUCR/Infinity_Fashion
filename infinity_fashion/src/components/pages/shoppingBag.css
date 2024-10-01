@@ -1,0 +1,173 @@
+.title{
+    margin-bottom: 5vh;
+}
+.card{
+    margin: auto;
+    max-width: 950px;
+    width: 90%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent;
+}
+@media(max-width:767px){
+    .card{
+        margin: 3vh auto;
+    }
+}
+.cart{
+    background-color: #fff;
+    padding: 4vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+}
+@media(max-width:767px){
+    .cart{
+        padding: 4vh;
+        border-bottom-left-radius: unset;
+        border-top-right-radius: 1rem;
+    }
+}
+.summary{
+    background: linear-gradient(to right, #D4B2A7, #BF665E);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 4vh;
+    color: black;
+}
+@media(max-width:767px){
+    .summary{
+    border-top-right-radius: unset;
+    border-bottom-left-radius: 1rem;
+    }
+}
+.summary h5 {
+    font-family: 'Playfair Display', sans-serif;
+    margin-bottom: 1rem;
+}
+.summary .col-2{
+    padding: 0;
+}
+.summary .col-10
+{
+    padding: 0;
+}.row{
+    margin: 0;
+}
+.title b{
+    font-size: 1.5rem;
+}
+.main{
+    margin: 0;
+    padding: 2vh 0;
+    width: 100%;
+}
+.col h4 {
+    font-family: 'Playfair Display', sans-serif;
+}
+.col-2, .col{
+    padding: 0 1vh;
+}
+a{
+    padding: 0 1vh;
+}
+.close{
+    margin-left: auto;
+    font-size: 0.7rem;
+}
+.img-cart{
+    width: 3.5rem;
+}
+.back-to-shop{
+    margin-top: 4.5rem;
+}
+h5{
+    margin-top: 4vh;
+}
+hr{
+    margin-top: 1.25rem;
+}
+form{
+    padding: 2vh 0;
+}
+select{
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1.5vh 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: #EDE9E3;
+    border-radius: 8px;
+}
+option {
+    border-radius: 8px;
+}
+input{
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: #FFF;
+    border-radius: 8px;
+}
+input:focus::-webkit-input-placeholder
+{
+      color:transparent;
+}
+
+.btnCart {
+    margin-top: 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+.btnCart:hover {
+    box-shadow: none;
+    border: 1px solid #BF665E;
+    color: #BF665E;
+}
+.textQuantity {
+    padding: 15px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+.unit-price {
+    font-size: 12px;
+}
+.btn-remove {
+    padding: 5px 9px;
+    border-radius: 50%;
+    margin-left: 1rem;
+    font-weight: 400;
+    background-color: #dc3545;
+    margin-top: 0;
+}
+.btn-remove:hover {
+    background-color: #bd192a;
+    font-weight: bold;
+}
+.emptyCart {
+    padding: 3rem;
+    text-transform: uppercase;
+}
+.totals {
+    font-weight: bold;
+}
+.btn-pay {
+    padding: 0 2px;
+    margin: 0 3px;
+    background: #FFF;
+    color: rgb(65, 65, 65);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.btn-pay:hover {
+    background-color: rgba(231, 215, 201, 1);
+    color: white;
+}
+ #code{
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253) , rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center;
+}

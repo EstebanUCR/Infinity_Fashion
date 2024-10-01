@@ -104,16 +104,16 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                   </Link>
                   <div id='carrito' className='bg-white p-3'>
                     {isEmpty ? (
-                      <h3 className='text-center'>El carrito está vacio</h3>
+                      <h3 className='text-center'>No items!</h3>
                     ) : (
                       <>
                         <table className='w-100 table'>
                           <thead>
                             <tr>
-                              <th className='cart-titles'>Imagen</th>
-                              <th className='cart-titles'>Nombre</th>
-                              <th className='cart-titles'>Precio</th>
-                              <th className='cart-titles'>Cantidad</th>
+                              <th className='cart-titles'>Image</th>
+                              <th className='cart-titles'>Name</th>
+                              <th className='cart-titles'>Price</th>
+                              <th className='cart-titles'>Quantity</th>
                               <th></th>
                             </tr>
                           </thead>
@@ -151,15 +151,13 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                             ))}
                           </tbody>
                         </table>
-                        <p className='text-end'>Total pagar: <span className='fw-bold'>${cartTotal.toFixed(2)}</span></p>
+                        <p className='text-end'>Total: <span className='fw-bold'>${cartTotal.toFixed(2)}</span></p>
 
                         <button
                           className='btn btn-dark'
                           onClick={clearCart}
-                        >Vaciar Carrito</button>
-                        <button
-                          className='btn btn-pay w-100 mt-3 p-2'
-                        >Finalizar Compra</button>
+                        >Clear Cart</button>
+                        <Link className='btn btn-pay w-100 mt-3 p-2' to='/shoppingBag'>Go to checkout</Link>
                       </>
                     )}
                   </div>

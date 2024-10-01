@@ -37,7 +37,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
             <div className="productDisplayRight">
                 <h1>{name}</h1>
                 <div className="productDisplayRightPrices">
-                    <div className="productDisplayRightPriceNew">Price: {price}</div>
+                    <div className="productDisplayRightPriceNew">Price: ${price}</div>
                     <div className="productDisplayRightPriceOld">{oldPrice}</div>
                     <div className="productDisplayRightPriceDiscount">{discount}</div>
                 </div>
@@ -56,7 +56,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
                         <div>XL</div>
                     </div>
                 </div>
-                <button onClick={() => addToCart(product)} >ADD TO CART</button>
+                <button className='btn-add' onClick={() => addToCart(product)} >ADD TO CART</button>
                 <div className='productDisplayRightCategory'>Category: {category}</div>
                 <div className='productDisplayRightProductCode'> Product code: {id}</div>
                 {isExclusive && <div className='productDisplayRightExclusive'>WEB EXCLUSIVE</div>}
