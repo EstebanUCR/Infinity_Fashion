@@ -61,21 +61,26 @@
 /* Estilos para el formulario de búsqueda */
 .search-form {
   display: flex;
-  align-items: center;
+  align-items: top;
+  position: relative; /* Contenedor de búsqueda principal */
 }
 
 .search-input {
-  width: 300px; /* Alargado del campo de búsqueda */
+  width: 500px; /* Alargado del campo de búsqueda */
   height: 40px;
   font-size: 0.95rem;
   border-radius: 20px;
   padding-left: 20px;
   padding: 0 10px;
-  border: 1px solid #ddd;
-  margin-top: 15px; /* Ajusta este valor según sea necesario */
+  border: 1px solid #3f1515;
+  margin-top: -10px; /* Reduce el valor para menos espacio arriba */
+  margin-bottom: -10px; /* Añade esta propiedad para menos espacio abajo */
 }
 
 .search-button {
+   margin-top: -10px; /* Reduce el valor para menos espacio arriba */
+  margin-bottom: -10px; /* Añade esta propiedad para menos espacio abajo */
+
   height: 40px;
   font-size: 0.9rem;
   border-radius: 20px;
@@ -84,7 +89,6 @@
   color: #BF665E;
   background-color: #fff;
   transition: background-color 0.3s ease, color 0.3s ease;
-   margin-top: -5px; /* Ajusta el botón de búsqueda hacia arriba */
 }
 
 .search-button:hover {
@@ -171,19 +175,14 @@
   font-weight: 200;
 }
 
-/* Posicionar el contenedor de búsqueda de manera relativa */
-.search-form {
-  position: relative; /* Contenedor de búsqueda principal */
-}
-
 .search-results {
   position: absolute; /* Posiciona el contenedor de resultados respecto a .search-form */
-  top: 55px; /* Ajusta la posición vertical debajo del campo de búsqueda */
+  top: 50px; /* Ajusta la posición vertical debajo del campo de búsqueda */
   left: 0; /* Alinea con el borde izquierdo del contenedor */
   width: 86%; /* Asegúrate de que tenga el mismo ancho que el contenedor */
   background-color: #fff;
   border: 1px solid #ddd;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
   z-index: 1000; /* Asegura que se muestre sobre otros elementos */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -211,5 +210,102 @@
   background-color: #ffffff;
 }
 
+/* Botón de menú para abrir el sidebar */
+.menu-toggle {
+  display: none; /* Oculto en pantallas grandes */
+  font-size: 30px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+/* Estilos para el sidebar */
+.sidebar {
+  height: 100%; /* Altura completa */
+  width: 0; /* Anchura inicial */
+  position: fixed; /* Posicionamiento fijo */
+  z-index: 1000; /* Asegura que esté encima del contenido */
+  top: 0;
+  left: 0;
+  background-color: #fff; /* Fondo blanco */
+  overflow-x: hidden; /* Oculta el contenido fuera del ancho */
+  transition: 0.5s; /* Transición suave */
+  padding-top: 60px; /* Espacio en la parte superior */
+  border-right: 1px solid #ddd;
+}
+
+/* Cuando el sidebar esté abierto */
+.sidebar.open {
+  width: 250px; /* Cambia el ancho al abrirse */
+}
+
+/* Encabezado del sidebar con botón para cerrar */
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 15px;
+}
+
+/* Estilo del botón de cierre */
+.sidebar-header .close-btn {
+  font-size: 30px;               /* Tamaño de la fuente */
+  cursor: pointer;               /* Cambia el cursor a pointer */
+  background-color: none;
+  width: 30px;                   /* Ancho del botón */
+  height: 40px;                  /* Altura del botón */
+  display: flex;                 /* Asegura que el contenido se centre*/
+  justify-content: center;       /* Centra horizontalmente el contenido */
+  align-items: center;           /* Centra verticalmente el contenido */
+  color: #fff4f4;                   /* Color del texto */
+  margin-right: 20px;            /* Añade espacio a la derecha */
+  position: absolute;            /* Posición absoluta */
+  top: -10px;                     /* Ajusta la posición vertical */
+  right: -10px;                   /* Ajusta la posición horizontal */
+}
+
+/* Enlaces del sidebar */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.sidebar-nav .nav-link {
+  padding: 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #333;
+  transition: 0.3s;
+}
+
+.sidebar-nav .nav-link:hover {
+  background-color: #f1f1f1;
+}
+
+/* Estilo para la sección de búsqueda dentro del sidebar */
+.sidebar-search {
+  padding: 15px;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-search .search-input {
+  width: 100%; /* Adaptar el ancho del campo */
+  margin-bottom: 10px;
+}
+.sidebar-search .search-results {
+  width: 100%; /* Adaptar el ancho del campo */
+}
 
 
+/* Mostrar el botón de menú en pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Ocultar el contenido de la navbar original en pantallas pequeñas */
+  .navbar-custom, .nav-links, .nav-right, .auth-links {
+    display: none;
+  }
+}
