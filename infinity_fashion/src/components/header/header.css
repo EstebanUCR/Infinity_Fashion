@@ -297,9 +297,22 @@
   width: 100%; /* Adaptar el ancho del campo */
 }
 
+.menu-toggle {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto tridimensional */
+  transition: all 0.3s ease; /* Transición para suavizar los cambios */
+  width: 50px;
+}
 
+/* Efecto al pasar el ratón sobre el botón */
+.menu-toggle:hover {
+  background-color: #BF665E; /* Cambiar el color de fondo */
+  border-color: #903b3b; /* Cambiar el color del borde */
+  color: white; /* Mantener el color del ícono */
+  transform: translateY(-2px); /* Elevar el botón al hacer hover */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Aumentar la sombra al hacer hover */
+}
 /* Mostrar el botón de menú en pantallas pequeñas */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .menu-toggle {
     display: block;
   }

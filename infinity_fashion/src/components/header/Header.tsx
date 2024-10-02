@@ -8,7 +8,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import img1 from '../../assets/Home/logoWithOutBackground.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
 import { useState } from 'react';
 
@@ -39,7 +39,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   return (
     <header>
       <div className="menu-toggle" onClick={toggleSidebar}>
-        &#9776; {/* Ícono de menú */}
+        <FontAwesomeIcon icon={faBars} />
       </div>
 
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
