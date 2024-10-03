@@ -109,7 +109,6 @@
 
 .productDisplayRightSize h1{
     display: flex;
-    color: #cf764a;
 }
 
 .productDisplayRightSizes {
@@ -146,7 +145,7 @@
 .productDisplayRightDetails {
     display: block;
     text-align: left;
-    color: darkgrey;
+    color: black;
     font-size: 20px;
 }
 
