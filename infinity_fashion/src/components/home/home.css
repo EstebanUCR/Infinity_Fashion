@@ -1,41 +1,56 @@
 .carousel-caption-left {
-  position: absolute; /* Fijar la posición */
-  bottom: 30%; /* Mover el texto hacia arriba */
-  left: 5%; /* Mover el texto hacia la izquierda */
-  text-align: left; /* Alinear el texto a la izquierda */
-  color: white; /* Asegurar que el texto sea legible */
-  max-width: 40%; /* Limitar el ancho del área del texto */
+  position: absolute;
+  /* Fijar la posición */
+  bottom: 30%;
+  /* Mover el texto hacia arriba */
+  left: 5%;
+  /* Mover el texto hacia la izquierda */
+  text-align: left;
+  /* Alinear el texto a la izquierda */
+  color: white;
+  /* Asegurar que el texto sea legible */
+  max-width: 40%;
+  /* Limitar el ancho del área del texto */
   margin: 20px;
 }
 
 .home-p {
-     font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .carousel-caption-left h3 {
   font-size: 3.2rem;
-  font-family: 'Playfair Display', serif; 
-  font-weight: bold; 
+  font-family: 'Playfair Display', serif;
+  font-weight: bold;
 }
 
 .carousel-caption-left p {
-  font-size: 1.2rem; /* Ajustar el tamaño del texto del párrafo */
+  font-size: 1.2rem;
+  /* Ajustar el tamaño del texto del párrafo */
 }
 
 /* Ajustar el tamaño del carrusel */
 .magaain {
-  height: 500px;  /* Ajusta la altura total del carrusel */
-  width: 100%;  /* El carrusel ocupará todo el ancho de la pantalla */
-  overflow: hidden;  /* Evita que el contenido se salga del contenedor */
-  margin-bottom: 10rem;  /* Ajusta el espacio debajo del carrusel */
+  height: 500px;
+  /* Ajusta la altura total del carrusel */
+  width: 100%;
+  /* El carrusel ocupará todo el ancho de la pantalla */
+  overflow: hidden;
+  /* Evita que el contenido se salga del contenedor */
+  margin-bottom: 10rem;
+  /* Ajusta el espacio debajo del carrusel */
 }
 
 /* Ajustar las imágenes dentro del carrusel */
 .carousel-item img {
-  height: 100%;  /* La imagen ocupará el 100% de la altura del carrusel */
-  width: 100%;   /* La imagen ocupará el 100% del ancho del carrusel */
-  object-fit: contain;  /* Ajusta la imagen para que cubra todo el contenedor sin deformarse */
-  object-position: center;  /* Centra la imagen dentro del contenedor */
+  height: 100%;
+  /* La imagen ocupará el 100% de la altura del carrusel */
+  width: 100%;
+  /* La imagen ocupará el 100% del ancho del carrusel */
+  object-fit: contain;
+  /* Ajusta la imagen para que cubra todo el contenedor sin deformarse */
+  object-position: center;
+  /* Centra la imagen dentro del contenedor */
 }
 
 .terracotta-btn {
@@ -43,7 +58,8 @@
   border-color: #BF665E;
   color: white;
   font-size: 18px;
-  padding: 15px 20px; /* Aumenta el tamaño del botón */
+  padding: 15px 20px;
+  /* Aumenta el tamaño del botón */
   margin-bottom: 150px;
   font-family: 'Montserrat', sans-serif;
 }
@@ -57,4 +73,63 @@
   border-radius: 50%;
   top: 50%;
   transform: translateY(-50%);
+}
+
+@media (max-width: 992px) {
+
+  .carousel-caption-left {
+    top: -10px;
+    left: 5%;
+    /* Mueve el texto hacia la izquierda */
+    max-width: 90%;
+    /* Asegúrate de que el texto no ocupe demasiado espacio */
+    margin: 5px;
+    /* Reduce el margen */
+  }
+
+  .carousel-caption-left h3 {
+    font-size: 1rem;
+    /* Ajusta el tamaño del encabezado */
+  }
+
+  .carousel-caption-left p {
+    font-size: 0.9rem;
+    /* Ajusta el tamaño del párrafo */
+  }
+
+  .terracotta-btn {
+    display: flex;
+    /* Configura el botón como un contenedor flex */
+    align-items: center;
+    /* Centra verticalmente el contenido */
+    justify-content: center;
+    /* Centra horizontalmente el contenido */
+    width: auto;
+    /* Ajusta el ancho según el contenido */
+    height: auto;
+    /* Ajusta la altura según el contenido */
+    font-size: 0.3rem;
+    /* Ajusta el tamaño de la fuente */
+    padding: 8px 12px;
+    /* Controla el espacio interno del botón */
+    margin-top: 0;
+    /* Elimina margen superior */
+    text-align: center;
+    /* Asegura que el texto se alinee en el centro */
+    line-height: 1;
+    /* Ajusta la altura de la línea para centrar el texto */
+  }
+
+  .magaain {
+    height: 200px !important;
+    /* Reduce la altura del carrusel */
+    margin-bottom: 50px;
+  }
+
+  .carousel-item img {
+    object-fit: cover;
+    /* Ajusta la imagen para cubrir mejor el contenedor */
+  }
+
+
 }

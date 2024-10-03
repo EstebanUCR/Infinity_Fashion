@@ -1,17 +1,41 @@
-import './bestSeller.css'; // Mantén este archivo CSS
+import './bestSeller.css';
 import bestsellers_products from '../../assets/bestSellerProducts';
 import { Carousel } from 'react-bootstrap';
 import ProductCard from '../productCard/Product';
 import { Product } from '../../types/types';
+import { useState, useEffect } from 'react';
 
 type BestSellerProps = {
   addToCart: (item: Product) => void
 }
 
-export default function BestSeller({addToCart} : BestSellerProps) {
-  // Agrupar productos de 3 en 3
+export default function BestSeller({ addToCart }: BestSellerProps) {
+  const [groupSize, setGroupSize] = useState(3);
+  const [carouselKey, setCarouselKey] = useState(0); // Para forzar re-renderizado
+
+  useEffect(() => {
+    const handleResize = () => {
+      let newGroupSize = 4;
+
+      if (window.innerWidth <= 768) {
+        newGroupSize = 1; // Muestra 1 producto por slide en pantallas pequeñas
+      } else if (window.innerWidth <= 1024) {
+        newGroupSize = 2; // Muestra 2 productos por slide en pantallas medianas
+      }
+
+      setGroupSize(newGroupSize);
+      setCarouselKey(prevKey => prevKey + 1); // Actualiza el key del carrusel para forzar re-renderizado
+    };
+
+    handleResize(); // Llama la función al cargar la página
+    window.addEventListener('resize', handleResize); // Ajusta la cantidad de productos al cambiar el tamaño
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Agrupar productos según el tamaño del grupo
   const groupedProducts = bestsellers_products.reduce((acc, curr, index) => {
-    if (index % 4 === 0) {
+    if (index % groupSize === 0) {
       acc.push([curr]);
     } else {
       acc[acc.length - 1].push(curr);
@@ -25,7 +49,7 @@ export default function BestSeller({addToCart} : BestSellerProps) {
         <h2 className="elegant-title">Best Sellers</h2>
       </div>
 
-      <Carousel>
+      <Carousel key={carouselKey}> {/* Nuevo key para forzar re-renderizado */}
         {groupedProducts.map((group, i) => (
           <Carousel.Item key={i}>
             <div className="carousel-container">
@@ -36,7 +60,6 @@ export default function BestSeller({addToCart} : BestSellerProps) {
           </Carousel.Item>
         ))}
       </Carousel>
-
     </div>
   );
 }

@@ -8,7 +8,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import img1 from '../../assets/Home/logoWithOutBackground.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
 import { useState } from 'react';
 
@@ -25,14 +25,84 @@ type HeaderProps = {
 export default function Header({ cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal }: HeaderProps) {
   const [search, setSearch] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Función para alternar la visibilidad del cuadro de búsqueda
   const toggleSearch = () => {
     setIsSearchOpen((prev) => !prev);
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
   return (
     <header>
+      <div className="menu-toggle" onClick={toggleSidebar}>
+        <FontAwesomeIcon icon={faBars} />
+      </div>
+
+      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <div className="sidebar-header">
+          <button className="close-btn" onClick={toggleSidebar}>
+            &times;
+          </button>
+        </div>
+        <nav className="sidebar-nav">
+          <div className="sidebar-search">
+            <FontAwesomeIcon
+              icon={faSearch}
+              className="search-icon"
+              size="lg"
+              onClick={toggleSearch}
+              style={{ cursor: 'pointer' }}
+            />
+
+            {isSearchOpen && (
+              <Form className="search-form">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="search-input"
+                  aria-label="Search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                {search !== '' && (
+                  <div className="search-results">
+                    {all_products.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
+                      .map((item, index) => (
+                        <div key={index} className="search-result-item">
+                          <Link to={`/product/${item.id}`}>
+                            <img src={item.image} alt={item.name} className="search-result-image" />
+                            <span>{item.name}</span>
+                          </Link>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </Form>
+            )}
+          </div>
+          <Link className="nav-link nav-titles" to='/'>HOME</Link>
+          <Link className="nav-link nav-titles" to='/tops'>TOPS</Link>
+          <Link className="nav-link nav-titles" to='/bottoms'>BOTTOMS</Link>
+          <Link className="nav-link nav-titles" to='/outerwear'>OUTERWEAR</Link>
+          <Link className="nav-link nav-titles" to='/accessories'>ACCESSORIES</Link>
+          <Link className="nav-link nav-titles" to='/shoes'>SHOES</Link>
+          <Link className="nav-link nav-titles" to='/signIn'>Sign In</Link>
+          <div className="sidebar-icons">
+            <Link to='/shoppingBag'>
+              <FontAwesomeIcon
+                icon={faShoppingBag}
+                className="cart-icon-sidebar"
+                size="lg"
+                style={{ cursor: 'pointer' }}
+              />
+            </Link>
+          </div>
+        </nav>
+      </div>
       <Container className="logo-container">
         <img
           src={img1}
@@ -55,14 +125,14 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
               <Link className="nav-link nav-titles" to='/shoes'>SHOES</Link>
             </Nav>
 
-            <div className="nav-right">
-  
-              <FontAwesomeIcon 
-                icon={faSearch} 
-                className="search-icon" 
-                size="lg" 
-                onClick={toggleSearch} 
-                style={{ cursor: 'pointer', marginTop: '5px', marginRight: '-10px' }}
+            <Nav className="nav-right">
+
+              <FontAwesomeIcon
+                icon={faSearch}
+                className="search-icon"
+                size="lg"
+                onClick={toggleSearch}
+                style={{ cursor: 'pointer' }}
               />
 
               {isSearchOpen && (
@@ -77,17 +147,17 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                   />
                   <Button variant="outline-dark" className="search-button">Search</Button>
 
-      
+
                   {search !== '' && (
                     <div className="search-results">
                       {all_products.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
                         .map((item, index) => (
                           <div key={index} className="search-result-item">
                             <Link to={`/product/${item.id}`}>
-                            {/* Mostrar la imagen del producto */}
-                            <img src={item.image} alt={item.name} className="search-result-image" />
-                            {/* Mostrar el nombre del producto */}
-                            <span>{item.name}</span>
+                              {/* Mostrar la imagen del producto */}
+                              <img src={item.image} alt={item.name} className="search-result-image" />
+                              {/* Mostrar el nombre del producto */}
+                              <span>{item.name}</span>
                             </Link>
                           </div>
                         ))}
@@ -95,7 +165,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                   )}
                 </Form>
               )}
-              
+
               <Nav className="auth-links">
                 <Link className="nav-link" to='/signIn'>Sign In</Link>
                 <div className='carrito'>
@@ -163,7 +233,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                   </div>
                 </div>
               </Nav>
-            </div>
+            </Nav>
 
           </Navbar.Collapse>
         </Container>
