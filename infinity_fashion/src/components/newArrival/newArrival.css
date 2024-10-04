@@ -7,7 +7,7 @@
   width: fit-content; /* Make the rectangle wrap around the text */
   margin: 0 auto 20px; /* Center the rectangle horizontally */
   position: relative;
-  top: -30px; /* Move the rectangle upwards */
+  top: -20px; /* Move the rectangle upwards */
   height: 90px;
 }
 

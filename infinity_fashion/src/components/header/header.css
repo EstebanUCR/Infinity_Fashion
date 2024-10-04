@@ -211,7 +211,7 @@ header {
 }
 
 .search-result-item:hover {
-  background-color: #ffffff;
+  background-color: #e1e1e1;
 }
 
 /* Botón de menú para abrir el sidebar */
@@ -299,6 +299,15 @@ header {
 }
 .sidebar-search .search-results {
   width: 100%; /* Adaptar el ancho del campo */
+}
+
+.sidebar-search .search-result-image {
+  width: 40px; /* Ajusta el ancho de la imagen */
+  height: 40px; /* Ajusta la altura de la imagen */
+  object-fit: cover; /* Recorta la imagen si es necesario */
+  border-radius: 5px; /*añade bordes redondeados */
+  margin-right: 50px; /* Espacio entre la imagen y el texto */
+  margin-left: 50px;
 }
 
 .menu-toggle {

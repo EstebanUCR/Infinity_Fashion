@@ -22,7 +22,7 @@ let bestsellers_products : Product[] = [
     id: 2,
     category: "tops",
     image: p2_img,
-    name: 'Lace/Trim Bow Accent Crop Cami Top',
+    name: 'Lace Bow Accent Crop Cami Top',
     price: 9.49,
     isExclusive: false,
   },
