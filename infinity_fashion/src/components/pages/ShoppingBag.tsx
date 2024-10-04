@@ -103,10 +103,10 @@ export default function  ShoppingBag ({cart, removeFromCart, increaseQuantity, d
                     </div>
                     <form>
                         <p>SHIPPING</p>
-                        <select onChange={shippingChange}>
+                        <select onChange={shippingChange}>                            
+                            <option className="text-muted">Pickup - $0.00</option>   
                             <option className="text-muted">Standard-Delivery - $5.00</option>
-                            <option className="text-muted">Priority-Delivery - $8.00</option>
-                            <option className="text-muted">Pickup - $0.00</option>                            
+                            <option className="text-muted">Priority-Delivery - $8.00</option>                         
                         </select>
                         <p>GIVE CODE</p>
                         <input id="code" placeholder="Enter your code" />
