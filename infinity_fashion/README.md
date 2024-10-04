@@ -1,50 +1,73 @@
-# React + TypeScript + Vite
+<a id="readme-top"></a>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
+  <img height="200" src="https://extraordinary-douhua-fdc1a5.netlify.app/assets/logoWithOutBackground-Dz6pAbzi.png"  />
+</div>
 
-Currently, two official plugins are available:
+###
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h1 align="center">INFINITY FASHION</h1>
 
-## Expanding the ESLint configuration
+###
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Team members
+Esteban Iglesias Vargas - C03913
+Johana Wu Nie - C08591
+Pablo Rodríguez Navarro - B66060
+Paola Alexandra Feng Wu - C22884
 
-- Configure the top-level `parserOptions` property like this:
+###
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Project of the Web Application Development course CI-0137 of the UCR.
+It consists of the creation of a virtual store of high quality women's clothing, where the knowledge acquired in the course is applied.
+
+The site in production can be seen in [this link](https://extraordinary-douhua-fdc1a5.netlify.app/).
+
+###
+
+## Tech
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo"  />
+  <img width="20" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo"  />
+  <img width="20" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo"  />
+  <img width="20" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo"  />
+  <img width="20" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" height="40" alt="bootstrap logo"  />
+</div>
+
+###
+
+## How to run
+
+Once the repository is downloaded, the dependencies must be installed:
+```sh
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Once they are installed, you can run it in a local environment:
+```sh
+npm run dev
 ```
+
+###
+
+## Stages
+
+### First stage
+The following features were implemented for this stage:
+* Header with navigation menu.
+* Login and registration page (without functionality).
+* Product search.
+* Home page containing best sellers and new arrivals.
+* Product filtering according to category.
+* Product view according to category.
+* Detailed product view.
+* Functional shopping cart.
+* Footer (without functionality).
+
+###
+
+<p align="right">(<a href="#readme-top">Back to top</a>)</p>
