@@ -1,5 +1,5 @@
 import { Product, CartItem, ProductID } from "../../types/types";
-
+import { useRef } from "react";
 import "./home.css"
 import Carousel from 'react-bootstrap/Carousel';
 import img1 from '../../assets/Home/Picture1.png';
@@ -22,6 +22,13 @@ type HomeProps = {
 }
 
 export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, addToCart} : HomeProps) {
+
+  const shopNow = useRef<HTMLInputElement | null>(null);
+  
+  const handleShopNowButton = () => {
+    shopNow.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+
   return (
     <div className="container-fluid">
       <Header
@@ -44,7 +51,7 @@ export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQ
             <Carousel.Caption className="carousel-caption-left">
               <h3>ON SALE ONLY FOR THIS MONTH</h3>
               <p className="home-p">Take advantage of these limited-time promotions</p>
-              <Button variant="outline-light" className="terracotta-btn">Shop Now</Button>
+              <Button variant="outline-light" className="terracotta-btn" onClick={handleShopNowButton}>Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -56,7 +63,7 @@ export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQ
             <Carousel.Caption className="carousel-caption-left">
               <h3>ON SALE ONLY FOR THIS MONTH</h3>
               <p>Take advantage of these limited-time promotions</p>
-              <Button variant="outline-light" className="terracotta-btn">Shop Now</Button>
+              <Button variant="outline-light" className="terracotta-btn" onClick={handleShopNowButton}>Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -68,16 +75,18 @@ export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQ
             <Carousel.Caption className="carousel-caption-left">
               <h3>ON SALE ONLY FOR THIS MONTH</h3>
               <p>Take advantage of these limited-time promotions</p>
-              <Button variant="outline-light" className="terracotta-btn">Shop Now</Button>
+              <Button variant="outline-light" className="terracotta-btn" onClick={handleShopNowButton}>Shop Now</Button>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-        <BestSeller 
-          addToCart={addToCart}
-        />
-        <NewArrival 
-          addToCart={addToCart}
-        />
+        <div ref={shopNow}>
+          <BestSeller 
+            addToCart={addToCart}
+          />
+          <NewArrival 
+            addToCart={addToCart}
+          />
+        </div>
         <Footer />
       </Container >
     </div>
