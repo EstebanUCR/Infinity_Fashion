@@ -1,7 +1,7 @@
 <a id="readme-top"></a>
 
 <div align="center">
-  <img height="200" src="https://extraordinary-douhua-fdc1a5.netlify.app/assets/logoWithOutBackground-Dz6pAbzi.png"  />
+  <img height="200" src="https://raw.githubusercontent.com/EstebanUCR/Infinity_Fashion/refs/heads/stage1Project/infinity_fashion/src/assets/Home/logo.png"  />
 </div>
 
 ###
@@ -11,10 +11,10 @@
 ###
 
 ## Team members
-Esteban Iglesias Vargas - C03913
-Johana Wu Nie - C08591
-Pablo Rodríguez Navarro - B66060
-Paola Alexandra Feng Wu - C22884
+Esteban Iglesias Vargas - C03913<br>
+Johana Wu Nie - C08591<br>
+Pablo Rodríguez Navarro - B66060<br>
+Paola Alexandra Feng Wu - C22884<br>
 
 ###
 
