@@ -1,5 +1,7 @@
 .footer {
   margin-top: 20px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .bg-body-tertiary {
@@ -13,4 +15,26 @@ h3 {
 
 p {
   font-size: smaller;
+}
+
+.followContainer {
+  align-content: center;
+}
+
+.iconContainer {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  cursor: pointer;
+  margin: 10px;
+  width: 30px;
+}
+
+.icon:hover {
+  transition: transform 0.4s ease;
+  transform: scale(1.5);
 }
