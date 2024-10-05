@@ -21,7 +21,7 @@ Paola Alexandra Feng Wu - C22884<br>
 Project of the Web Application Development course CI-0137 of the UCR.<br>
 It consists of the creation of a virtual store of high quality women's clothing, where the knowledge acquired in the course is applied.<br><br>
 The [identity manual](https://drive.google.com/file/d/1wuHNlB9XpuQO-Sg6PUW5JpCMAIztyfyt/view?usp=sharing) defines important design details such as the logo, primary and secondary colors, as well as typography.<br><br>
-In the [moodboard](https://miro.com/welcomeonboard/YVJYdEhocWNNUktjNHFnUDFlVFEyd2xUUTRKTWtISXUzR1kzMDQyZ3FET2xNaUVIZlJKVWgzaWJDMDFYV1VrcXwzNDU4NzY0NTI0ODk1NjQ1ODQ0fDI=?share_link_id=804363808267) you can visualize the brainstorming that was discussed about the essence of the site.
+In the [moodboard](https://miro.com/welcomeonboard/YVJYdEhocWNNUktjNHFnUDFlVFEyd2xUUTRKTWtISXUzR1kzMDQyZ3FET2xNaUVIZlJKVWgzaWJDMDFYV1VrcXwzNDU4NzY0NTI0ODk1NjQ1ODQ0fDI=?share_link_id=804363808267) you can visualize the brainstorming that was discussed about the essence of the site, We also have a sitemap that helps developers understand the structure of the site [MapSite](https://app.diagrams.net/#G1QiA9apxC77bNKnrP6CQWWQXdFD2p6cYL) and a usage guide for users [User Guide](https://www.canva.com/design/DAGSqp_VKng/ZUG9lJQ0J3WJD2ygRNW1aA/edit).
 
 The site in production can be seen in [this link](https://extraordinary-douhua-fdc1a5.netlify.app/).
 
