@@ -1,0 +1,52 @@
+h1 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-family: 'Playfair Display';
+  font-weight: 500;
+}
+
+.filterTitle {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: flex-start; /* Alinea los enlaces a la derecha */
+  font-weight: 600;
+}
+
+.filter-link {
+  display: flex;
+  justify-content: flex-start; /* Alinea los enlaces a la derecha */
+
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.shopcategory-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* Mantén 4 productos por fila */
+  gap: 20px;
+  /* Espaciado reducido entre los productos */
+  padding: 10px;
+  /* Ajusta el padding externo */
+  justify-items: center;
+}
+
+/* Tarjeta del producto */
+.product-card {
+  padding: 15px;
+  width: 95%;
+}
+
+/* Imagen del producto */
+.image-container img {
+  height: 40vh;
+}
+
+.product-details h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

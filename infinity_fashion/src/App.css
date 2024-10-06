@@ -1,7 +1,15 @@
+/* Fuentes personalizadas */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap');
+@font-face {
+  font-family: 'Tan Mon Cheri';
+  src: url('./assets/fonts/tan-mon-cheri.woff') format('woff')
+       url('./assets/fonts/tan-mon-cheri.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -40,3 +48,5 @@
 .read-the-docs {
   color: #888;
 }
+
+

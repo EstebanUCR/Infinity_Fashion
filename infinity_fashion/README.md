@@ -1,50 +1,75 @@
-# React + TypeScript + Vite
+<a id="readme-top"></a>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
+  <img height="200" src="https://raw.githubusercontent.com/EstebanUCR/Infinity_Fashion/refs/heads/stage1Project/infinity_fashion/src/assets/Home/logo.png"  />
+</div>
 
-Currently, two official plugins are available:
+###
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h1 align="center">INFINITY FASHION</h1>
 
-## Expanding the ESLint configuration
+###
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Team members
+Esteban Iglesias Vargas - C03913<br>
+Johana Wu Nie - C08591<br>
+Pablo Rodríguez Navarro - B66060<br>
+Paola Alexandra Feng Wu - C22884<br>
 
-- Configure the top-level `parserOptions` property like this:
+###
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Project of the Web Application Development course CI-0137 of the UCR.<br>
+It consists of the creation of a virtual store of high quality women's clothing, where the knowledge acquired in the course is applied.<br><br>
+The [identity manual](https://drive.google.com/file/d/1wuHNlB9XpuQO-Sg6PUW5JpCMAIztyfyt/view?usp=sharing) defines important design details such as the logo, primary and secondary colors, as well as typography.<br><br>
+In the [moodboard](https://miro.com/welcomeonboard/YVJYdEhocWNNUktjNHFnUDFlVFEyd2xUUTRKTWtISXUzR1kzMDQyZ3FET2xNaUVIZlJKVWgzaWJDMDFYV1VrcXwzNDU4NzY0NTI0ODk1NjQ1ODQ0fDI=?share_link_id=804363808267) you can visualize the brainstorming that was discussed about the essence of the site, We also have a sitemap that helps developers understand the structure of the site [MapSite](https://app.diagrams.net/#G1QiA9apxC77bNKnrP6CQWWQXdFD2p6cYL) and a usage guide for users [User Guide](https://www.canva.com/design/DAGSqp_VKng/ZUG9lJQ0J3WJD2ygRNW1aA/edit).
+
+The site in production can be seen in [this link](https://extraordinary-douhua-fdc1a5.netlify.app/).
+
+###
+
+## Tech
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo"  />
+  <img width="20" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo"  />
+  <img width="20" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo"  />
+  <img width="20" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo"  />
+  <img width="20" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" height="40" alt="bootstrap logo"  />
+</div>
+
+###
+
+## How to run
+
+Once the repository is downloaded, the dependencies must be installed:
+```sh
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Once they are installed, you can run it in a local environment:
+```sh
+npm run dev
 ```
+
+###
+
+## Stages
+
+### First stage
+The following features were implemented for this stage:
+* Header with navigation menu.
+* Login and registration page (without functionality).
+* Product search.
+* Home page containing best sellers and new arrivals.
+* Product filtering according to category.
+* Product view according to category.
+* Detailed product view.
+* Functional shopping cart.
+* Footer (without functionality).
+
+###
+
+<p align="right">(<a href="#readme-top">Back to top</a>)</p>

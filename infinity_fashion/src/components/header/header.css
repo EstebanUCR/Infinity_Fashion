@@ -1,0 +1,337 @@
+header {
+  /* background: linear-gradient(0deg, rgba(212,178,167,0.07) 0%, rgba(191,102,94,0.1) 100%); */
+}
+
+/* Contenedor del logo, centrado */
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+  pointer-events: none; /* Evita cualquier interacción del mouse */
+}
+
+/* Estilos para la barra de navegación */
+.navbar-custom {
+  border-top: 1px solid #BF665E;
+  padding: 1px 0;
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos a los lados */
+  align-items: center;
+}
+
+/* Enlaces de navegación centrados a la derecha */
+.nav-links {
+  display: flex;
+  justify-content: flex-end; /* Alinea los enlaces a la derecha */
+  /*flex-grow: 1;*/
+  font-size: 1.2rem;
+  gap: 2rem; /* Espacio entre los enlaces */
+  text-align: center;
+  margin-right: 150px; /* Asegura que no haya margen adicional */
+  
+}
+
+.nav-link {
+  text-transform: uppercase;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #BF665E;
+}
+
+.nav-titles {
+  font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
+  font-size: 1rem;
+}
+
+/* Sección de la derecha: búsqueda y autenticación */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Estilos para el formulario de búsqueda */
+.search-form {
+  display: flex;
+  align-items: top;
+  position: relative; /* Contenedor de búsqueda principal */
+}
+
+.search-input {
+  width: 500px; /* Alargado del campo de búsqueda */
+  height: 40px;
+  font-size: 0.95rem;
+  border-radius: 20px;
+  padding-left: 20px;
+  padding: 0 10px;
+  border: 1px solid #3f1515;
+  margin-top: -10px; /* Reduce el valor para menos espacio arriba */
+  margin-bottom: -10px; /* Añade esta propiedad para menos espacio abajo */
+}
+
+.search-button {
+   margin-top: -10px; /* Reduce el valor para menos espacio arriba */
+  margin-bottom: -10px; /* Añade esta propiedad para menos espacio abajo */
+
+  height: 40px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  padding: 0 15px;
+  border: 1px solid #BF665E;
+  color: #BF665E;
+  background-color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #BF665E;
+  color: #fff;
+}
+
+/* Enlaces de autenticación */
+.auth-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.auth-links .nav-link {
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: #555;
+}
+
+.auth-links .nav-link:hover {
+  color: #BF665E;
+}
+
+/*Carrito */
+.btn-dark {
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+.carrito {
+  background-color: transparent;
+  border: none;
+  max-width: 2rem;
+  position: relative;
+  z-index: 100;
+}
+
+.carrito #carrito {
+  display: none;
+  position: absolute;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.carrito:hover #carrito {
+  display: block;
+  background-color: white;
+  padding: 10px;
+  height: fit-content;
+  min-width: 350px;
+  width: fit-content;
+  top: 100%;
+  right: 0;
+  left: unset;
+  margin-left: unset;
+  margin-right: unset;
+}
+
+#carrito img {
+  width: 30px;
+}
+
+#carrito .btn-danger {
+  font-size: 10px;
+  border-radius: 50%;
+  padding: 5px 9px;
+}
+
+#carrito .btn-dark {
+  padding: 2px;
+  margin: 0 3px;
+}
+
+#carrito .btn-pay {
+  padding: 0 2px;
+  margin: 0 3px;
+  background: rgba(8, 174, 39, 0.7);
+  color: #FFF;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.cart-titles {
+  font-family: 'Playfair Display';
+  font-weight: 200;
+}
+
+.search-results {
+  position: absolute; /* Posiciona el contenedor de resultados respecto a .search-form */
+  top: 50px; /* Ajusta la posición vertical debajo del campo de búsqueda */
+  left: 0; /* Alinea con el borde izquierdo del contenedor */
+  width: 86%; /* Asegúrate de que tenga el mismo ancho que el contenedor */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000; /* Asegura que se muestre sobre otros elementos */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px; /* Añade redondeado a toda la tabla */
+}
+/* Estilos para el contenedor de resultados */
+.search-result-item {
+  display: flex; /* Coloca la imagen y el texto en línea */
+  align-items: center; /* Centra verticalmente la imagen y el texto */
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* Estilos para la imagen dentro del resultado */
+.search-result-image {
+  width: 70px; /* Ajusta el ancho de la imagen */
+  height: 70px; /* Ajusta la altura de la imagen */
+  object-fit: cover; /* Recorta la imagen si es necesario */
+  border-radius: 5px; /*añade bordes redondeados */
+  margin-right: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.search-result-item:hover {
+  background-color: #e1e1e1;
+}
+
+/* Botón de menú para abrir el sidebar */
+.menu-toggle {
+  display: none; /* Oculto en pantallas grandes */
+  font-size: 30px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+/* Estilos para el sidebar */
+.sidebar {
+  height: 100%; /* Altura completa */
+  width: 0; /* Anchura inicial */
+  position: fixed; /* Posicionamiento fijo */
+  z-index: 1000; /* Asegura que esté encima del contenido */
+  top: 0;
+  left: 0;
+  background-color: #fff; /* Fondo blanco */
+  overflow-x: hidden; /* Oculta el contenido fuera del ancho */
+  transition: 0.5s; /* Transición suave */
+  padding-top: 60px; /* Espacio en la parte superior */
+  border-right: 1px solid #ddd;
+}
+
+/* Cuando el sidebar esté abierto */
+.sidebar.open {
+  width: 250px; /* Cambia el ancho al abrirse */
+}
+
+/* Encabezado del sidebar con botón para cerrar */
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 15px;
+}
+
+/* Estilo del botón de cierre */
+.sidebar-header .close-btn {
+  font-size: 30px;               /* Tamaño de la fuente */
+  cursor: pointer;               /* Cambia el cursor a pointer */
+  background-color: none;
+  width: 30px;                   /* Ancho del botón */
+  height: 40px;                  /* Altura del botón */
+  display: flex;                 /* Asegura que el contenido se centre*/
+  justify-content: center;       /* Centra horizontalmente el contenido */
+  align-items: center;           /* Centra verticalmente el contenido */
+  color: #fff4f4;                   /* Color del texto */
+  margin-right: 20px;            /* Añade espacio a la derecha */
+  position: absolute;            /* Posición absoluta */
+  top: -10px;                     /* Ajusta la posición vertical */
+  right: -10px;                   /* Ajusta la posición horizontal */
+}
+
+/* Enlaces del sidebar */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.sidebar-nav .nav-link {
+  padding: 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #333;
+  transition: 0.3s;
+}
+
+.sidebar-nav .nav-link:hover {
+  background-color: #f1f1f1;
+}
+
+/* Estilo para la sección de búsqueda dentro del sidebar */
+.sidebar-search {
+  padding: 15px;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-search .search-input {
+  width: 100%; /* Adaptar el ancho del campo */
+  margin-bottom: 10px;
+}
+.sidebar-search .search-results {
+  width: 100%; /* Adaptar el ancho del campo */
+}
+
+.sidebar-search .search-result-image {
+  width: 40px; /* Ajusta el ancho de la imagen */
+  height: 40px; /* Ajusta la altura de la imagen */
+  object-fit: cover; /* Recorta la imagen si es necesario */
+  border-radius: 5px; /*añade bordes redondeados */
+  margin-right: 50px; /* Espacio entre la imagen y el texto */
+  margin-left: 50px;
+}
+
+.menu-toggle {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto tridimensional */
+  transition: all 0.3s ease; /* Transición para suavizar los cambios */
+  width: 50px;
+}
+
+/* Efecto al pasar el ratón sobre el botón */
+.menu-toggle:hover {
+  background-color: #BF665E; /* Cambiar el color de fondo */
+  border-color: #903b3b; /* Cambiar el color del borde */
+  color: white; /* Mantener el color del ícono */
+  transform: translateY(-2px); /* Elevar el botón al hacer hover */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Aumentar la sombra al hacer hover */
+}
+/* Mostrar el botón de menú en pantallas pequeñas */
+@media (max-width: 992px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Ocultar el contenido de la navbar original en pantallas pequeñas */
+  .navbar-custom, .nav-links, .nav-right, .auth-links {
+    display: none;
+  }
+}
