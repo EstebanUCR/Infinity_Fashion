@@ -76,7 +76,7 @@
 
 .productDisplayRight h1 {
     display: flex;
-    color: rgb(197, 101, 101);
+    color: #BF665E;
     font-size: 40px;
     font-weight: 700;
     text-align: left;
@@ -84,10 +84,11 @@
 
 .productDisplayRightPrices {
     display: flex;
+    align-items: center;
     margin: 20px 0px;
     gap: 30px;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .productDisplayRightPriceOld {
@@ -98,8 +99,8 @@
 }
 
 .productDisplayRightPriceNew {
-    color: #ff4141;
-    font-size: 20px;
+    color: #000000;
+    font-size: 33px;
 }
 
 .productDisplayRightPriceDiscount {
@@ -134,7 +135,7 @@
     width: 200px;
     font-size: 16px;
     font-weight: 600;
-    background: #ff4141;
+    background: #BF665E;
     margin-bottom: 40px;
     border: none;
     outline: none;
@@ -172,7 +173,7 @@
 }
 
 .btn-add:hover {
-    background-color: #df3535;
+    background-color: #BF665E;
     color: #000000;
     font-weight: bold;
 }

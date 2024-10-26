@@ -39,7 +39,7 @@
   text-align: center; /* Centrar el contenido */
   transition: transform 0.2s; /* Transición suave para hover */
    margin-right: 10px;
-   margin-bottom: 150px;
+   margin-bottom: 6rem;
 }
 
 .bestseller-section .product-card:hover {

@@ -1,22 +1,24 @@
 header {
-  /* background: linear-gradient(0deg, rgba(212,178,167,0.07) 0%, rgba(191,102,94,0.1) 100%); */
+
 }
 
 /* Contenedor del logo, centrado */
 .logo-container {
   display: flex;
   justify-content: center;
+  background: linear-gradient(0deg, rgba(212,178,167,0.5) 0%, rgba(191,102,94,0.5) 100%);
 }
 
 .logo {
-  max-width: 200px;
+  max-width: 160px;
+  margin: 10px;
   height: auto;
   pointer-events: none; /* Evita cualquier interacción del mouse */
 }
 
 /* Estilos para la barra de navegación */
 .navbar-custom {
-  border-top: 1px solid #BF665E;
+  /* border-top: 1px solid #BF665E; */
   padding: 1px 0;
 }
 

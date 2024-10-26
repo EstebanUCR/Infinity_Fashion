@@ -74,7 +74,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                       .map((item, index) => (
                         <div key={index} className="search-result-item">
                           <Link to={`/product/${item.id}`}>
-                            <img src={item.image} alt={item.name} className="search-result-image" />
+                            <img src={item.image[0]} alt={item.name} className="search-result-image" />
                             <span>{item.name}</span>
                           </Link>
                         </div>
@@ -103,7 +103,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
           </div>
         </nav>
       </div>
-      <Container className="logo-container">
+      <Container fluid className="logo-container">
         <img
           src={img1}
           className="logo"
@@ -155,7 +155,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                           <div key={index} className="search-result-item">
                             <Link to={`/product/${item.id}`}>
                               {/* Mostrar la imagen del producto */}
-                              <img src={item.image} alt={item.name} className="search-result-image" />
+                              <img src={item.image[0]} alt={item.name} className="search-result-image" />
                               {/* Mostrar el nombre del producto */}
                               <span>{item.name}</span>
                             </Link>
@@ -191,7 +191,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                             {cart.map(product => (
                               <tr key={product.id}>
                                 <td>
-                                  <img className='img-fluid' src={product.image} />
+                                  <img className='img-fluid' src={product.image[0]} />
                                 </td>
                                 <td>{product.name}</td>
                                 <td className='fw-bold'>
