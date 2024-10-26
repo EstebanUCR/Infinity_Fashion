@@ -63,6 +63,7 @@
   width: 50%; /* Ancho del formulario */
   transition: all 0.6s ease-in-out;
   box-sizing: border-box;
+  
 }
 
 /* Contenedor del formulario de "Sign In" */
@@ -94,15 +95,15 @@
   z-index: 5;
 }
 
-/* Input de los formularios */
+
 input {
   background-color: #eee;
-  border: none;
   padding: 12px 15px;
   margin: 8px 0;
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 20px; /* Espacio adicional entre los campos */
+  width: 100% !important; /* Mantén el ancho completo */
+  min-height: 40px; /* Agrega una altura mínima */
+  box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el tamaño */
+  margin-bottom: 20px;
 }
 
 /* Botones */
@@ -239,6 +240,35 @@ a {
 
 .container.rightPanelActive .overlayRight {
   transform: translateX(20%);
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  position: relative; /* Cambiamos a relative para que los errores se muestren */
+  margin-top: -30px; /* Ajusta este valor según sea necesario para posicionar el mensaje */
+  text-align: left;
+  width: 100%;
+  
+}
+
+.errorList {
+  position: static; /* Cambia a static para que siga el flujo normal */
+  padding-left: 20px; /* Espaciado para la lista de errores */
+  color: red;
+  text-align: left;
+  margin-top: 5px; /* Agrega un margen superior para separarlo del campo de entrada */
+}
+
+.errorList li {
+  margin-bottom: 30px; /* Aumenta el margen entre los errores */
+  line-height: 1.4; /* Asegura que los errores tengan un espaciado vertical adecuado */
+}
+
+.inputError {
+  border: 2px solid red; /* Cambia el borde a rojo */
+  width: 100% !important;; /* Asegura que el ancho se mantenga al 100% */
+  box-sizing: border-box; /* Asegura que el padding y el borde no afecten el tamaño total */
 }
 
 /* Animación de aparición */
