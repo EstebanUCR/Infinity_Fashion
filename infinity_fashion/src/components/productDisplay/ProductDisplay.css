@@ -80,6 +80,7 @@
     font-size: 40px;
     font-weight: 700;
     text-align: left;
+    font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
 }
 
 .productDisplayRightPrices {
@@ -110,11 +111,13 @@
 
 .productDisplayRightSize h1{
     display: flex;
+    font-size: 30px;
+    font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
 }
 
 .productDisplayRightSizes {
     display: flex;
-    margin: 30px 0px;
+    margin: 20px 0px;
     gap: 20px;
 }
 
@@ -148,6 +151,13 @@
     text-align: left;
     color: black;
     font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.productDisplayRightDetails h1 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
 }
 
 .productDisplayRightCategory {

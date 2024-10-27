@@ -5,6 +5,9 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import { Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import SplitButton from 'react-bootstrap/SplitButton';
+import Accordion from 'react-bootstrap/Accordion';
 
 type ShopCategoryProps = {
   cart: CartItem[]
@@ -35,17 +38,23 @@ export default function ShopCategory ({cart, removeFromCart, increaseQuantity, d
       />
       <Container>
         <Row>
-          <h1>{filterName}</h1>
+          <h1 className='categoryTitle'>{filterName}</h1>
         </Row>
         <Row>
           <Col md="auto">
             <div className='filters'>
-              <h2 className='filterTitle'>Filters</h2>
-              <Link className="filter-link" to='/tops'>Tops</Link>
-              <Link className="filter-link" to='/bottoms'>Bottoms</Link>
-              <Link className="filter-link" to='/outerwear'>Outerwear</Link>
-              <Link className="filter-link" to='/accessories'>Accessories</Link>
-              <Link className="filter-link" to='/shoes'>Shoes</Link>
+              <Accordion defaultActiveKey="0" flush>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>Filter</Accordion.Header>
+                  <Accordion.Body>
+                    <Link className="filter-link" to='/tops'>Tops</Link>
+                    <Link className="filter-link" to='/bottoms'>Bottoms</Link>
+                    <Link className="filter-link" to='/outerwear'>Outerwear</Link>
+                    <Link className="filter-link" to='/accessories'>Accessories</Link>
+                    <Link className="filter-link" to='/shoes'>Shoes</Link>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
             </div>
           </Col>
           <Col>

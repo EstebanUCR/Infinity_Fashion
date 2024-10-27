@@ -20,6 +20,7 @@ header {
 .navbar-custom {
   /* border-top: 1px solid #BF665E; */
   padding: 1px 0;
+  border-bottom: 3px solid rgba(212,178,167,0.5)
 }
 
 .navbar-collapse {
