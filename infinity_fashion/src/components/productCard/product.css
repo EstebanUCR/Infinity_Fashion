@@ -16,7 +16,7 @@
 .product-card {
   margin: 0;
   /* Elimina el margen adicional */
-  padding: 10px;
+  padding: 15px;
   /* Ajusta el padding si es necesario */
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -29,8 +29,8 @@
 
 /* Asegúrate de que las imágenes no tengan márgenes grandes */
 .image-container img {
-  width: 100%;
-  height: auto;
+  width: 94%;
+  height: 40vh;
   object-fit: cover;
   margin: 0;
   padding: 0;

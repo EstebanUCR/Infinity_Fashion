@@ -61,7 +61,7 @@ export default function  ShoppingBag ({cart, removeFromCart, increaseQuantity, d
                         cart.map((product, index) => (
                             <div className={`row border-top ${index === cart.length - 1 ? 'border-bottom' : ''}`} key={product.id}>
                                <div className="row main align-items-center">
-                                    <div className="col-2"><img className="img-fluid img-cart" src={product.image} /></div>
+                                    <div className="col-2"><img className="img-fluid img-cart" src={product.image[0]} /></div>
                                     <div className="col">
                                         <div className="row">{product.name}</div>
                                         <div className="row text-muted unit-price">Unit price ${product.price}</div>

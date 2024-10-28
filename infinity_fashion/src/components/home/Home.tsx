@@ -3,6 +3,8 @@ import { useRef } from "react";
 import "./home.css"
 import Carousel from 'react-bootstrap/Carousel';
 import img1 from '../../assets/Home/Picture1.png';
+import img2 from '../../assets/Home/Picture2.jpg';
+import img3 from '../../assets/Home/Picture3.jpg';
 import { Container } from 'react-bootstrap';
 import Header from '../header/Header';
 import BestSeller from '../bestSeller/BestSeller';
@@ -30,7 +32,7 @@ export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQ
   }
 
   return (
-    <div className="container-fluid">
+    <div>
       <Header
         cart={cart} 
         removeFromCart={removeFromCart}
@@ -57,7 +59,7 @@ export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQ
           <Carousel.Item>
             <img
               className="d-block w-100"
-              src={img1}
+              src={img2}
               alt="Second slide"
             />
             <Carousel.Caption className="carousel-caption-left">
@@ -69,7 +71,7 @@ export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQ
           <Carousel.Item>
             <img
               className="d-block w-100"
-              src={img1}
+              src={img3}
               alt="Third slide"
             />
             <Carousel.Caption className="carousel-caption-left">
@@ -87,8 +89,8 @@ export default function Home ({cart, removeFromCart, increaseQuantity, decreaseQ
             addToCart={addToCart}
           />
         </div>
-        <Footer />
       </Container >
+      <Footer />
     </div>
   )
 }
