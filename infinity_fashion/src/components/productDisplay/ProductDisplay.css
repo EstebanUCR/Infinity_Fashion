@@ -76,18 +76,20 @@
 
 .productDisplayRight h1 {
     display: flex;
-    color: rgb(197, 101, 101);
+    color: #BF665E;
     font-size: 40px;
     font-weight: 700;
     text-align: left;
+    font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
 }
 
 .productDisplayRightPrices {
     display: flex;
+    align-items: center;
     margin: 20px 0px;
     gap: 30px;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .productDisplayRightPriceOld {
@@ -98,8 +100,8 @@
 }
 
 .productDisplayRightPriceNew {
-    color: #ff4141;
-    font-size: 20px;
+    color: #000000;
+    font-size: 33px;
 }
 
 .productDisplayRightPriceDiscount {
@@ -109,11 +111,13 @@
 
 .productDisplayRightSize h1{
     display: flex;
+    font-size: 30px;
+    font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
 }
 
 .productDisplayRightSizes {
     display: flex;
-    margin: 30px 0px;
+    margin: 20px 0px;
     gap: 20px;
 }
 
@@ -134,7 +138,7 @@
     width: 200px;
     font-size: 16px;
     font-weight: 600;
-    background: #ff4141;
+    background: #BF665E;
     margin-bottom: 40px;
     border: none;
     outline: none;
@@ -147,6 +151,13 @@
     text-align: left;
     color: black;
     font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.productDisplayRightDetails h1 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
 }
 
 .productDisplayRightCategory {
@@ -172,7 +183,7 @@
 }
 
 .btn-add:hover {
-    background-color: #df3535;
+    background-color: #BF665E;
     color: #000000;
     font-weight: bold;
 }

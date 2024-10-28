@@ -37,8 +37,9 @@
   /* El carrusel ocupará todo el ancho de la pantalla */
   overflow: hidden;
   /* Evita que el contenido se salga del contenedor */
-  margin-bottom: 10rem;
+  margin-bottom: 6rem;
   /* Ajusta el espacio debajo del carrusel */
+  margin-top: 20px;
 }
 
 /* Ajustar las imágenes dentro del carrusel */

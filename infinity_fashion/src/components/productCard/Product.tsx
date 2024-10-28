@@ -11,8 +11,8 @@ export default function ProductCard ({product} : ProductProps)  {
   return (
     <div className="product-card">
       <div className="image-container">
-        <Link to={`/product/${product.id}`}> <img src={product.image} alt={product.name} /> </Link>
-      </div>
+        <Link to={`/product/${product.id}`}> <img src={product.image[0]} alt={product.name} /> </Link>
+        </div>
       <div className="product-details">
         <h3>{product.name}</h3>
         <p>

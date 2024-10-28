@@ -5,7 +5,7 @@ import { Product } from '../../types/types';
 /* TODO agregar los datos faltantes para mejorar la descripcion y el stock*/
 interface ProductDisplayProps {
     id: number;
-    image: string;
+    image: string[];
     name: string;
     price: number;
     description?: string;
@@ -25,12 +25,12 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
         <div className="productDisplay">
             <div className="productDisplayLeft">
                 <div className='productDisplayImgList'>
-                    <img src={image} alt='' />
-                    <img src={image} alt='' />
-                    <img src={image} alt='' />
+                    <img src={image[1]} alt='' />
+                    <img src={image[2]} alt='' />
+                    <img src={image[3]} alt='' />
                 </div>
                 <div className="productDisplayImg">
-                    <img className='productDisplayImgMain' src={image} alt='' />
+                    <img className='productDisplayImgMain' src={image[0]} alt='' />
                 </div>
             </div>
 

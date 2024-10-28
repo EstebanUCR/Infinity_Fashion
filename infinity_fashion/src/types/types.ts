@@ -1,7 +1,7 @@
 export type Product = {
     id: number
     category: string
-    image: string
+    image: string[]
     name: string
     price: number
     oldPrice?: string
