@@ -271,6 +271,22 @@ a {
   box-sizing: border-box; /* Asegura que el padding y el borde no afecten el tamaño total */
 }
 
+.passwordContainer {
+  position: relative;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.eyeImage {
+  width: 35px; /* Ajusta el tamaño según sea necesario */
+  height: 25px;
+}
 /* Animación de aparición */
 @keyframes show {
   0%, 49.99% {

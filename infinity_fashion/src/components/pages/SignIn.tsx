@@ -4,6 +4,8 @@ import useUser from '../../hooks/useUser'; // Importa tu hook de usuario
 import styles from './signIn.module.css';
 import googleLogo from '../../assets/SignInSignUp/googleLogo.png';
 import infinityLogo from '../../assets/Home/logoWithOutBackground.png';
+import eyeOpenIcon from '../../assets/Home/eyeOpenIcon.png';
+import eyeClosedIcon from '../../assets/Home/eyeClosedIcon.png';
 
 const SignIn = () => {
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
@@ -11,6 +13,23 @@ const SignIn = () => {
   const { user, handleInputChange } = useUser(); // Usamos el hook para el manejo del estado del usuario
   const { errors: signUpErrors, validateSignUp } = useValidation(); // Errores para Sign Up
   const { errors: signInErrors, validateSignIn } = useValidation(); // Errores para Sign In
+  const [showPasswordSignUp, setShowPasswordSignUp] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPasswordSignIn, setShowPasswordSignIn] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const togglePasswordVisibilitySignUp = () => {
+    setShowPasswordSignUp(!showPasswordSignUp);
+  };
+
+  const togglePasswordVisibilitySignIn = () => {
+    setShowPasswordSignIn(!showPasswordSignIn);
+  };
+
+  const toggleVisibilityConfirmPassword = () => {
+    setShowConfirmPassword(!showPasswordSignUp);
+  };
+
 
   const handleSignUpClick = () => {
     setIsRightPanelActive(true);
@@ -30,7 +49,7 @@ const SignIn = () => {
 
   const handleSignUpSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateSignUp(user.name, user.email, user.password)) {
+    if (validateSignUp(user.name, user.email, user.password, confirmPassword)) {
       // Lógica para el registro si es válido
       console.log('Sign Up data:', { name: user.name, email: user.email, password: user.password });
     }
@@ -80,15 +99,42 @@ const SignIn = () => {
             className={signUpErrors.email && isRightPanelActive ? `${styles.inputError}` : ''}
           />
           {renderErrors(signUpErrors.email)}
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={user.password}
-            onChange={handleInputChange}
-            className={signUpErrors.password && isRightPanelActive ? `${styles.inputError}` : ''}
-          />
+          <div className={styles.passwordContainer}>
+            <input
+              type={showPasswordSignUp ? "text" : "password"}
+              placeholder="Password"
+              name="password"
+              value={user.password}
+              onChange={handleInputChange}
+              className={signUpErrors.password && isRightPanelActive ? `${styles.inputError}` : ''}
+            />
+            <span onClick={togglePasswordVisibilitySignUp} className={styles.eyeIcon}>
+              <img
+                src={showPasswordSignUp ? eyeOpenIcon : eyeClosedIcon}
+                alt={showPasswordSignUp ? "Hide password" : "Show password"}
+                className={styles.eyeImage}
+              />
+            </span>
+          </div>
           {renderErrors(signUpErrors.password)}
+          <div className={styles.passwordContainer}>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={signUpErrors.confirmPassword&& isRightPanelActive ? `${styles.inputError}` : ''}
+            />
+            <span onClick={toggleVisibilityConfirmPassword} className={styles.eyeIcon}>
+              <img
+                src={showConfirmPassword ? eyeOpenIcon : eyeClosedIcon}
+                alt={showConfirmPassword ? "Hide password" : "Show password"}
+                className={styles.eyeImage}
+              />
+            </span>
+          </div>
+          {renderErrors(signUpErrors.confirmPassword)}
           <button type="submit">Sign Up</button>
         </form>
       </div>
@@ -112,14 +158,24 @@ const SignIn = () => {
             className={signInErrors.email && !isRightPanelActive ? `${styles.inputError}` : ''}
           />
           {renderErrors(signInErrors.email)}
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={user.password}
-            onChange={handleInputChange}
-            className={signInErrors.password && !isRightPanelActive ? `${styles.inputError}` : ''}
-          />
+
+          <div className={styles.passwordContainer}>
+            <input
+              type={showPasswordSignIn ? "text" : "password"}
+              placeholder="Password"
+              name="password"
+              value={user.password}
+              onChange={handleInputChange}
+              className={signInErrors.password && !isRightPanelActive ? `${styles.inputError}` : ''}
+            />
+            <span onClick={togglePasswordVisibilitySignIn} className={styles.eyeIcon}>
+              <img
+                src={showPasswordSignIn ? eyeOpenIcon : eyeClosedIcon}
+                alt={showPasswordSignIn ? "Hide password" : "Show password"}
+                className={styles.eyeImage}
+              />
+            </span>
+          </div>
           {renderErrors(signInErrors.password)}
           <button type="submit">Sign In</button>
         </form>

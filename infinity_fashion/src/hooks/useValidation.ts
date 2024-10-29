@@ -8,29 +8,29 @@ const useValidation = () => {
     name: string;
     email: string;
     password: string | string[];
+    confirmPassword?: string;
   }>({
     name: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
 
-  const validateSignUp = (name: string, email: string, password: string) => {
+  const validateSignUp = (name: string, email: string, password: string, confirmPassword: string) => {
     const errorsTemp: {
       name: string;
       email: string;
       password: string | string[];
-    } = { name: '', email: '', password: '' };
+      confirmPassword: string;
+    } = { name: '', email: '', password: '',  confirmPassword: '' };
 
-    // Verificar si el nombre o el email ya están registrados en la lista de usuarios existentes
-    const isNameTaken = existingUsersData.some((user) => user.name === name);
+    // Verificar si el email ya están registrados en la lista de usuarios existentes
     const isEmailTaken = existingUsersData.some((user) => user.email === email);
 
     if (!name) {
       errorsTemp.name = 'Name is required';
     } else if (!/^[a-zA-Z0-9]+$/.test(name)) {
       errorsTemp.name = 'The name can only contain letters and numbers';
-    } else if (isNameTaken) {
-      errorsTemp.name = 'The name is already taken, please choose another one';
     }
 
     if (!email) {
@@ -49,6 +49,9 @@ const useValidation = () => {
       if (password.length < 6) {
         passwordErrors.push('Must be at least 6 characters');
       }
+      if (password.length > 12) {
+        passwordErrors.push('Must not exceed 12 characters');
+      }
       if (!/(?=.*[A-Z])(?=.*\d)/.test(password)) {
         passwordErrors.push('Must contain at least one uppercase letter and one number');
       }
@@ -62,10 +65,17 @@ const useValidation = () => {
       } else {
         errorsTemp.password = ''; // Sin errores, deja el campo vacío
       }
+
+    }
+
+      if (confirmPassword !== password) {
+      errorsTemp.confirmPassword = 'Passwords do not match';
+    } else {
+      errorsTemp.confirmPassword = ''; // Sin errores
     }
 
     setErrors(errorsTemp);
-    return !errorsTemp.name && !errorsTemp.email && errorsTemp.password === '';
+    return !errorsTemp.name && !errorsTemp.email && errorsTemp.password === '' && errorsTemp.confirmPassword === '';
   };
 
   const validateSignIn = (email: string, password: string) => {
