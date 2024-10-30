@@ -10,6 +10,12 @@ export type Product = {
     description?: string
   }
 
+  export type userData = {
+    name: string
+    email: string
+    password: string | null
+  }
+  
   export type CartItem = Product & {
     quantity: number
   }

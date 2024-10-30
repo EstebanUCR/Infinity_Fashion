@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import useValidation from '../../hooks/useValidation';
 import useUser from '../../hooks/useUser'; // Importa tu hook de usuario
+import useGoogleAuth from '../../hooks/useGoogleLogin';
 import styles from './signIn.module.css';
 import googleLogo from '../../assets/SignInSignUp/googleLogo.png';
 import infinityLogo from '../../assets/Home/logoWithOutBackground.png';
+import useAddUser from '../../hooks/UseAddUser';
 
 const SignIn = () => {
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
-
-  const { user, handleInputChange } = useUser(); // Usamos el hook para el manejo del estado del usuario
-  const { errors: signUpErrors, validateSignUp } = useValidation(); // Errores para Sign Up
-  const { errors: signInErrors, validateSignIn } = useValidation(); // Errores para Sign In
+  const { user, handleInputChange } = useUser();
+  const { errors: signUpErrors, validateSignUp } = useValidation();
+  const { errors: signInErrors, validateSignIn } = useValidation();
+  const { googleUser, googleLogin } = useGoogleAuth();
+  const { SignUp, SignIn, GoogleSignIn } = useAddUser();
+  const { validateGoogleSignIn } = useValidation();
 
   const handleSignUpClick = () => {
     setIsRightPanelActive(true);
@@ -23,7 +27,7 @@ const SignIn = () => {
   const handleSignInSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateSignIn(user.email, user.password)) {
-      // Lógica para el inicio de sesión si es válido
+      SignIn(user.email, user.password);
       console.log('Sign In data:', { email: user.email, password: user.password });
     }
   };
@@ -31,7 +35,16 @@ const SignIn = () => {
   const handleSignUpSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateSignUp(user.name, user.email, user.password)) {
-      // Lógica para el registro si es válido
+      SignUp(user.name, user.email, user.password);
+      console.log('Sign In data:', { email: user.email, password: user.password });
+    }
+  };
+
+  const handleGoogleSignUpSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    googleLogin();
+    if (googleUser && validateGoogleSignIn(googleUser.email)) {
+      GoogleSignIn(googleUser.email);
       console.log('Sign Up data:', { name: user.name, email: user.email, password: user.password });
     }
   };
@@ -57,9 +70,9 @@ const SignIn = () => {
         <form onSubmit={handleSignUpSubmit}>
           <h1>Create Account</h1>
           <div className={styles.socialContainer}>
-            <a href="#" className={styles.social}>
-              <img src={googleLogo} alt="Google" className={styles.googleLogo} />
-            </a>
+            <button onClick={() => googleLogin()} type="button" className={styles.googleButton}>
+              <img src={googleLogo} alt="Google Sign in" className={styles.googleLogo} />
+            </button>
           </div>
           <span>or use your email for registration</span>
           <input
@@ -98,9 +111,9 @@ const SignIn = () => {
         <form onSubmit={handleSignInSubmit}>
           <h1>Sign in</h1>
           <div className={styles.socialContainer}>
-            <a href="#" className={styles.social}>
-              <img src={googleLogo} alt="Google" className={styles.googleLogo} />
-            </a>
+            <button onClick={() => handleGoogleSignUpSubmit} type="button" className={styles.googleButton}>
+              <img src={googleLogo} alt="Google Sign in" className={styles.googleLogo} />
+            </button>
           </div>
           <span>or use your account</span>
           <input

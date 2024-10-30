@@ -22,16 +22,19 @@ const useValidation = () => {
     } = { name: '', email: '', password: '' };
 
     // Verificar si el nombre o el email ya están registrados en la lista de usuarios existentes
-    const isNameTaken = existingUsersData.some((user) => user.name === name);
+    // const isNameTaken = existingUsersData.some((user) => user.name === name);
     const isEmailTaken = existingUsersData.some((user) => user.email === email);
 
     if (!name) {
       errorsTemp.name = 'Name is required';
     } else if (!/^[a-zA-Z0-9]+$/.test(name)) {
       errorsTemp.name = 'The name can only contain letters and numbers';
-    } else if (isNameTaken) {
+    } 
+    /* 
+    else if (isNameTaken) {
       errorsTemp.name = 'The name is already taken, please choose another one';
-    }
+    } 
+    */ 
 
     if (!email) {
       errorsTemp.email = 'Email is required';
@@ -88,7 +91,22 @@ const useValidation = () => {
     return !errorsTemp.email && errorsTemp.password === '';
   };
 
-  return { errors, validateSignUp, validateSignIn };
+  const validateGoogleSignIn = (email: string) => {
+    const errorsTemp: {
+      name: string;
+      email: string;
+      password: string | string[];
+    } = { name: '', email: '', password: '' };
+
+    const isEmailTaken = existingUsersData.some((user) => user.email === email);
+    if(!isEmailTaken) {
+      errorsTemp.email = 'This email is not registered';
+    }
+
+    setErrors(errorsTemp);
+    return !errorsTemp.email;
+  };
+  return { errors, validateSignUp, validateSignIn, validateGoogleSignIn };
 };
 
 export default useValidation;

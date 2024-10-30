@@ -16,10 +16,12 @@
   transition: all 0.6s ease-in-out;
   font-family: 'Montserrat', sans-serif;
 }
+
 .googleLogo {
   width: 30px; /* Ajusta el tamaño del logo según tus preferencias */
   height: auto;
-  margin: 0 10px;
+  justify-content: center;
+  align-items: center;
   vertical-align: middle; /* Centrar verticalmente la imagen */
 }
 
@@ -284,3 +286,15 @@ a {
   }
 }
 
+.googleButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* Ancho del botón */
+  height: 40px; /* Altura del botón */
+  background-color: rgb(255, 255, 255); /* Fondo blanco */
+  border: 1px solid #ccc; /* Borde gris claro */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+}
