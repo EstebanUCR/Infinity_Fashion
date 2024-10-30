@@ -101,6 +101,7 @@ const SignIn = () => {
         const data = await response.json();
 
          if (response.ok) {
+          localStorage.setItem('token', data.token);
           loginUser({ name: user.name, email: user.email }); // Set user in context
         } 
         alert(data.message);
@@ -127,6 +128,7 @@ const SignIn = () => {
           }),
         });
         const data = await response.json();
+        localStorage.setItem('token', data.token);
         alert(data.message);
       } catch (error) {
         console.error('Error:', error);
