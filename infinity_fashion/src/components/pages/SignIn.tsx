@@ -21,7 +21,7 @@ const SignIn = () => {
   const [showPasswordSignIn, setShowPasswordSignIn] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const { loginUser } = useUserContext();
-
+  
   const handleGoogleAuth = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -38,6 +38,7 @@ const SignIn = () => {
         const data = await response.json();
         if (response.ok) {
           alert(data.message); // Inicio de sesión exitoso
+          localStorage.setItem('token', data.token); // Guardamos el token en el localStorage
           loginUser({ name: displayName || '', email: email || '' });
         } else {
           alert("Este usuario no está registrado. Por favor, regístrese primero.");
@@ -53,6 +54,7 @@ const SignIn = () => {
       const data = await response.json();
       if (response.ok) {
         alert(data.message); // Registro exitoso
+        localStorage.setItem('token', data.token); // Guardamos el token en el localStorage
       } else {
         alert(data.message); // Error en el registro (usuario ya registrado)
       }

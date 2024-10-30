@@ -1,31 +1,44 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
+const SECRET_KEY = process.env.SECRET_KEY; // Obtener la clave secreta desde las variables de entorno
 
-// Configurar CORS para permitir solicitudes desde el frontend
-app.use(cors());
 app.use(bodyParser.json());
+app.use(cors());
 
 // Ruta al archivo JSON de usuarios
 const usersFilePath = path.join(__dirname, '../src/assets/users/existing_users.json');
 
 // Función para leer usuarios desde el archivo JSON
 const readUsers = () => {
-  const data = fs.readFileSync(usersFilePath);
-  return JSON.parse(data);
+  try {
+    const data = fs.readFileSync(usersFilePath);
+    console.log('Usuarios leídos:', data.toString());
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error al leer el archivo de usuarios:', error);
+    return [];
+  }
 };
 
 // Función para escribir usuarios en el archivo JSON
 const writeUsers = (users) => {
-  fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+  try {
+    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+    console.log('Usuarios guardados:', users);
+  } catch (error) {
+    console.error('Error al escribir en el archivo de usuarios:', error);
+  }
 };
 
-// Ruta para registrar un nuevo usuario
+// Endpoint para registrar un usuario
 app.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
   const users = readUsers();
@@ -33,7 +46,7 @@ app.post('/signup', (req, res) => {
   // Verificar si el email ya está registrado
   const existingUser = users.find(user => user.email === email);
   if (existingUser) {
-    return res.status(400).json({ message: 'This email is already registered' });
+    return res.status(400).json({ message: 'El usuario ya está registrado.' });
   }
 
   // Añadir el nuevo usuario
@@ -41,10 +54,11 @@ app.post('/signup', (req, res) => {
   users.push(newUser);
   writeUsers(users);
 
-  res.status(201).json({ message: 'User registered successfully' });
+  const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
+  res.status(201).json({ message: 'Registro exitoso', token });
 });
 
-// Ruta para iniciar sesión
+// Endpoint para iniciar sesión
 app.post('/signin', (req, res) => {
   const { email, password } = req.body;
   const users = readUsers();
@@ -58,16 +72,44 @@ app.post('/signin', (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
     }
-    return res.status(200).json({ message: 'Inicio de sesión exitoso con Google' });
+    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
+    return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', token });
   }
 
   // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión normal
   const user = users.find(user => user.email.toLowerCase() === normalizedEmail && user.password === password);
   if (!user) {
-    return res.status(400).json({ message: 'Invalid email or password' });
+    return res.status(400).json({ message: 'Correo o contraseña incorrectos.' });
   }
 
-  res.status(200).json({ message: 'Inicio de sesión exitoso' });
+  const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
+  res.status(200).json({ message: 'Inicio de sesión exitoso', token });
+});
+
+// Middleware para verificar el token
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+
+  if (!token) {
+    return res.status(403).json({ message: 'No se proporcionó un token.' });
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: 'Token inválido.' });
+    }
+    
+    req.email = decoded.email;
+    const users = readUsers();
+    const user = users.find(user => user.email.toLowerCase() === req.email);
+    req.name = user.name;
+    next();
+  });
+};
+
+// Ejemplo de un endpoint protegido
+app.get('/protected', verifyToken, (req, res) => {
+  res.status(200).json({ message: 'Acceso autorizado:', email: req.email, name: req.name });
 });
 
 // Iniciar el servidor
