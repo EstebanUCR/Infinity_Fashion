@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import useValidation from '../../hooks/useValidation';
 import useUser from '../../hooks/useUser'; // Importa tu hook de usuario
-import useGoogleAuth from '../../hooks/useGoogleLogin';
 import styles from './signIn.module.css';
 import googleLogo from '../../assets/SignInSignUp/googleLogo.png';
 import infinityLogo from '../../assets/Home/logoWithOutBackground.png';

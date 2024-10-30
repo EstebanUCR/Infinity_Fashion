@@ -4,13 +4,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Tu configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyD8cYoS-vL5txyo1qyOr1R1RK-R4WVRz6A",
-  authDomain: "infinityfashion-f9396.firebaseapp.com",
-  projectId: "infinityfashion-f9396",
-  storageBucket: "infinityfashion-f9396.appspot.com",
-  messagingSenderId: "279082486125",
-  appId: "1:279082486125:web:1faade54d4f2a03a3eb264",
-  measurementId: "G-TLPZKQ30XT"
+  apiKey: "AIzaSyDDB6z4avUKhiD_hO5NxS9jhhBPyImopv8",
+  authDomain: "infinityfashion-da038.firebaseapp.com",
+  projectId: "infinityfashion-da038",
+  storageBucket: "infinityfashion-da038.firebasestorage.app",
+  messagingSenderId: "745027377150",
+  appId: "1:745027377150:web:7f034d0fcec722b08f12af"
 };
 
 // Inicializar Firebase
