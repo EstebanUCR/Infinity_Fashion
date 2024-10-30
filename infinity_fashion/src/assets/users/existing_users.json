@@ -1,12 +1,32 @@
 [
-    {
-        "name": "Johana",
-        "email": "johana.wu@gmail.com",
-        "password": "Password123"
-    },
-    {
-        "name": "Andrey",
-        "email": "andrey@gmail.com",
-        "password": "Password123"
-    }
+  {
+    "name": "Johana",
+    "email": "johana.wu@gmail.com",
+    "password": "Password123"
+  },
+  {
+    "name": "Andrey",
+    "email": "andrey@gmail.com",
+    "password": "Password123"
+  },
+  {
+    "name": "Mary",
+    "email": "mary@gmail.com",
+    "password": "tejfjdoT4"
+  },
+  {
+    "name": "SDAS",
+    "email": "SD@gmail.com",
+    "password": "qqqteR5"
+  },
+  {
+    "name": "Johana",
+    "email": "wuniejwu@gmail.com",
+    "password": ""
+  },
+  {
+    "name": "JA",
+    "email": "a@gmail.com",
+    "password": "aaafdA1"
+  }
 ]

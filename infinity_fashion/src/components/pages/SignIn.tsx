@@ -5,16 +5,76 @@ import useGoogleAuth from '../../hooks/useGoogleLogin';
 import styles from './signIn.module.css';
 import googleLogo from '../../assets/SignInSignUp/googleLogo.png';
 import infinityLogo from '../../assets/Home/logoWithOutBackground.png';
-import useAddUser from '../../hooks/UseAddUser';
+import eyeOpenIcon from '../../assets/Home/eyeOpenIcon.png';
+import eyeClosedIcon from '../../assets/Home/eyeClosedIcon.png';
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from '../../firebaseConfig';
+import { useUserContext } from '../Context/userContext';
 
 const SignIn = () => {
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
-  const { user, handleInputChange } = useUser();
-  const { errors: signUpErrors, validateSignUp } = useValidation();
-  const { errors: signInErrors, validateSignIn } = useValidation();
-  const { googleUser, googleLogin } = useGoogleAuth();
-  const { SignUp, SignIn, GoogleSignIn } = useAddUser();
-  const { validateGoogleSignIn } = useValidation();
+
+  const { user, handleInputChange } = useUser(); // Usamos el hook para el manejo del estado del usuario
+  const { errors: signUpErrors, validateSignUp } = useValidation(); // Errores para Sign Up
+  const { errors: signInErrors, validateSignIn } = useValidation(); // Errores para Sign In
+  const [showPasswordSignUp, setShowPasswordSignUp] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPasswordSignIn, setShowPasswordSignIn] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { loginUser } = useUserContext();
+
+  const handleGoogleAuth = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const { displayName, email } = result.user;
+
+    if (!isRightPanelActive) {
+      // Modo Sign In
+       const response = await fetch('http://localhost:3000/signin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }), // Solo enviamos el email en el caso de Google
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          alert(data.message); // Inicio de sesión exitoso
+          loginUser({ name: displayName || '', email: email || '' });
+        } else {
+          alert("Este usuario no está registrado. Por favor, regístrese primero.");
+        }
+    } else {
+      // Modo Sign Up
+      const response = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: displayName, email, password: '' }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message); // Registro exitoso
+      } else {
+        alert(data.message); // Error en el registro (usuario ya registrado)
+      }
+    }
+  } catch (error) {
+    console.error("Error con la autenticación de Google:", error);
+    alert("Error con la autenticación de Google. Por favor, inténtelo de nuevo.");
+  }
+};
+  const togglePasswordVisibilitySignUp = () => {
+    setShowPasswordSignUp(!showPasswordSignUp);
+  };
+
+  const togglePasswordVisibilitySignIn = () => {
+    setShowPasswordSignIn(!showPasswordSignIn);
+  };
+
+  const toggleVisibilityConfirmPassword = () => {
+    setShowConfirmPassword(!showPasswordSignUp);
+  };
+
 
   const handleSignUpClick = () => {
     setIsRightPanelActive(true);
@@ -24,27 +84,52 @@ const SignIn = () => {
     setIsRightPanelActive(false);
   };
 
-  const handleSignInSubmit = (e: React.FormEvent) => {
+  const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateSignIn(user.email, user.password)) {
-      SignIn(user.email, user.password);
+      // Lógica para el inicio de sesión si es válido
+      try {
+        const response = await fetch('http://localhost:3000/signin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: user.email,
+            password: user.password,
+          }),
+        });
+        const data = await response.json();
+
+         if (response.ok) {
+          loginUser({ name: user.name, email: user.email }); // Set user in context
+        } 
+        alert(data.message);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
       console.log('Sign In data:', { email: user.email, password: user.password });
     }
   };
 
-  const handleSignUpSubmit = (e: React.FormEvent) => {
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateSignUp(user.name, user.email, user.password)) {
-      SignUp(user.name, user.email, user.password);
-      console.log('Sign In data:', { email: user.email, password: user.password });
-    }
-  };
-
-  const handleGoogleSignUpSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    googleLogin();
-    if (googleUser && validateGoogleSignIn(googleUser.email)) {
-      GoogleSignIn(googleUser.email);
+    if (validateSignUp(user.name, user.email, user.password, confirmPassword)) {
+      // Lógica para el registro si es válido
+      try {
+        const response = await fetch('http://localhost:3000/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: user.name,
+            email: user.email,
+            password: user.password,
+          }),
+        });
+        const data = await response.json();
+        alert(data.message);
+      } catch (error) {
+        console.error('Error:', error);
+      }
       console.log('Sign Up data:', { name: user.name, email: user.email, password: user.password });
     }
   };
@@ -70,9 +155,9 @@ const SignIn = () => {
         <form onSubmit={handleSignUpSubmit}>
           <h1>Create Account</h1>
           <div className={styles.socialContainer}>
-            <button onClick={() => googleLogin()} type="button" className={styles.googleButton}>
-              <img src={googleLogo} alt="Google Sign in" className={styles.googleLogo} />
-            </button>
+            <a href="#" className={styles.social} onClick={handleGoogleAuth}>
+              <img src={googleLogo} alt="Google" className={styles.googleLogo} />
+            </a>
           </div>
           <span>or use your email for registration</span>
           <input
@@ -93,15 +178,42 @@ const SignIn = () => {
             className={signUpErrors.email && isRightPanelActive ? `${styles.inputError}` : ''}
           />
           {renderErrors(signUpErrors.email)}
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={user.password}
-            onChange={handleInputChange}
-            className={signUpErrors.password && isRightPanelActive ? `${styles.inputError}` : ''}
-          />
+          <div className={styles.passwordContainer}>
+            <input
+              type={showPasswordSignUp ? "text" : "password"}
+              placeholder="Password"
+              name="password"
+              value={user.password}
+              onChange={handleInputChange}
+              className={signUpErrors.password && isRightPanelActive ? `${styles.inputError}` : ''}
+            />
+            <span onClick={togglePasswordVisibilitySignUp} className={styles.eyeIcon}>
+              <img
+                src={showPasswordSignUp ? eyeOpenIcon : eyeClosedIcon}
+                alt={showPasswordSignUp ? "Hide password" : "Show password"}
+                className={styles.eyeImage}
+              />
+            </span>
+          </div>
           {renderErrors(signUpErrors.password)}
+          <div className={styles.passwordContainer}>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={signUpErrors.confirmPassword && isRightPanelActive ? `${styles.inputError}` : ''}
+            />
+            <span onClick={toggleVisibilityConfirmPassword} className={styles.eyeIcon}>
+              <img
+                src={showConfirmPassword ? eyeOpenIcon : eyeClosedIcon}
+                alt={showConfirmPassword ? "Hide password" : "Show password"}
+                className={styles.eyeImage}
+              />
+            </span>
+          </div>
+          {renderErrors(signUpErrors.confirmPassword)}
           <button type="submit">Sign Up</button>
         </form>
       </div>
@@ -111,9 +223,9 @@ const SignIn = () => {
         <form onSubmit={handleSignInSubmit}>
           <h1>Sign in</h1>
           <div className={styles.socialContainer}>
-            <button onClick={() => handleGoogleSignUpSubmit} type="button" className={styles.googleButton}>
-              <img src={googleLogo} alt="Google Sign in" className={styles.googleLogo} />
-            </button>
+            <a href="#" className={styles.social} onClick={handleGoogleAuth}>
+              <img src={googleLogo} alt="Google" className={styles.googleLogo} />
+            </a>
           </div>
           <span>or use your account</span>
           <input
@@ -125,14 +237,24 @@ const SignIn = () => {
             className={signInErrors.email && !isRightPanelActive ? `${styles.inputError}` : ''}
           />
           {renderErrors(signInErrors.email)}
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={user.password}
-            onChange={handleInputChange}
-            className={signInErrors.password && !isRightPanelActive ? `${styles.inputError}` : ''}
-          />
+
+          <div className={styles.passwordContainer}>
+            <input
+              type={showPasswordSignIn ? "text" : "password"}
+              placeholder="Password"
+              name="password"
+              value={user.password}
+              onChange={handleInputChange}
+              className={signInErrors.password && !isRightPanelActive ? `${styles.inputError}` : ''}
+            />
+            <span onClick={togglePasswordVisibilitySignIn} className={styles.eyeIcon}>
+              <img
+                src={showPasswordSignIn ? eyeOpenIcon : eyeClosedIcon}
+                alt={showPasswordSignIn ? "Hide password" : "Show password"}
+                className={styles.eyeImage}
+              />
+            </span>
+          </div>
           {renderErrors(signInErrors.password)}
           <button type="submit">Sign In</button>
         </form>
