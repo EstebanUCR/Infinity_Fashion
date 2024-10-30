@@ -100,9 +100,8 @@ const SignIn = () => {
 
          if (response.ok) {
           loginUser({ name: user.name, email: user.email }); // Set user in context
-        } else {
-          alert(data.message);
-        }
+        } 
+        alert(data.message);
       } catch (error) {
         console.error('Error:', error);
       }
