@@ -8,6 +8,7 @@ import ShopCategory from './components/pages/ShopCategory';
 import './index.css'
 import useCart from './hooks/useCart';
 import Product from './components/pages/Product';
+import { UserProvider } from './components/Context/userContext';
 
 function App() {
   const {data, cart, addToCart, removeFromCart, decreaseQuantity, increaseQuantity, clearCart, isEmpty, cartTotal, shipping, shippingValue} = useCart()
@@ -15,6 +16,7 @@ function App() {
   return (
 
     <div>
+     <UserProvider> {
       <Router>
         <Routes>
           <Route path="/" element={<Home cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} addToCart={addToCart}/>} />
@@ -27,7 +29,8 @@ function App() {
           <Route path="/shoppingBag" element={<ShoppingBag cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} shipping={shipping} shippingValue={shippingValue}/>} />
           <Route path="/product/:productId" element={<Product cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} data={data} addToCart={addToCart} filterName="" category="" />} />
         </Routes>
-      </Router>
+      </Router>}
+       </UserProvider>
     </div>
   )
 }

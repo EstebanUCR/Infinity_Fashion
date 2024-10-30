@@ -8,6 +8,7 @@ import eyeOpenIcon from '../../assets/Home/eyeOpenIcon.png';
 import eyeClosedIcon from '../../assets/Home/eyeClosedIcon.png';
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from '../../firebaseConfig';
+import { useUserContext } from '../Context/userContext';
 
 const SignIn = () => {
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
@@ -19,6 +20,7 @@ const SignIn = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPasswordSignIn, setShowPasswordSignIn] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { loginUser } = useUserContext();
 
   const handleGoogleAuth = async () => {
   try {
@@ -36,6 +38,7 @@ const SignIn = () => {
         const data = await response.json();
         if (response.ok) {
           alert(data.message); // Inicio de sesión exitoso
+          loginUser({ name: displayName || '', email: email || '' });
         } else {
           alert("Este usuario no está registrado. Por favor, regístrese primero.");
         }
@@ -94,7 +97,12 @@ const SignIn = () => {
           }),
         });
         const data = await response.json();
-        alert(data.message);
+
+         if (response.ok) {
+          loginUser({ name: user.name, email: user.email }); // Set user in context
+        } else {
+          alert(data.message);
+        }
       } catch (error) {
         console.error('Error:', error);
       }
