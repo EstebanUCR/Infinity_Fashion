@@ -10,7 +10,7 @@ import img1 from '../../assets/Home/logoWithOutBackground.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type HeaderProps = {
   cart: CartItem[]
@@ -35,7 +35,16 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
-
+  
+  // TODO: Revisar cambiar el estado en tiempo real
+  const [userData, setUser] = useState(null);
+  useEffect(() => {
+    const storedUser = localStorage.getItem('users');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+  
   return (
     <header>
       <div className="menu-toggle" onClick={toggleSidebar}>
@@ -90,7 +99,13 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
           <Link className="nav-link nav-titles" to='/outerwear'>OUTERWEAR</Link>
           <Link className="nav-link nav-titles" to='/accessories'>ACCESSORIES</Link>
           <Link className="nav-link nav-titles" to='/shoes'>SHOES</Link>
-          <Link className="nav-link nav-titles" to='/signIn'>Sign In</Link>
+          <li>
+            { userData ? (
+              <Link className="nav-link nav-titles" to='/profile'>Logout</Link>
+            ) : (
+              <Link className="nav-link nav-titles" to='/signIn'>Profile</Link>
+            )}
+          </li>
           <div className="sidebar-icons">
             <Link to='/shoppingBag'>
               <FontAwesomeIcon
