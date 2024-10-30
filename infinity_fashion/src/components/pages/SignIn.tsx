@@ -6,6 +6,8 @@ import googleLogo from '../../assets/SignInSignUp/googleLogo.png';
 import infinityLogo from '../../assets/Home/logoWithOutBackground.png';
 import eyeOpenIcon from '../../assets/Home/eyeOpenIcon.png';
 import eyeClosedIcon from '../../assets/Home/eyeClosedIcon.png';
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from '../../firebaseConfig';
 
 const SignIn = () => {
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
@@ -18,6 +20,45 @@ const SignIn = () => {
   const [showPasswordSignIn, setShowPasswordSignIn] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const handleGoogleAuth = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const { displayName, email } = result.user;
+
+    if (!isRightPanelActive) {
+      // Modo Sign In
+       const response = await fetch('http://localhost:3000/signin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }), // Solo enviamos el email en el caso de Google
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          alert(data.message); // Inicio de sesión exitoso
+        } else {
+          alert("Este usuario no está registrado. Por favor, regístrese primero.");
+        }
+    } else {
+      // Modo Sign Up
+      const response = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: displayName, email, password: '' }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message); // Registro exitoso
+      } else {
+        alert(data.message); // Error en el registro (usuario ya registrado)
+      }
+    }
+  } catch (error) {
+    console.error("Error con la autenticación de Google:", error);
+    alert("Error con la autenticación de Google. Por favor, inténtelo de nuevo.");
+  }
+};
   const togglePasswordVisibilitySignUp = () => {
     setShowPasswordSignUp(!showPasswordSignUp);
   };
@@ -39,18 +80,48 @@ const SignIn = () => {
     setIsRightPanelActive(false);
   };
 
-  const handleSignInSubmit = (e: React.FormEvent) => {
+  const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateSignIn(user.email, user.password)) {
       // Lógica para el inicio de sesión si es válido
+      try {
+        const response = await fetch('http://localhost:3000/signin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: user.email,
+            password: user.password,
+          }),
+        });
+        const data = await response.json();
+        alert(data.message);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
       console.log('Sign In data:', { email: user.email, password: user.password });
     }
   };
 
-  const handleSignUpSubmit = (e: React.FormEvent) => {
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateSignUp(user.name, user.email, user.password, confirmPassword)) {
       // Lógica para el registro si es válido
+      try {
+        const response = await fetch('http://localhost:3000/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: user.name,
+            email: user.email,
+            password: user.password,
+          }),
+        });
+        const data = await response.json();
+        alert(data.message);
+      } catch (error) {
+        console.error('Error:', error);
+      }
       console.log('Sign Up data:', { name: user.name, email: user.email, password: user.password });
     }
   };
@@ -76,7 +147,7 @@ const SignIn = () => {
         <form onSubmit={handleSignUpSubmit}>
           <h1>Create Account</h1>
           <div className={styles.socialContainer}>
-            <a href="#" className={styles.social}>
+            <a href="#" className={styles.social} onClick={handleGoogleAuth}>
               <img src={googleLogo} alt="Google" className={styles.googleLogo} />
             </a>
           </div>
@@ -124,7 +195,7 @@ const SignIn = () => {
               name="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className={signUpErrors.confirmPassword&& isRightPanelActive ? `${styles.inputError}` : ''}
+              className={signUpErrors.confirmPassword && isRightPanelActive ? `${styles.inputError}` : ''}
             />
             <span onClick={toggleVisibilityConfirmPassword} className={styles.eyeIcon}>
               <img
@@ -144,7 +215,7 @@ const SignIn = () => {
         <form onSubmit={handleSignInSubmit}>
           <h1>Sign in</h1>
           <div className={styles.socialContainer}>
-            <a href="#" className={styles.social}>
+            <a href="#" className={styles.social} onClick={handleGoogleAuth}>
               <img src={googleLogo} alt="Google" className={styles.googleLogo} />
             </a>
           </div>
