@@ -38,7 +38,7 @@ const SignIn = () => {
         const data = await response.json();
         if (response.ok) {
           alert(data.message); // Inicio de sesión exitoso
-          localStorage.setItem('token', data.token); // Guardamos el token en el localStorage
+          localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
           loginUser({ name: displayName || '', email: email || '' });
         } else {
           alert("Este usuario no está registrado. Por favor, regístrese primero.");
@@ -54,7 +54,7 @@ const SignIn = () => {
       const data = await response.json();
       if (response.ok) {
         alert(data.message); // Registro exitoso
-        localStorage.setItem('token', data.token); // Guardamos el token en el localStorage
+        localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
       } else {
         alert(data.message); // Error en el registro (usuario ya registrado)
       }
@@ -101,7 +101,7 @@ const SignIn = () => {
         const data = await response.json();
 
          if (response.ok) {
-          localStorage.setItem('token', data.token);
+          localStorage.setItem('token', data.accessToken);
           loginUser({ name: user.name, email: user.email }); // Set user in context
         } 
         alert(data.message);
@@ -128,7 +128,7 @@ const SignIn = () => {
           }),
         });
         const data = await response.json();
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.accessToken);
         alert(data.message);
       } catch (error) {
         console.error('Error:', error);
