@@ -44,6 +44,8 @@ const SignIn = () => {
           alert(data.message); // Inicio de sesión exitoso
           localStorage.setItem('token', data.token); // Guardamos el token en el localStorage
           loginUser({ name: displayName || '', email: email || '' });
+          localStorage.setItem('name', displayName || '');
+          localStorage.setItem('email', email || '');
           navigate('/');
         } else {
           alert("Este usuario no está registrado. Por favor, regístrese primero.");
@@ -60,6 +62,9 @@ const SignIn = () => {
       if (response.ok) {
         alert(data.message); // Registro exitoso
         localStorage.setItem('token', data.token); // Guardamos el token en el localStorage
+        loginUser({ name: displayName || '', email: email || '' });
+        localStorage.setItem('name', displayName || '');
+        localStorage.setItem('email', email || '');
         navigate('/');
       } else {
         alert(data.message); // Error en el registro (usuario ya registrado)
@@ -108,7 +113,9 @@ const SignIn = () => {
 
          if (response.ok) {
           localStorage.setItem('token', data.token);
-          loginUser({ name: user.name, email: user.email }); // Set user in context
+          loginUser({ name: data.userName, email: user.email }); // Set user in context
+          localStorage.setItem('name', data.userName);
+          localStorage.setItem('email', user.email);
           navigate('/');
         } 
         alert(data.message);
@@ -136,6 +143,9 @@ const SignIn = () => {
         });
         const data = await response.json();
         localStorage.setItem('token', data.token);
+        loginUser({ name: data.userName, email: user.email }); // Set user in context
+        localStorage.setItem('name', data.userName);
+        localStorage.setItem('email', user.email);
         alert(data.message);
         navigate('/');
       } catch (error) {

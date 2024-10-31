@@ -82,8 +82,10 @@ app.post('/signin', (req, res) => {
     return res.status(400).json({ message: 'Correo o contraseña incorrectos.' });
   }
 
+  const userName = user.name
+
   const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
-  res.status(200).json({ message: 'Inicio de sesión exitoso', token });
+  res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, token });
 });
 
 // Middleware para verificar el token
@@ -103,16 +105,13 @@ const verifyToken = (req, res, next) => {
     req.email = decoded.email;
     const users = readUsers();
     const user = users.find(user => user.email.toLowerCase() === req.email);
-    // req.name = user.name;
-    req.name = decoded.name;
-    console.log(req.name)
     next();
   });
 };
 
 // Ejemplo de un endpoint protegido
 app.get('/protected', verifyToken, (req, res) => {
-  res.status(200).json({ message: 'Acceso autorizado:', email: req.email, name: req.name });
+  res.status(200).json({ message: 'Acceso autorizado:', email: req.email});
 });
 
 // Iniciar el servidor

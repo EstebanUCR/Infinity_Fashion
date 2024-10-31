@@ -338,3 +338,8 @@ header {
     display: none;
   }
 }
+
+.accordion-button {
+  display: block; 
+  text-align: center;
+}
