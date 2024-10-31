@@ -33,5 +33,15 @@
     "name": "Esteban Yglesias",
     "email": "estebanyglesiasv@gmail.com",
     "password": ""
+  },
+  {
+    "name": "Paola Feng",
+    "email": "paolafeng19@gmail.com",
+    "password": ""
+  },
+  {
+    "name": "testAccount",
+    "email": "testEmail@gmail.com",
+    "password": "Password123"
   }
 ]

@@ -88,21 +88,24 @@ app.post('/signin', (req, res) => {
 
 // Middleware para verificar el token
 const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'];
+  const token = req.headers['authorization'].substr(6);
 
   if (!token) {
     return res.status(403).json({ message: 'No se proporcionó un token.' });
   }
-
+  console.log(token)
   jwt.verify(token, SECRET_KEY, (err, decoded) => {
     if (err) {
+      console.log(err)
       return res.status(401).json({ message: 'Token inválido.' });
     }
     
     req.email = decoded.email;
     const users = readUsers();
     const user = users.find(user => user.email.toLowerCase() === req.email);
-    req.name = user.name;
+    // req.name = user.name;
+    req.name = decoded.name;
+    console.log(req.name)
     next();
   });
 };
