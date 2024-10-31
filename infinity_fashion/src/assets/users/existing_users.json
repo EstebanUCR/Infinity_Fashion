@@ -43,5 +43,10 @@
     "name": "testAccount",
     "email": "testEmail@gmail.com",
     "password": "Password123"
+  },
+  {
+    "name": "testAccount2",
+    "email": "testEmail2@gmail.com",
+    "password": "Password123"
   }
 ]

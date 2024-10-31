@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
 import { useState, useEffect } from 'react';
+import { useUserContext } from '../Context/userContext';
 
 type HeaderProps = {
   cart: CartItem[]
@@ -40,11 +41,11 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   const [userData, setUser] = useState(null);
   const [userToken, setUserToken] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const { user } = useUserContext();
 
   useEffect(() => {
     const userToken = localStorage.getItem('token');
     if (userToken) {
-      
       // setUser(JSON.parse(storedUser));
       validateToken()
     }
@@ -64,6 +65,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
       console.log(userToken)
       const data = await response.json();
       console.log('Protected data:', data);
+      
       setUserToken(userToken)
     }
   } 
