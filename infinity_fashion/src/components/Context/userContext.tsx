@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface UserProviderProps {
   children: ReactNode;
@@ -20,8 +20,25 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const loginUser = (userData: User) => setUser(userData);
-  const logoutUser = () => setUser(null);
+  // Función para iniciar sesión
+  const loginUser = (userData: User) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData)); // Guardar en localStorage
+  };
+
+  // Función para cerrar sesión
+  const logoutUser = () => {
+    setUser(null);
+    localStorage.removeItem('user'); // Eliminar del localStorage
+  };
+
+  // Restaurar sesión desde localStorage
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, loginUser, logoutUser }}>
