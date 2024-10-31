@@ -47,10 +47,23 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   
   return (
     <header>
-      <div className="menu-toggle" onClick={toggleSidebar}>
-        <FontAwesomeIcon icon={faBars} />
-      </div>
-
+      <Container fluid className="logo-container">
+        <img
+          src={img1}
+          className="logo"
+          alt="Infinity Fashion Logo"
+        />
+      </Container>
+      <div className='menu-toggle-cart'>
+        <div className="menu-toggle" onClick={toggleSidebar}>
+          <FontAwesomeIcon icon={faBars} />
+        </div>
+        <div className="sidebar-icons">
+            <Link to='/shoppingBag'>
+              <FontAwesomeIcon icon={faShoppingBag} size="xl" />
+            </Link>
+          </div>
+        </div>
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <button className="close-btn" onClick={toggleSidebar}>
@@ -106,25 +119,8 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
               <Link className="nav-link nav-titles" to='/signIn'>Profile</Link>
             )}
           </li>
-          <div className="sidebar-icons">
-            <Link to='/shoppingBag'>
-              <FontAwesomeIcon
-                icon={faShoppingBag}
-                className="cart-icon-sidebar"
-                size="lg"
-                style={{ cursor: 'pointer' }}
-              />
-            </Link>
-          </div>
         </nav>
       </div>
-      <Container fluid className="logo-container">
-        <img
-          src={img1}
-          className="logo"
-          alt="Infinity Fashion Logo"
-        />
-      </Container>
 
       <Navbar expand="lg" className="navbar-custom">
         <Container fluid>
