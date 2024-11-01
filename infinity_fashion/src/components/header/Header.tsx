@@ -148,7 +148,8 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                   <Accordion.Body>
                     <h3 className='text-center'><strong>User:</strong> {userName}</h3>
                     <h3 className='text-center'><strong>Email:</strong> {userEmail}</h3>
-                    <Link className="nav-link" to='/' onClick={handleLogOut}>Log Out</Link>
+                    {/* <Link className="nav-link" to='/' onClick={handleLogOut}>Log Out</Link> */}
+                    <Link className='btn btn-pay w-100 mt-3 p-2' to='/' onClick={handleLogOut}>Log Out</Link>
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion> 
@@ -242,7 +243,8 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                       
                     <h3 className='text-center'><strong>User:</strong> {userName}</h3>
                     <h3 className='text-center'><strong>Email:</strong> {userEmail}</h3>
-                    <Link className="nav-link" to='/' onClick={handleLogOut}>Logout</Link>
+                    {/* <Link className="nav-link" to='/' >Logout</Link> */}
+                    <Link className='btn btn-logOut w-100 mt-3 p-2'  to='/' onClick={handleLogOut}>Log Out</Link>
                     </div>
                   </div>
                 ) : (
