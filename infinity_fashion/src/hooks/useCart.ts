@@ -4,16 +4,15 @@ import { all_products } from "../assets/all_products";
 
 import type { Product, CartItem, ProductID } from "../types/types";
 
-//Cart interface
-interface CartObject {
-  email: string;
-  cart: CartItem[];
-}
-
 const useCart = () => {
   const initialCart = () : CartItem[] => {
     const localStorageCart = localStorage.getItem('cart')
-    return localStorageCart ? JSON.parse(localStorageCart) : []
+    console.log(typeof(localStorageCart))
+    if(localStorageCart === "undefined" || typeof(localStorageCart) === undefined) {
+      return []
+    } else {
+      return localStorageCart ? JSON.parse(localStorageCart) : []
+    }
   }
 
   //State

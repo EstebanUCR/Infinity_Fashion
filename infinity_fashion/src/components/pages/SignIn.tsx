@@ -52,7 +52,12 @@ const SignIn = () => {
         if (response.ok) {
           alert(data.message); // Inicio de sesión exitoso
           localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
-          localStorage.setItem('cart', JSON.stringify(data.userCart.cart))
+          const storagedCart = JSON.stringify(data.userCart.cart)
+          if(typeof(storagedCart) === undefined || storagedCart === undefined) {
+            localStorage.setItem('cart', JSON.stringify([]));
+          } else {
+            localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
+          }
           loginUser({ name: displayName || '', email: email || '' });
           localStorage.setItem('name', displayName || '');
           localStorage.setItem('email', email || '');

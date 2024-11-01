@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './ProductDisplay.css'
 import { Product } from '../../types/types';
+import AutoCloseModal from '../pages/messageModal';
 
 /* TODO agregar los datos faltantes para mejorar la descripcion y el stock*/
 interface ProductDisplayProps {
@@ -18,6 +19,8 @@ interface ProductDisplayProps {
 }
 
 const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category, addToCart, product }) => {
+    const [showModal, setShowModal] = useState(false)
+
     const [userToken, setUserToken] = useState('');
     const [mainImage, setMainImage] = useState<string>(image[0]);
     const handleImageClick = (image: string) => {
@@ -55,7 +58,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
         if (userToken !== '') {
             addToCart(product)
         } else {
-            alert("Debe iniciar sesion para agregar productos al carrito!")
+            setShowModal(true)
         }
       }
 
@@ -107,6 +110,12 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
                 <div className='productDisplayRightProductCode'> Product code: {id}</div>
                 {isExclusive && <div className='productDisplayRightExclusive'>WEB EXCLUSIVE</div>}
             </div>
+
+            <AutoCloseModal
+                message='You must be logged in to add to cart!'
+                show={showModal}
+                onClose={() => setShowModal(false)}
+            />
         </div>
     );
 }

@@ -1,0 +1,15 @@
+.title {
+  font-family: 'Playfair Display', sans-serif;
+  margin-bottom: 0;
+}
+
+.btn-login {
+  padding: 8px;
+  background-color: #BF665E;
+  color: #FFF;
+  font-weight: 500;
+}
+  & .btn-login:hover {
+    background-color: #BF665E;
+    color: #000;
+  }
