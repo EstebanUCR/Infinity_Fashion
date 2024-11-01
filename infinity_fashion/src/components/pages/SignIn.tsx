@@ -93,7 +93,7 @@ const SignIn = () => {
   };
 
   const toggleVisibilityConfirmPassword = () => {
-    setShowConfirmPassword(!showPasswordSignUp);
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const toggleForm = () => setIsRightPanelActive(!isRightPanelActive);
