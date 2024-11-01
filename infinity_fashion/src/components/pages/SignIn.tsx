@@ -95,7 +95,7 @@ const SignIn = () => {
   };
 
   const toggleVisibilityConfirmPassword = () => {
-    setShowConfirmPassword(!showPasswordSignUp);
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const toggleForm = () => setIsRightPanelActive(!isRightPanelActive);
@@ -183,7 +183,11 @@ const SignIn = () => {
   return (
     <>
       <Container fluid className="logo-container">
-        <img src={img1} className="logo" alt="Infinity Fashion Logo" />
+        <img className="logo"
+          src={img1}
+          alt="Logo"
+          onClick={() => navigate('/')}
+        />
       </Container>
 
       <div className={`${styles.container} ${isRightPanelActive && !isMobile ? styles.rightPanelActive : ''}`} id="container">
