@@ -1,3 +1,104 @@
 [
-  
+  {
+    "email": "prodriguez1491@gmail.com",
+    "cart": [
+      {
+        "id": 11,
+        "category": "accessories",
+        "image": [
+          "/src/assets/productImages/rhinestone-hoop-earrings.jpg",
+          "/src/assets/productImages/rhinestone-hoop-earrings-1.jpg",
+          "/src/assets/productImages/rhinestone-hoop-earrings-2.jpg",
+          "/src/assets/productImages/rhinestone-hoop-earrings-3.jpg"
+        ],
+        "name": "Rhinestone Hoop Earrings",
+        "price": 21.6,
+        "oldPrice": "$27.00",
+        "discount": "20% OFF",
+        "isExclusive": false,
+        "description": "These hoop earrings make the perfect statement piece.",
+        "quantity": 1
+      },
+      {
+        "id": 10,
+        "category": "accessories",
+        "image": [
+          "/src/assets/productImages/pearl-bow-pendant-necklace.jpg",
+          "/src/assets/productImages/pearl-bow-pendant-necklace-1.jpg",
+          "/src/assets/productImages/pearl-bow-pendant-necklace-2.jpg",
+          "/src/assets/productImages/pearl-bow-pendant-necklace-3.jpg"
+        ],
+        "name": "Pearl Bow-Pendant Necklace",
+        "price": 24.5,
+        "isExclusive": false,
+        "description": "A delicate and simple necklace with an eye-catching bow charm.",
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "category": "tops",
+        "image": [
+          "/src/assets/productImages/crinkled-tie-sleeve-shirt.jpg",
+          "/src/assets/productImages/crinkled-tie-sleeve-shirt-1.jpg",
+          "/src/assets/productImages/crinkled-tie-sleeve-shirt-2.jpg",
+          "/src/assets/productImages/crinkled-tie-sleeve-shirt-3.jpg"
+        ],
+        "name": "Crinkled Tie-Sleeve Shirt",
+        "price": 9.49,
+        "isExclusive": false,
+        "description": "This fashionably crinckled shirt is casual yet elegant.",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "email": "testEmail2@gmail.com",
+    "cart": [
+      {
+        "id": 8,
+        "category": "outerwear",
+        "image": [
+          "/src/assets/productImages/double-breasted-blazer.jpg",
+          "/src/assets/productImages/double-breasted-blazer-1.jpg",
+          "/src/assets/productImages/double-breasted-blazer-2.jpg",
+          "/src/assets/productImages/double-breasted-blazer-3.jpg"
+        ],
+        "name": "Double-Breasted Blazer",
+        "price": 24.49,
+        "isExclusive": true,
+        "description": "A blazer ideal for a casual business look.",
+        "quantity": 2
+      },
+      {
+        "id": 1,
+        "category": "tops",
+        "image": [
+          "/src/assets/productImages/fitted-tee-bodysuit.jpg",
+          "/src/assets/productImages/fitted-tee-bodysuit-1.jpg",
+          "/src/assets/productImages/fitted-tee-bodysuit-2.jpg",
+          "/src/assets/productImages/fitted-tee-bodysuit-3.jpg"
+        ],
+        "name": "Fitted Tee Bodysuit",
+        "price": 13.6,
+        "isExclusive": true,
+        "description": "A plain fitted shirt perfect for any occassion.",
+        "quantity": 1
+      },
+      {
+        "id": 13,
+        "category": "shoes",
+        "image": [
+          "/src/assets/productImages/suede-stiletto-boots.jpg",
+          "/src/assets/productImages/suede-stiletto-boots-1.jpg",
+          "/src/assets/productImages/suede-stiletto-boots-2.jpg",
+          "/src/assets/productImages/suede-stiletto-boots-3.jpg"
+        ],
+        "name": "Suede Stiletto Boots",
+        "price": 29.49,
+        "isExclusive": true,
+        "description": "These boots offer a sturdy, classic look.",
+        "quantity": 1
+      }
+    ]
+  }
 ]

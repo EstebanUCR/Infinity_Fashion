@@ -1,3 +1,46 @@
 [
-  
+  {
+    "email": "prodriguez1491@gmail.com",
+    "date": "2024-11-01T18:10:42.331Z",
+    "shipping": 5,
+    "product": [
+      {
+        "id": 10,
+        "name": "Pearl Bow-Pendant Necklace",
+        "price": 24.5,
+        "quantity": 2
+      },
+      {
+        "id": 25,
+        "name": "Pointed Stiletto Heels",
+        "price": 13.99,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "email": "testEmail2@gmail.com",
+    "date": "2024-11-01T21:15:26.670Z",
+    "shipping": 5,
+    "product": [
+      {
+        "id": 8,
+        "name": "Double-Breasted Blazer",
+        "price": 24.49,
+        "quantity": 2
+      },
+      {
+        "id": 1,
+        "name": "Fitted Tee Bodysuit",
+        "price": 13.6,
+        "quantity": 1
+      },
+      {
+        "id": 13,
+        "name": "Suede Stiletto Boots",
+        "price": 29.49,
+        "quantity": 1
+      }
+    ]
+  }
 ]

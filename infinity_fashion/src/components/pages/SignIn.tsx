@@ -126,13 +126,20 @@ const SignIn = () => {
           }),
         });
         const data = await response.json();
-
+        console.log(data)
         if (response.ok) {
           localStorage.setItem('token', data.token);
+          const storagedCart = JSON.stringify(data.userCart.cart)
+          if(typeof(storagedCart) === undefined || storagedCart === undefined) {
+            localStorage.setItem('cart', JSON.stringify([]));
+          } else {
+            localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
+          }
           loginUser({ name: data.userName, email: user.email }); // Set user in context
           localStorage.setItem('name', data.userName);
           localStorage.setItem('email', user.email);
           navigate('/');
+          location.reload();
         }
         alert(data.message);
       } catch (error) {
