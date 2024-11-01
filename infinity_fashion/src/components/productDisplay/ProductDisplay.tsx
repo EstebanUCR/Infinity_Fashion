@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './ProductDisplay.css'
 import { Product } from '../../types/types';
 
@@ -17,20 +17,31 @@ interface ProductDisplayProps {
     product: Product
 }
 
-const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category, addToCart, product}) => {
+const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category, addToCart, product }) => {
+    const [mainImage, setMainImage] = useState<string>(image[0]);
+    const handleImageClick = (image: string) => {
+        setMainImage(image); // Actualizar el estado de la imagen principal
+    };
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, []);
+    }, []);
     return (
         <div className="productDisplay">
             <div className="productDisplayLeft">
                 <div className='productDisplayImgList'>
-                    <img src={image[1]} alt='' />
-                    <img src={image[2]} alt='' />
-                    <img src={image[3]} alt='' />
+                    {image.slice(0, 3).map((image, index) => (
+                        <img
+                            key={index}
+                            src={image}
+                            alt={`Product thumbnail ${index}`}
+                            className="img-thumbnail"
+                            onClick={() => handleImageClick(image)} // Agregar el controlador de eventos
+                            style={{ cursor: 'pointer' }} // Cambiar el cursor para indicar que es clicable
+                        />
+                    ))}
                 </div>
                 <div className="productDisplayImg">
-                    <img className='productDisplayImgMain' src={image[0]} alt='' />
+                    <img className='productDisplayImgMain' src={mainImage} alt='' />
                 </div>
             </div>
 
