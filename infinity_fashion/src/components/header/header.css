@@ -348,3 +348,17 @@ header {
     justify-content: space-between; /* Distribuye el espacio entre los elementos */
   }
 }
+
+.accordion-button {
+  display: block; 
+  text-align: center;
+}
+
+.btn-logOut {
+  padding: 0 2px;
+  margin: 0 3px;
+  background: #BF665E;
+  color: #FFF;
+  font-weight: bold;
+  text-transform: uppercase;
+}

@@ -20,11 +20,6 @@
     "password": "qqqteR5"
   },
   {
-    "name": "Johana",
-    "email": "wuniejwu@gmail.com",
-    "password": ""
-  },
-  {
     "name": "JA",
     "email": "a@gmail.com",
     "password": "aaafdA1"
@@ -48,5 +43,10 @@
     "name": "testAccount2",
     "email": "testEmail2@gmail.com",
     "password": "Password123"
+  },
+  {
+    "name": "Johana",
+    "email": "wuniejwu@gmail.com",
+    "password": ""
   }
 ]

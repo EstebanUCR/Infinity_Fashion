@@ -2,34 +2,43 @@
 
 .container {
   background-color: #ffffff;
-  border-radius: 15px; /* Borde redondeado */
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.19); /* Sombra más suave */
-  position: absolute; /* Cambiar a absolute para centrar en pantalla */
-  top: 50%; /* Centra verticalmente */
-  left: 50%; /* Centra horizontalmente */
-  transform: translate(-50%, -50%); /* Ajuste para centrar completamente */
+  border-radius: 15px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.19);
+  position: relative;
+  /* Cambiado a relative */
+  margin-top: 40px;
+  /* Espacio superior para el encabezado */
+  margin-bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Solo mover horizontalmente */
   overflow: hidden;
-  width: 1200px; /* Aumenta el ancho */
+  width: 1200px;
   max-width: 100%;
-  min-height: 900px; /* Aumenta la altura mínima */
+  min-height: 800px;
+  /* Altura mínima ajustada */
   box-sizing: border-box;
   transition: all 0.6s ease-in-out;
   font-family: 'Montserrat', sans-serif;
 }
 
 .googleLogo {
-  width: 30px; /* Ajusta el tamaño del logo según tus preferencias */
+  width: 30px;
+  /* Ajusta el tamaño del logo según tus preferencias */
   height: auto;
   justify-content: center;
   align-items: center;
-  vertical-align: middle; /* Centrar verticalmente la imagen */
+  vertical-align: middle;
+  /* Centrar verticalmente la imagen */
 }
 
 .companyLogo {
-  width: 300px; /* Ajusta el tamaño del logo según tus preferencias */
+  width: 300px;
+  /* Ajusta el tamaño del logo según tus preferencias */
   height: auto;
   margin: 0 10px;
-  vertical-align: middle; /* Centrar verticalmente la imagen */
+  vertical-align: middle;
+  /* Centrar verticalmente la imagen */
 }
 
 .socialContainer {
@@ -62,10 +71,11 @@
   text-align: center;
   position: absolute;
   top: 0;
-  width: 50%; /* Ancho del formulario */
+  width: 50%;
+  /* Ancho del formulario */
   transition: all 0.6s ease-in-out;
   box-sizing: border-box;
-  
+
 }
 
 /* Contenedor del formulario de "Sign In" */
@@ -102,9 +112,12 @@ input {
   background-color: #eee;
   padding: 12px 15px;
   margin: 8px 0;
-  width: 100% !important; /* Mantén el ancho completo */
-  min-height: 40px; /* Agrega una altura mínima */
-  box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el tamaño */
+  width: 100% !important;
+  /* Mantén el ancho completo */
+  min-height: 40px;
+  /* Agrega una altura mínima */
+  box-sizing: border-box;
+  /* Asegura que el padding y el borde se incluyan en el tamaño */
   margin-bottom: 20px;
 }
 
@@ -114,7 +127,8 @@ button {
   border: 1px solid #BF665E;
   background-color: #BF665E;
   color: #FFFFFF;
-  font-size: 14px; /* Tamaño de fuente más grande */
+  font-size: 14px;
+  /* Tamaño de fuente más grande */
   font-weight: bold;
   padding: 12px 45px;
   letter-spacing: 1px;
@@ -143,7 +157,8 @@ button.ghost {
 .socialContainer {
   margin: 20px 0;
   display: flex;
-  justify-content: center; /* Centra los íconos sociales */
+  justify-content: center;
+  /* Centra los íconos sociales */
 }
 
 .socialContainer a {
@@ -152,7 +167,8 @@ button.ghost {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin: 0 10px; /* Ajusta el margen entre los íconos */
+  margin: 0 10px;
+  /* Ajusta el margen entre los íconos */
   height: 40px;
   width: 40px;
 }
@@ -164,7 +180,7 @@ h1 {
 }
 
 h2 {
-   font-size: 16px;
+  font-size: 16px;
 }
 
 span {
@@ -247,30 +263,41 @@ a {
 .error {
   color: red;
   font-size: 14px;
-  position: relative; /* Cambiamos a relative para que los errores se muestren */
-  margin-top: -30px; /* Ajusta este valor según sea necesario para posicionar el mensaje */
+  position: relative;
+  /* Cambiamos a relative para que los errores se muestren */
+  margin-top: -30px;
+  /* Ajusta este valor según sea necesario para posicionar el mensaje */
   text-align: left;
   width: 100%;
-  
+
 }
 
 .errorList {
-  position: static; /* Cambia a static para que siga el flujo normal */
-  padding-left: 20px; /* Espaciado para la lista de errores */
+  position: static;
+  /* Cambia a static para que siga el flujo normal */
+  padding-left: 20px;
+  /* Espaciado para la lista de errores */
   color: red;
   text-align: left;
-  margin-top: 5px; /* Agrega un margen superior para separarlo del campo de entrada */
+  margin-top: 5px;
+  /* Agrega un margen superior para separarlo del campo de entrada */
 }
 
 .errorList li {
-  margin-bottom: 30px; /* Aumenta el margen entre los errores */
-  line-height: 1.4; /* Asegura que los errores tengan un espaciado vertical adecuado */
+  margin-bottom: 30px;
+  /* Aumenta el margen entre los errores */
+  line-height: 1.4;
+  /* Asegura que los errores tengan un espaciado vertical adecuado */
 }
 
 .inputError {
-  border: 2px solid red; /* Cambia el borde a rojo */
-  width: 100% !important;; /* Asegura que el ancho se mantenga al 100% */
-  box-sizing: border-box; /* Asegura que el padding y el borde no afecten el tamaño total */
+  border: 2px solid red;
+  /* Cambia el borde a rojo */
+  width: 100% !important;
+  ;
+  /* Asegura que el ancho se mantenga al 100% */
+  box-sizing: border-box;
+  /* Asegura que el padding y el borde no afecten el tamaño total */
 }
 
 .passwordContainer {
@@ -286,17 +313,30 @@ a {
 }
 
 .eyeImage {
-  width: 35px; /* Ajusta el tamaño según sea necesario */
+  width: 35px;
+  /* Ajusta el tamaño según sea necesario */
   height: 25px;
 }
+
+.logo {
+  max-width: 160px;
+  margin: 10px;
+  height: auto;
+  pointer-events: none;
+  /* Evita cualquier interacción del mouse */
+}
+
 /* Animación de aparición */
 @keyframes show {
-  0%, 49.99% {
+
+  0%,
+  49.99% {
     opacity: 0;
     z-index: 1;
   }
-  
-  50%, 100% {
+
+  50%,
+  100% {
     opacity: 1;
     z-index: 5;
   }
@@ -306,11 +346,91 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px; /* Ancho del botón */
-  height: 40px; /* Altura del botón */
-  background-color: rgb(255, 255, 255); /* Fondo blanco */
-  border: 1px solid #ccc; /* Borde gris claro */
-  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-  transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+  width: 40px;
+  /* Ancho del botón */
+  height: 40px;
+  /* Altura del botón */
+  background-color: rgb(255, 255, 255);
+  /* Fondo blanco */
+  border: 1px solid #ccc;
+  /* Borde gris claro */
+  cursor: pointer;
+  /* Cambia el cursor al pasar sobre el botón */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Sombra ligera */
+  transition: box-shadow 0.3s ease;
+  /* Transición suave para la sombra */
+}
+
+
+.container {
+  max-width: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+/* Ocultar overlay en pantallas pequeñas */
+@media (max-width: 768px) {
+  .overlayContainer {
+    display: none;
+    /* Oculta el overlay en móviles */
+  }
+
+  .container {
+    width: 100%;
+    /* Ajusta el contenedor para ocupar todo el ancho en móviles */
+    max-width: 100%;
+    /* Asegura que no tenga límite de ancho */
+    margin: 0 auto;
+    /* Centra el contenedor en móviles */
+    padding: 20px;
+    /* Agrega un poco de espacio alrededor */
+  }
+
+  .formContainer {
+    width: 100%;
+    /* Hace que el formulario ocupe todo el ancho del contenedor */
+    padding: 20px;
+    /* Espaciado adicional para móviles */
+    box-sizing: border-box;
+    /* Asegura que el padding no afecte el tamaño del contenedor */
+  }
+
+  input {
+    width: 80%;
+    /* Ajusta el ancho según tu preferencia */
+    max-width: 250px;
+    /* Establece un ancho máximo */
+    margin: 8px auto;
+    /* Centra los inputs horizontalmente */
+  }
+
+  .eyeIcon {
+    right: 20px;
+    /* Reduce la distancia del borde derecho */
+    top: 35%;
+    /* Centra verticalmente */
+    transform: translateY(-50%);
+  }
+
+  .passwordContainer {
+    width: 100%;
+    /* Ajusta el ancho según tu preferencia */
+    max-width: 250px;
+    /* Establece un ancho máximo */
+    margin: 8px auto;
+    /* Centra el contenedor horizontalmente */
+  }
+
+  .eyeIcon {
+    right: 5px;
+    /* Ajusta la distancia desde el borde derecho para móviles */
+    top: 35%;
+    /* Centra verticalmente */
+    transform: translateY(-50%);
+  }
+
+  input[type="password"] {
+    padding-right: 35px;
+    /* Ajusta el padding para que no solape el icono */
+  }
 }

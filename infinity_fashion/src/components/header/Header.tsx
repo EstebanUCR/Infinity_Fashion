@@ -8,10 +8,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import img1 from '../../assets/Home/logoWithOutBackground.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faSearch, faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useUserContext } from '../Context/userContext';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Accordion from 'react-bootstrap/Accordion';
 
 type HeaderProps = {
   cart: CartItem[]
@@ -38,10 +40,11 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   };
 
   // TODO: Revisar cambiar el estado en tiempo real
-  const [userData, setUser] = useState(null);
   const [userToken, setUserToken] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const { user } = useUserContext();
+
 
   useEffect(() => {
     const userToken = localStorage.getItem('token');
@@ -65,7 +68,8 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
       console.log(userToken)
       const data = await response.json();
       console.log('Protected data:', data);
-
+      setUserEmail(localStorage.getItem('email') || '')
+      setUserName(localStorage.getItem('name') || '')
       setUserToken(userToken)
     }
   }
@@ -76,6 +80,9 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   };
 
   return (
+    <div>
+
+
     <header>
       <Container fluid className="logo-container">
         <img
@@ -142,8 +149,24 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
           <Link className="nav-link nav-titles" to='/outerwear'>OUTERWEAR</Link>
           <Link className="nav-link nav-titles" to='/accessories'>ACCESSORIES</Link>
           <Link className="nav-link nav-titles" to='/shoes'>SHOES</Link>
-          {userToken.length > 0 ? (
-            <Link className="nav-link" to='/' onClick={handleLogOut}>Log Out</Link>
+          { userToken.length > 0 ? (
+            <div>
+              <Accordion className='w-100 align-center' defaultActiveKey="0" flush>
+                <Accordion.Item className='w-100 align-center' eventKey="1">
+                  <Accordion.Header className='w-100 align-center'>
+                    <div className='w-100 align-center'>
+                      <FontAwesomeIcon icon={faUser} size="lg" />
+                    </div>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <h3 className='text-center'><strong>User:</strong> {userName}</h3>
+                    <h3 className='text-center'><strong>Email:</strong> {userEmail}</h3>
+                    {/* <Link className="nav-link" to='/' onClick={handleLogOut}>Log Out</Link> */}
+                    <Link className='btn btn-pay w-100 mt-3 p-2' to='/' onClick={handleLogOut}>Log Out</Link>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion> 
+            </div>
           ) : (
             <Link className="nav-link" to='/signIn'>Sign In</Link>
           )}
@@ -206,9 +229,20 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
               )}
 
               <Nav className="auth-links">
-
-                {userToken.length > 0 ? (
-                  <Link className="nav-link" to='/' onClick={handleLogOut}>Logout</Link>
+              
+                { userToken.length > 0 ? (
+                  <div className='carrito'>
+                    <Link className="nav-link" to='#'>
+                      <FontAwesomeIcon icon={faUser} size="xl" />
+                    </Link>
+                    <div id='carrito' className='bg-white p-3'>
+                      
+                    <h3 className='text-center'><strong>User:</strong> {userName}</h3>
+                    <h3 className='text-center'><strong>Email:</strong> {userEmail}</h3>
+                    {/* <Link className="nav-link" to='/' >Logout</Link> */}
+                    <Link className='btn btn-logOut w-100 mt-3 p-2'  to='/' onClick={handleLogOut}>Log Out</Link>
+                    </div>
+                  </div>
                 ) : (
                   <Link className="nav-link" to='/signIn'>Sign In</Link>
                 )}
@@ -284,5 +318,6 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
         </Container>
       </Navbar>
     </header>
+    </div>
   );
 };
