@@ -54,8 +54,8 @@ export default function  ShoppingBag ({cart, removeFromCart, increaseQuantity, d
         setIsFormValid(allFieldsValid);
     }, [formValues]);
 
-    const handleInputChange = (e) => {
-        const {name, value} = e.target;
+    const handleInputChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = event.target;
         setFormValues({...formValues, [name]: value})   
     }
     

@@ -104,13 +104,13 @@ const SignIn = () => {
   };
 
   const toggleForm = () => setIsRightPanelActive(!isRightPanelActive);
-  const handleSignInClick = () => {
-    setIsRightPanelActive(false);
-  };
+  // const handleSignInClick = () => {
+  //   setIsRightPanelActive(false);
+  // };
 
-  const handleSignUpClick = () => {
-    setIsRightPanelActive(true);
-  };
+  // const handleSignUpClick = () => {
+  //   setIsRightPanelActive(true);
+  // };
 
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

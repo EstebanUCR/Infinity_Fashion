@@ -5,8 +5,6 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import { Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Dropdown from 'react-bootstrap/Dropdown';
-import SplitButton from 'react-bootstrap/SplitButton';
 import Accordion from 'react-bootstrap/Accordion';
 
 type ShopCategoryProps = {

@@ -10,9 +10,8 @@ import img1 from '../../assets/Home/logoWithOutBackground.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag, faSearch, faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
-import { useState, useEffect, useContext } from 'react';
-import { useUserContext } from '../Context/userContext';
-import Dropdown from 'react-bootstrap/Dropdown';
+import { useState, useEffect } from 'react';
+//import { useUserContext } from '../Context/userContext';
 import Accordion from 'react-bootstrap/Accordion';
 
 type HeaderProps = {
@@ -44,7 +43,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   const [userToken, setUserToken] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
-  const { user } = useUserContext();
+  //const { user } = useUserContext();
 
 
   useEffect(() => {
@@ -65,8 +64,8 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
           'authorization': 'Basic ' + userToken
         },
       });
-      //const data = await response.json();
-      //console.log('Protected data:', data);
+      const data = await response.json();
+      console.log('Protected data:', data);
       setUserEmail(localStorage.getItem('email') || '')
       setUserName(localStorage.getItem('name') || '')
       setUserToken(userToken)
