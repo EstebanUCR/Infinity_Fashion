@@ -57,7 +57,6 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   const validateToken = async () => {
     const userToken = localStorage.getItem('token');
     if (userToken) {
-      console.log(userToken)
       const response = await fetch('http://localhost:3000/protected', {
         method: 'GET',
         headers: {
@@ -65,18 +64,28 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
           'authorization': 'Basic ' + userToken
         },
       });
-      console.log(userToken)
-      const data = await response.json();
-      console.log('Protected data:', data);
+      //const data = await response.json();
+      //console.log('Protected data:', data);
       setUserEmail(localStorage.getItem('email') || '')
       setUserName(localStorage.getItem('name') || '')
       setUserToken(userToken)
     }
   }
 
-  const handleLogOut = () => {
-    localStorage.clear()
-    location.reload()
+  const handleLogOut = async () => {
+    const email = localStorage.getItem('email')
+    if(email) {
+      const response = await fetch('http://localhost:3000/signout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, cart }),
+      });
+
+      if (response.ok) {
+        localStorage.clear();
+        location.reload();
+      }
+  }
   };
 
   return (

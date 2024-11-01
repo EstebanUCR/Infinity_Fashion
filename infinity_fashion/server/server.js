@@ -18,6 +18,7 @@ const refreshTokensFilePath = path.join(__dirname, 'refreshTokens.json');
 
 // Ruta al archivo JSON de usuarios
 const usersFilePath = path.join(__dirname, '../src/assets/users/existing_users.json');
+const usersCartsFile = path.join(__dirname, '../src/assets/users/users_carts.json');
 
 // Función para leer los refresh tokens desde el archivo JSON
 const readRefreshTokens = () => {
@@ -49,6 +50,17 @@ const readUsers = () => {
 const writeUsers = (users) => {
   fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
 };
+
+//Funcion para leer archivo de carritos por usuario
+const readCarts = () => {
+  const carts = fs.readFileSync(usersCartsFile)
+  return JSON.parse(carts)
+}
+
+//Funcion para escribir carritos en archivo
+const writeCars = (carts) => {
+  fs.writeFileSync(usersCartsFile, JSON.stringify(carts, null, 2));
+}
 
 // Endpoint para registrar un usuario
 app.post('/signup', (req, res) => {
@@ -90,7 +102,13 @@ app.post('/signin', (req, res) => {
     const refreshTokens = readRefreshTokens();
     refreshTokens.push(refreshToken);
     writeRefreshTokens(refreshTokens);
-    return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken });
+    const carts = readCarts();
+    const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
+    userCart = []
+    if(cart) {
+      userCart = cart
+    }
+    return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken, userCart });
   }
 
   // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión normal
@@ -101,10 +119,34 @@ app.post('/signin', (req, res) => {
   }
 
   const userName = user.name
+  const carts = readCarts()
+  userCart = []
+  const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
+  if(cart) {
+    userCart = cart
+  }
 
   const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
-  res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, token });
+  res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, token, cart: userCart });
 });
+
+//Endpoint para cerrar sesion
+app.post('/signout', (req, res) => {
+  const {email, cart} = req.body;
+  if(email) {
+    const data = readCarts()
+    const user = data.find(user => user.email.toLowerCase() === email.toLowerCase())
+    if(user) {
+      user.cart = cart
+    } else {
+      data.push({email, cart})
+    }
+    writeCars(data)
+    res.status(201).json({ message: 'Carrito guardado'});
+  } else {
+    res.status(400).json({ message: 'Debe iniciar sesion'});
+  }
+})
 
 // Endpoint para renovar el access token
 app.post('/refresh-token', (req, res) => {
@@ -135,7 +177,7 @@ const verifyToken = (req, res, next) => {
   if (!token) {
     return res.status(403).json({ message: 'No se proporcionó un token.' });
   }
-  console.log(token)
+  //console.log(token)
   jwt.verify(token, SECRET_KEY, (err, decoded) => {
     if (err) {
       console.log(err)

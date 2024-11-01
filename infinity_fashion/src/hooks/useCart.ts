@@ -4,6 +4,12 @@ import { all_products } from "../assets/all_products";
 
 import type { Product, CartItem, ProductID } from "../types/types";
 
+//Cart interface
+interface CartObject {
+  email: string;
+  cart: CartItem[];
+}
+
 const useCart = () => {
   const initialCart = () : CartItem[] => {
     const localStorageCart = localStorage.getItem('cart')
@@ -93,7 +99,7 @@ const useCart = () => {
     isEmpty,
     cartTotal,
     shipping,
-    shippingValue
+    shippingValue,
   }
 }
 

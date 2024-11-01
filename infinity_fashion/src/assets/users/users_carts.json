@@ -1,0 +1,52 @@
+[
+  {
+    "email": "prodriguez1491@gmail.com",
+    "cart": [
+      {
+        "id": 10,
+        "category": "accessories",
+        "image": [
+          "/src/assets/productImages/pearl-bow-pendant-necklace.jpg",
+          "/src/assets/productImages/pearl-bow-pendant-necklace-1.jpg",
+          "/src/assets/productImages/pearl-bow-pendant-necklace-2.jpg",
+          "/src/assets/productImages/pearl-bow-pendant-necklace-3.jpg"
+        ],
+        "name": "Pearl Bow-Pendant Necklace",
+        "price": 24.5,
+        "isExclusive": false,
+        "description": "A delicate and simple necklace with an eye-catching bow charm.",
+        "quantity": 2
+      },
+      {
+        "id": 3,
+        "category": "tops",
+        "image": [
+          "/src/assets/productImages/knit-srap-crop-top.jpg",
+          "/src/assets/productImages/knit-srap-crop-top-1.jpg",
+          "/src/assets/productImages/knit-srap-crop-top-2.jpg",
+          "/src/assets/productImages/knit-srap-crop-top-3.jpg"
+        ],
+        "name": "Knit Strap Crop Top",
+        "price": 18.99,
+        "isExclusive": false,
+        "description": "This high-quality crop top is perfect for a romantic outing.",
+        "quantity": 2
+      },
+      {
+        "id": 20,
+        "category": "outerwear",
+        "image": [
+          "/src/assets/productImages/boxy-cropped-jacket.jpg",
+          "/src/assets/productImages/boxy-cropped-jacket-1.jpg",
+          "/src/assets/productImages/boxy-cropped-jacket-2.jpg",
+          "/src/assets/productImages/boxy-cropped-jacket-3.jpg"
+        ],
+        "name": "Boxy Cropped Jacket",
+        "price": 15.49,
+        "isExclusive": false,
+        "description": "A sturdy, fashionable jacket that will keep you perfectly warm.",
+        "quantity": 2
+      }
+    ]
+  }
+]

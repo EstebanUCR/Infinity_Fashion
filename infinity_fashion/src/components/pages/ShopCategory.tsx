@@ -24,7 +24,7 @@ type ShopCategoryProps = {
 }
 
 
-export default function ShopCategory ({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, data, addToCart, filterName, category } : ShopCategoryProps) {
+export default function ShopCategory ({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, data, addToCart, filterName, category} : ShopCategoryProps) {
   return (
     <div className='shop-category'>
       <Header 

@@ -18,13 +18,48 @@ interface ProductDisplayProps {
 }
 
 const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category, addToCart, product }) => {
+    const [userToken, setUserToken] = useState('');
     const [mainImage, setMainImage] = useState<string>(image[0]);
     const handleImageClick = (image: string) => {
         setMainImage(image); // Actualizar el estado de la imagen principal
     };
+
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
+        const token = localStorage.getItem('token');
+        if (token) {
+            validateToken();
+        }
+      }, []);
+
+      const validateToken = async () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+          console.log(token)
+          const response = await fetch('http://localhost:3000/protected', {
+            method: 'GET',
+            headers: { 
+              'Content-Type': 'application/json',
+              'authorization': 'Basic ' + token
+            },
+          });
+          console.log(token)
+          const data = await response.json();
+          console.log('Protected data:', data);
+          
+          setUserToken(token)
+        }
+      } 
+
+      const addToBag = (product: Product) => {
+        if (userToken !== '') {
+            addToCart(product)
+        } else {
+            alert("Debe iniciar sesion para agregar productos al carrito!")
+        }
+      }
+
+
     return (
         <div className="productDisplay">
             <div className="productDisplayLeft">
@@ -67,7 +102,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
                         <div>XL</div>
                     </div>
                 </div>
-                <button className='btn-add' onClick={() => addToCart(product)} >ADD TO CART</button>
+                <button className='btn-add' onClick={() => addToBag(product)} >ADD TO CART</button>
                 <div className='productDisplayRightCategory'>Category: {category}</div>
                 <div className='productDisplayRightProductCode'> Product code: {id}</div>
                 {isExclusive && <div className='productDisplayRightExclusive'>WEB EXCLUSIVE</div>}
