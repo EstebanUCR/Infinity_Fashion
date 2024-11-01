@@ -36,7 +36,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
-  
+
   // TODO: Revisar cambiar el estado en tiempo real
   const [userData, setUser] = useState(null);
   const [userToken, setUserToken] = useState('');
@@ -57,7 +57,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
       console.log(userToken)
       const response = await fetch('http://localhost:3000/protected', {
         method: 'GET',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'authorization': 'Basic ' + userToken
         },
@@ -65,16 +65,16 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
       console.log(userToken)
       const data = await response.json();
       console.log('Protected data:', data);
-      
+
       setUserToken(userToken)
     }
-  } 
+  }
 
   const handleLogOut = () => {
     localStorage.clear()
     location.reload()
   };
-  
+
   return (
     <header>
       <Container fluid className="logo-container">
@@ -89,11 +89,11 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
           <FontAwesomeIcon icon={faBars} />
         </div>
         <div className="sidebar-icons">
-            <Link to='/shoppingBag'>
-              <FontAwesomeIcon icon={faShoppingBag} size="xl" />
-            </Link>
-          </div>
+          <Link to='/shoppingBag'>
+            <FontAwesomeIcon icon={faShoppingBag} size="xl" />
+          </Link>
         </div>
+      </div>
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <button className="close-btn" onClick={toggleSidebar}>
@@ -142,21 +142,11 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
           <Link className="nav-link nav-titles" to='/outerwear'>OUTERWEAR</Link>
           <Link className="nav-link nav-titles" to='/accessories'>ACCESSORIES</Link>
           <Link className="nav-link nav-titles" to='/shoes'>SHOES</Link>
-          { userToken.length > 0 ? (
+          {userToken.length > 0 ? (
             <Link className="nav-link" to='/' onClick={handleLogOut}>Log Out</Link>
           ) : (
             <Link className="nav-link" to='/signIn'>Sign In</Link>
           )}
-          <div className="sidebar-icons">
-            <Link to='/shoppingBag'>
-              <FontAwesomeIcon
-                icon={faShoppingBag}
-                className="cart-icon-sidebar"
-                size="lg"
-                style={{ cursor: 'pointer' }}
-              />
-            </Link>
-          </div>
         </nav>
       </div>
 
@@ -216,13 +206,13 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
               )}
 
               <Nav className="auth-links">
-              
-                { userToken.length > 0 ? (
+
+                {userToken.length > 0 ? (
                   <Link className="nav-link" to='/' onClick={handleLogOut}>Logout</Link>
                 ) : (
                   <Link className="nav-link" to='/signIn'>Sign In</Link>
                 )}
-                
+
                 <div className='carrito'>
                   <Link className="nav-link" to='#'>
                     <FontAwesomeIcon icon={faShoppingBag} size="xl" />
