@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
 import './header.css';
 import { useState, useEffect } from 'react';
+import { useUserContext } from '../Context/userContext';
 
 type HeaderProps = {
   cart: CartItem[]
@@ -38,12 +39,41 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
   
   // TODO: Revisar cambiar el estado en tiempo real
   const [userData, setUser] = useState(null);
+  const [userToken, setUserToken] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const { user } = useUserContext();
+
   useEffect(() => {
-    const storedUser = localStorage.getItem('users');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const userToken = localStorage.getItem('token');
+    if (userToken) {
+      // setUser(JSON.parse(storedUser));
+      validateToken()
     }
   }, []);
+
+  const validateToken = async () => {
+    const userToken = localStorage.getItem('token');
+    if (userToken) {
+      console.log(userToken)
+      const response = await fetch('http://localhost:3000/protected', {
+        method: 'GET',
+        headers: { 
+          'Content-Type': 'application/json',
+          'authorization': 'Basic ' + userToken
+        },
+      });
+      console.log(userToken)
+      const data = await response.json();
+      console.log('Protected data:', data);
+      
+      setUserToken(userToken)
+    }
+  } 
+
+  const handleLogOut = () => {
+    localStorage.clear()
+    location.reload()
+  };
   
   return (
     <header>
@@ -112,13 +142,21 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
           <Link className="nav-link nav-titles" to='/outerwear'>OUTERWEAR</Link>
           <Link className="nav-link nav-titles" to='/accessories'>ACCESSORIES</Link>
           <Link className="nav-link nav-titles" to='/shoes'>SHOES</Link>
-          <li>
-            { userData ? (
-              <Link className="nav-link nav-titles" to='/profile'>Logout</Link>
-            ) : (
-              <Link className="nav-link nav-titles" to='/signIn'>Profile</Link>
-            )}
-          </li>
+          { userToken.length > 0 ? (
+            <Link className="nav-link" to='/' onClick={handleLogOut}>Log Out</Link>
+          ) : (
+            <Link className="nav-link" to='/signIn'>Sign In</Link>
+          )}
+          <div className="sidebar-icons">
+            <Link to='/shoppingBag'>
+              <FontAwesomeIcon
+                icon={faShoppingBag}
+                className="cart-icon-sidebar"
+                size="lg"
+                style={{ cursor: 'pointer' }}
+              />
+            </Link>
+          </div>
         </nav>
       </div>
 
@@ -178,7 +216,13 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
               )}
 
               <Nav className="auth-links">
-                <Link className="nav-link" to='/signIn'>Sign In</Link>
+              
+                { userToken.length > 0 ? (
+                  <Link className="nav-link" to='/' onClick={handleLogOut}>Logout</Link>
+                ) : (
+                  <Link className="nav-link" to='/signIn'>Sign In</Link>
+                )}
+                
                 <div className='carrito'>
                   <Link className="nav-link" to='#'>
                     <FontAwesomeIcon icon={faShoppingBag} size="xl" />

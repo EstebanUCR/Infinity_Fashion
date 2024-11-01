@@ -9,8 +9,12 @@ import eyeClosedIcon from '../../assets/Home/eyeClosedIcon.png';
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from '../../firebaseConfig';
 import { useUserContext } from '../Context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
+
+  const navigate = useNavigate();
+
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
 
   const { user, handleInputChange } = useUser(); // Usamos el hook para el manejo del estado del usuario
@@ -40,7 +44,7 @@ const SignIn = () => {
           alert(data.message); // Inicio de sesión exitoso
           localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
           loginUser({ name: displayName || '', email: email || '' });
-          window.location.href = '/'; // Redirigimos al usuario a la página principal
+          navigate('/');
         } else {
           alert("Este usuario no está registrado. Por favor, regístrese primero.");
         }
@@ -55,8 +59,8 @@ const SignIn = () => {
       const data = await response.json();
       if (response.ok) {
         alert(data.message); // Registro exitoso
-        localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
-        window.location.href = '/'; // Redirigimos al usuario a la página principal
+        localStorage.setItem('token', data.token); // Guardamos el token en el localStorage
+        navigate('/');
       } else {
         alert(data.message); // Error en el registro (usuario ya registrado)
       }
@@ -105,7 +109,7 @@ const SignIn = () => {
          if (response.ok) {
           localStorage.setItem('token', data.accessToken);
           loginUser({ name: user.name, email: user.email }); // Set user in context
-          window.location.href = '/'; // Redirigimos al usuario a la página principal
+          navigate('/');
         } 
         alert(data.message);
       } catch (error) {
@@ -133,7 +137,7 @@ const SignIn = () => {
         const data = await response.json();
         localStorage.setItem('token', data.accessToken);
         alert(data.message);
-        window.location.href = '/'; // Redirigimos al usuario a la página principal
+        navigate('/');
       } catch (error) {
         console.error('Error:', error);
       }
