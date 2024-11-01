@@ -32,9 +32,21 @@ p {
   cursor: pointer;
   margin: 10px;
   width: 30px;
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .icon:hover {
-  transition: transform 0.4s ease;
-  transform: scale(1.5);
+  transform: scale(1.2); /* Aumenta el tamaño de los iconos */
+  filter: sepia(1) hue-rotate(-20deg) saturate(300%) brightness(0.8); /* Ajusta el color al terracota */
+}
+p {
+  font-size: smaller;
+  transition: transform 0.3s ease, color 0.3s ease;
+  color: black; /* Initial color */
+  cursor: pointer;
+}
+
+p:hover {
+  transform: scale(1.1); /* Slightly enlarge text */
+  color: #E2725B; /* Terracotta color */
 }
