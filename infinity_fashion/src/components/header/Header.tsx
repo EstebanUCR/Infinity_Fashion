@@ -1,6 +1,6 @@
 import { CartItem, ProductID } from '../../types/types';
 import { all_products } from "../../assets/all_products";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -26,6 +26,7 @@ type HeaderProps = {
 }
 
 export default function Header({ cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal }: HeaderProps) {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -85,10 +86,10 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
 
     <header>
       <Container fluid className="logo-container">
-        <img
+        <img className="logo"
           src={img1}
-          className="logo"
-          alt="Infinity Fashion Logo"
+          alt="Logo"
+          onClick={() => navigate('/')}
         />
       </Container>
       <div className='menu-toggle-cart'>

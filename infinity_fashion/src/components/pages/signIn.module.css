@@ -322,8 +322,7 @@ a {
   max-width: 160px;
   margin: 10px;
   height: auto;
-  pointer-events: none;
-  /* Evita cualquier interacción del mouse */
+  cursor: pointer;
 }
 
 /* Animación de aparición */
