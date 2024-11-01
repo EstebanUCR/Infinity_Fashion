@@ -49,6 +49,12 @@ Once the repository is downloaded, the dependencies must be installed:
 npm install
 ```
 
+A server must be run for login authentication to proceed correctly for this:
+```sh
+cd .\server
+node .\server.js
+```
+
 Once they are installed, you can run it in a local environment:
 ```sh
 npm run dev
@@ -57,6 +63,18 @@ npm run dev
 ###
 
 ## Stages
+
+### Second stage 
+The following features were implemented for this stage:
+* Functional login and registration.
+* Visual and responsive design improvements.
+* Change of the cart position in mobile versions.
+* When logging in, user information is displayed and option to log out.
+* Only if logged in allows to add items to the cart
+* If you log out without finalizing the purchase, the cart you had so far is saved and loaded when you log in again.
+* Card payment form is added.
+* At the end of the purchase, an order is generated and saved, the user empties the cart and is sent to the home page.
+
 
 ### First stage
 The following features were implemented for this stage:
