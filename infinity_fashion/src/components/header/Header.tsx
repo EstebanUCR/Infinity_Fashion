@@ -90,7 +90,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
         </div>
         <div className="sidebar-icons">
           <Link to='/shoppingBag'>
-            <FontAwesomeIcon icon={faShoppingBag} size="xl" />
+            <FontAwesomeIcon icon={faShoppingBag} size="2x" />
           </Link>
         </div>
       </div>

@@ -29,7 +29,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
         <div className="productDisplay">
             <div className="productDisplayLeft">
                 <div className='productDisplayImgList'>
-                    {image.slice(0, 3).map((image, index) => (
+                    {image.slice(0, 4).map((image, index) => (
                         <img
                             key={index}
                             src={image}
