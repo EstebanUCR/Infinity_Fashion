@@ -19,6 +19,7 @@ const refreshTokensFilePath = path.join(__dirname, 'refreshTokens.json');
 // Ruta al archivo JSON de usuarios
 const usersFilePath = path.join(__dirname, '../src/assets/users/existing_users.json');
 const usersCartsFile = path.join(__dirname, '../src/assets/users/users_carts.json');
+const userOrdersFile = path.join(__dirname, '../src/assets/users/users_orders.json');
 
 // Función para leer los refresh tokens desde el archivo JSON
 const readRefreshTokens = () => {
@@ -60,6 +61,17 @@ const readCarts = () => {
 //Funcion para escribir carritos en archivo
 const writeCars = (carts) => {
   fs.writeFileSync(usersCartsFile, JSON.stringify(carts, null, 2));
+}
+
+//Funcion para leer las ordenes
+const readOrders = () => {
+  const orders = fs.readFileSync(userOrdersFile)
+  return JSON.parse(orders)
+}
+
+//Funcion para escribir las ordenes de los clientes en el JSON
+const writeOrders = (orders) => {
+  fs.writeFileSync(userOrdersFile, JSON.stringify(orders, null, 2));
 }
 
 // Endpoint para registrar un usuario
@@ -143,6 +155,32 @@ app.post('/signout', (req, res) => {
     }
     writeCars(data)
     res.status(201).json({ message: 'Carrito guardado'});
+  } else {
+    res.status(400).json({ message: 'Debe iniciar sesion'});
+  }
+})
+
+//Endpont para guardar ordenes
+app.post('/pay', (req, res) => {
+  const {email, cart, shipping} = req.body;
+  if(email) {
+    const data = readOrders();
+    const currentDate = new Date().toISOString();
+    const orderDetails = cart.map(({id, name, price, quantity}) => ({
+      id,
+      name,
+      price,
+      quantity,
+    }))
+    const newOrder = {
+      email: email,
+      date: currentDate,
+      shipping: shipping,
+      product: orderDetails
+    }
+    data.push(newOrder)
+    writeOrders(data)
+    res.status(201).json({message: 'Orden realizada!'});
   } else {
     res.status(400).json({ message: 'Debe iniciar sesion'});
   }

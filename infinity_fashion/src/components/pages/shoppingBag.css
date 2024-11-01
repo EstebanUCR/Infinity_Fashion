@@ -154,6 +154,7 @@ input:focus::-webkit-input-placeholder
 }
 .totals {
     font-weight: bold;
+    margin-top: 5px;
 }
 .btn-pay {
     padding: 0 2px;
