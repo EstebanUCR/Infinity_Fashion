@@ -77,7 +77,7 @@ const SignIn = () => {
         const data = await response.json();
         if (response.ok) {
           alert(data.message); // Registro exitoso
-          localStorage.setItem('token', data.token); // Guardamos el token en el localStorage
+          localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
           loginUser({ name: displayName || '', email: email || '' });
           localStorage.setItem('name', displayName || '');
           localStorage.setItem('email', email || '');
@@ -128,7 +128,7 @@ const SignIn = () => {
         const data = await response.json();
         console.log(data)
         if (response.ok) {
-          localStorage.setItem('token', data.token);
+          localStorage.setItem('token', data.accessToken);
           const storagedCart = JSON.stringify(data.userCart.cart)
           if(typeof(storagedCart) === undefined || storagedCart === undefined) {
             localStorage.setItem('cart', JSON.stringify([]));
@@ -165,9 +165,9 @@ const SignIn = () => {
           }),
         });
         const data = await response.json();
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.accessToken);
         loginUser({ name: data.userName, email: user.email }); // Set user in context
-        localStorage.setItem('name', data.userName);
+        localStorage.setItem('name', user.name);
         localStorage.setItem('email', user.email);
         alert(data.message);
         navigate('/');

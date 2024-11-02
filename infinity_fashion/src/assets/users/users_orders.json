@@ -42,5 +42,24 @@
         "quantity": 1
       }
     ]
+  },
+  {
+    "email": "wuniejwu@gmail.com",
+    "date": "2024-11-01T22:35:49.930Z",
+    "shipping": 5,
+    "product": [
+      {
+        "id": 14,
+        "name": "Mary Jane Pumps",
+        "price": 17.49,
+        "quantity": 2
+      },
+      {
+        "id": 13,
+        "name": "Suede Stiletto Boots",
+        "price": 29.49,
+        "quantity": 1
+      }
+    ]
   }
 ]

@@ -45,13 +45,33 @@
     "password": "Password123"
   },
   {
+    "name": "Pablo Rodríguez Navarro",
+    "email": "prodriguez1491@gmail.com",
+    "password": ""
+  },
+  {
+    "name": "j",
+    "email": "j@gmail.com",
+    "password": "Password123"
+  },
+  {
+    "name": "ja",
+    "email": "ja@gmail.com",
+    "password": "Password123"
+  },
+  {
+    "name": "s",
+    "email": "s@gmail.com",
+    "password": "aaaS444"
+  },
+  {
     "name": "Johana",
     "email": "wuniejwu@gmail.com",
     "password": ""
   },
   {
-    "name": "Pablo Rodríguez Navarro",
-    "email": "prodriguez1491@gmail.com",
-    "password": ""
+    "name": "Johana",
+    "email": "johanaejemplo@gmail.com",
+    "password": "ffff4T"
   }
 ]

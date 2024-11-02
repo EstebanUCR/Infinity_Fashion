@@ -138,8 +138,8 @@ app.post('/signin', (req, res) => {
     userCart = cart
   }
 
-  const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
-  res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, token, userCart });
+  const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
+  res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, accessToken, userCart });
 });
 
 //Endpoint para cerrar sesion
