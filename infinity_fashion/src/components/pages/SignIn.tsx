@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import img1 from '../../assets/Home/logoWithOutBackground.png';
 import Footer from '../footer/Footer';
-import { signUp } from '../../services/apiService';
+import { signIn, signUp } from '../../services/apiService';
 
 const SignIn = () => {
 
@@ -54,7 +54,7 @@ const SignIn = () => {
           alert(data.message); // Inicio de sesión exitoso
           localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
           const storagedCart = JSON.stringify(data.userCart.cart)
-          if(typeof(storagedCart) === undefined || storagedCart === undefined) {
+          if (typeof (storagedCart) === undefined || storagedCart === undefined) {
             localStorage.setItem('cart', JSON.stringify([]));
           } else {
             localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
@@ -118,30 +118,31 @@ const SignIn = () => {
     if (validateSignIn(user.email, user.password)) {
       // Lógica para el inicio de sesión si es válido
       try {
-        const response = await fetch('http://localhost:3000/signin', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: user.email,
-            password: user.password,
-          }),
-        });
-        const data = await response.json();
+        // const response = await fetch('http://localhost:3000/signin', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     email: user.email,
+        //     password: user.password,
+        //   }),
+        // });
+        // const data = await response.json();
+
+        const data = await signIn(user.email, user.password);
         console.log(data)
-        if (response.ok) {
-          localStorage.setItem('token', data.accessToken);
-          const storagedCart = JSON.stringify(data.userCart.cart)
-          if(typeof(storagedCart) === undefined || storagedCart === undefined) {
-            localStorage.setItem('cart', JSON.stringify([]));
-          } else {
-            localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
-          }
-          loginUser({ name: data.userName, email: user.email }); // Set user in context
-          localStorage.setItem('name', data.userName);
-          localStorage.setItem('email', user.email);
-          navigate('/');
-          location.reload();
-        }
+        // localStorage.setItem('token', data.accessToken);
+        // const storagedCart = JSON.stringify(data.userCart.cart)
+        // if (typeof (storagedCart) === undefined || storagedCart === undefined) {
+        //   localStorage.setItem('cart', JSON.stringify([]));
+        // } else {
+        //   localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
+        // }
+        localStorage.setItem('token', data.accessToken);
+        loginUser({ name: data.userName, email: user.email }); // Set user in context
+        localStorage.setItem('name', data.userName);
+        localStorage.setItem('email', user.email);
+        alert(data.message);
+        navigate('/');
         alert(data.message);
       } catch (error) {
         console.error('Error:', error);
@@ -156,22 +157,22 @@ const SignIn = () => {
     if (validateSignUp(user.name, user.email, user.password, confirmPassword)) {
       // Lógica para el registro si es válido
       try {
-        const response = await fetch('http://localhost:3000/signup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: user.name,
-            email: user.email,
-            password: user.password,
-          }),
-        });
-        const data = await response.json();
+        // const response = await fetch('http://localhost:3000/signup', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     name: user.name,
+        //     email: user.email,
+        //     password: user.password,
+        //   }),
+        // });
+        // const data = await response.json();
+        const data = await signUp(user.email, user.password, user.name)
         localStorage.setItem('token', data.accessToken);
         loginUser({ name: data.userName, email: user.email }); // Set user in context
         localStorage.setItem('name', user.name);
         localStorage.setItem('email', user.email);
         alert(data.message);
-        signUp(user.email, user.password, user.name)
         navigate('/');
       } catch (error) {
         console.error('Error:', error);

@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
 
-const { signUp, signIn, signOut } = require('./authService');
+const { signUp, signIn, signOut, getUserByEmail } = require('./authService');
 
 const app = express();
 const PORT = process.env.PORT; // Obtener el puerto desde las variables de entorno o usar 3000 por defecto
@@ -20,26 +20,76 @@ app.use(express.json());
 
 // API route for sign up
 app.post('/api/signup', async (req, res) => {
-  console.log('inside api signup')
+  const { name, email, password } = req.body;
+
   try {
-    const { email, password, name } = req.body;
+    // Verificar si el usuario ya existe en la base de datos
+    const existingUser = await getUserByEmail(email);
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'El usuario ya está registrado.' });
+    }
+
+    // Crear el nuevo usuario en Supabase
     const user = await signUp(email, password, name);
-    res.status(201).json(user);
+
+    
+    // Generar tokens después de que el usuario se haya registrado
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+
+    // Guardar el refresh token en el archivo JSON
+    const refreshTokens = readRefreshTokens();
+    refreshTokens.push(refreshToken);
+    writeRefreshTokens(refreshTokens);
+
+    // Responder con éxito sólo una vez aquí
+    return res.status(201).json({ message: 'Registro exitoso', accessToken, refreshToken });
+
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error('Error en /signup:', error);
+    // Responder con el error si ocurre
+    return res.status(400).json({ error: error.message });
   }
-  console.log('finished work inside api signup')
 });
 
 // TODO falta implementar y probar este
 // API route for sign in
 app.post('/api/signin', async (req, res) => {
+  console.log("dentro de api signIn");
+  const { email, password } = req.body;
+  const normalizedEmail = email.toLowerCase();
+
   try {
-    const { email, password } = req.body;
-    const session = await signIn(email, password);
-    res.status(200).json(session);
+    // Verificar si es un inicio de sesión de Google (sin contraseña)
+    if (!password) {
+      const user = await getUserByEmail(normalizedEmail);
+      if (!user) {
+        return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
+      }
+
+      // Generar tokens para el inicio de sesión con Google
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+      const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+
+      // Guarda el refreshToken en tu base de datos o sistema de almacenamiento de tokens
+
+      return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken, refreshToken });
+    }
+
+    // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión regular
+    const user = await signIn(email, password);
+   
+    // Generar tokens para el inicio de sesión regular
+    const accessToken = jwt.sign({ email: user.email }, SECRET_KEY, { expiresIn: '1h' });
+    const refreshToken = jwt.sign({ email: user.email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+
+    // Guarda el refreshToken en tu base de datos o sistema de almacenamiento de tokens
+
+    return res.status(200).json({ message: 'Inicio de sesión exitoso', userName: user.name, accessToken, refreshToken });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error('Error en /signin:', error);
+    return res.status(400).json({ message: error.message });
   }
 });
 
@@ -114,7 +164,6 @@ const writeOrders = (orders) => {
   fs.writeFileSync(userOrdersFile, JSON.stringify(orders, null, 2));
 }
 
-// Endpoint para registrar un usuario
 app.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
   const users = readUsers();
@@ -138,14 +187,14 @@ app.post('/signup', (req, res) => {
 });
 
 // Endpoint para iniciar sesión
-app.post('/signin', (req, res) => {
+app.post('/signin', async (req, res) => {
   const { email, password } = req.body;
   const users = readUsers();
   const normalizedEmail = email.toLowerCase();
 
   // Verificar si es un inicio de sesión de Google (sin contraseña)
   if (!password) {
-    const user = users.find(user => user.email.toLowerCase() === normalizedEmail);
+    const user = await getUserByEmail(email);
     if (!user) {
       return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
     }
@@ -157,7 +206,7 @@ app.post('/signin', (req, res) => {
     const carts = readCarts();
     const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
     userCart = []
-    if(cart) {
+    if (cart) {
       userCart = cart
     }
     return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken, userCart });
@@ -174,7 +223,7 @@ app.post('/signin', (req, res) => {
   const carts = readCarts()
   userCart = []
   const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
-  if(cart) {
+  if (cart) {
     userCart = cart
   }
 
@@ -184,29 +233,29 @@ app.post('/signin', (req, res) => {
 
 //Endpoint para cerrar sesion
 app.post('/signout', (req, res) => {
-  const {email, cart} = req.body;
-  if(email) {
+  const { email, cart } = req.body;
+  if (email) {
     const data = readCarts()
     const user = data.find(user => user.email.toLowerCase() === email.toLowerCase())
-    if(user) {
+    if (user) {
       user.cart = cart
     } else {
-      data.push({email, cart})
+      data.push({ email, cart })
     }
     writeCars(data)
-    res.status(201).json({ message: 'Carrito guardado'});
+    res.status(201).json({ message: 'Carrito guardado' });
   } else {
-    res.status(400).json({ message: 'Debe iniciar sesion'});
+    res.status(400).json({ message: 'Debe iniciar sesion' });
   }
 })
 
 //Endpont para guardar ordenes
 app.post('/pay', (req, res) => {
-  const {email, cart, shipping} = req.body;
-  if(email) {
+  const { email, cart, shipping } = req.body;
+  if (email) {
     const data = readOrders();
     const currentDate = new Date().toISOString();
-    const orderDetails = cart.map(({id, name, price, quantity}) => ({
+    const orderDetails = cart.map(({ id, name, price, quantity }) => ({
       id,
       name,
       price,
@@ -220,9 +269,9 @@ app.post('/pay', (req, res) => {
     }
     data.push(newOrder)
     writeOrders(data)
-    res.status(201).json({message: 'Orden realizada!'});
+    res.status(201).json({ message: 'Orden realizada!' });
   } else {
-    res.status(400).json({ message: 'Debe iniciar sesion'});
+    res.status(400).json({ message: 'Debe iniciar sesion' });
   }
 })
 
@@ -261,7 +310,7 @@ const verifyToken = (req, res, next) => {
       console.log(err)
       return res.status(401).json({ message: 'Token inválido.' });
     }
-    
+
     res.email = decoded.email;
     const users = readUsers();
     const user = users.find(user => user.email.toLowerCase() === req.email);
@@ -271,7 +320,7 @@ const verifyToken = (req, res, next) => {
 
 // Ejemplo de un endpoint protegido
 app.get('/protected', verifyToken, (req, res) => {
-  res.status(200).json({ message: 'Acceso autorizado:', email: req.email});
+  res.status(200).json({ message: 'Acceso autorizado:', email: req.email });
 });
 
 // Iniciar el servidor
