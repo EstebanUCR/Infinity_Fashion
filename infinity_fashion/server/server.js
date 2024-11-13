@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
 
+const { signUp, signIn, signOut } = require('./authService');
+
 const app = express();
 const PORT = process.env.PORT; // Obtener el puerto desde las variables de entorno o usar 3000 por defecto
 const SECRET_KEY = process.env.SECRET_KEY; // Obtener la clave secreta desde las variables de entorno
@@ -13,6 +15,44 @@ const REFRESH_SECRET_KEY = process.env.REFRESH_SECRET_KEY; // Clave secreta para
 
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use(express.json());
+
+// API route for sign up
+app.post('/api/signup', async (req, res) => {
+  console.log('inside api signup')
+  try {
+    const { email, password, name } = req.body;
+    const user = await signUp(email, password, name);
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+  console.log('finished work inside api signup')
+});
+
+// TODO falta implementar y probar este
+// API route for sign in
+app.post('/api/signin', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const session = await signIn(email, password);
+    res.status(200).json(session);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// TODO falta implementar y probar este
+// API route for sign out
+app.post('/api/signout', async (req, res) => {
+  try {
+    await signOut();
+    res.status(200).json({ message: 'Signed out successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 const refreshTokensFilePath = path.join(__dirname, 'refreshTokens.json');
 

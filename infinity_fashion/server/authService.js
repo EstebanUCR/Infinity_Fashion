@@ -4,7 +4,7 @@ const { supabase } = require('./supabaseClient');
 
 const signUp = async (email, password, name) => {
   // Registrar al usuario en el sistema de autenticación de Supabase
-  const { user, error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: { data: { name } },
@@ -12,12 +12,14 @@ const signUp = async (email, password, name) => {
 
   if (error) throw error;
 
+  console.log(data)
+
   // Insertar datos adicionales en la tabla `users`
   const { error: insertError } = await supabase
     .from('users')
     .insert([
       {
-        id: user.id,       // Usamos el `id` de usuario creado en el sistema de autenticación
+        id: data.user.id,       // Usamos el `id` de usuario creado en el sistema de autenticación
         name: name,
         email: email,
         creation_date: new Date()  // Fecha de creación (opcional)
@@ -26,7 +28,7 @@ const signUp = async (email, password, name) => {
 
   if (insertError) throw insertError;
 
-  return user;
+  return data;
 };
 
 // Sign in function

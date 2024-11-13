@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import img1 from '../../assets/Home/logoWithOutBackground.png';
 import Footer from '../footer/Footer';
+import { signUp } from '../../services/apiService';
 
 const SignIn = () => {
 
@@ -170,6 +171,7 @@ const SignIn = () => {
         localStorage.setItem('name', user.name);
         localStorage.setItem('email', user.email);
         alert(data.message);
+        signUp(user.email, user.password, user.name)
         navigate('/');
       } catch (error) {
         console.error('Error:', error);
