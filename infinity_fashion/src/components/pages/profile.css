@@ -14,21 +14,30 @@
 .profile-left {
   text-align: center;
   margin-right: 30px;
-  margin-top: 100px;
+  margin-top: 150px;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 .profile-image {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 15px;
+  width: 250px; /* Fixed width */
+  height: 250px; /* Fixed height */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the container */
+  object-position: center; /* Centers the image */
+  cursor: pointer;
+  margin-bottom: 100px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow */
+  transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
 }
 
+/* Optional: Hover effect for a deeper shadow */
+.profile-image:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Adds a larger shadow on hover */
+}
 .profile-left h2 {
   font-size: 24px;
   margin-top: -50px;
@@ -96,4 +105,62 @@
 .logo {
   width: 150px;
   cursor: pointer;
+}
+
+/* Modal styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-content h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  margin-top: 15px; /* Space between buttons and input */
+}
+.save-button,
+.close-button {
+  background-color: #BF665E;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: -20px;
+  flex: 1; /* Makes buttons take equal width */
+}
+
+.close-button {
+  background-color: #666;
+  margin-left: 10px;
+}
+
+.save-button:hover {
+  background-color: #a14f4b;
+}
+
+.close-button:hover {
+  background-color: #444;
 }

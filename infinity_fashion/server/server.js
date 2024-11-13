@@ -14,7 +14,8 @@ const PORT = process.env.PORT; // Obtener el puerto desde las variables de entor
 const SECRET_KEY = process.env.SECRET_KEY; // Obtener la clave secreta desde las variables de entorno
 const REFRESH_SECRET_KEY = process.env.REFRESH_SECRET_KEY; // Clave secreta para el refresh token
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors());
 
 app.use(express.json());

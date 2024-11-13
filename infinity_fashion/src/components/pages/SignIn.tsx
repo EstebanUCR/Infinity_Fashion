@@ -137,12 +137,14 @@ const SignIn = () => {
         // } else {
         //   localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
         // }
-        localStorage.setItem('token', data.accessToken);
-        loginUser({ name: data.userName, email: user.email }); // Set user in context
-        localStorage.setItem('name', data.userName);
-        localStorage.setItem('email', user.email);
-        alert(data.message);
-        navigate('/');
+        if(data.message === 'Inicio de sesión exitoso') {
+          localStorage.setItem('token', data.accessToken);
+          loginUser({ name: data.userName, email: user.email }); // Set user in context
+          localStorage.setItem('name', data.userName);
+          localStorage.setItem('email', user.email);
+          alert(data.message);
+          navigate('/');
+        }
         alert(data.message);
       } catch (error) {
         console.error('Error:', error);
