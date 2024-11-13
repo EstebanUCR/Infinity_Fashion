@@ -1,0 +1,99 @@
+/* General container styling */
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Left section styling */
+.profile-left {
+  text-align: center;
+  margin-right: 30px;
+  margin-top: 100px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-image {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.profile-left h2 {
+  font-size: 24px;
+  margin-top: -50px;
+  color: #333;
+}
+
+.profile-left p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Right section styling */
+.profile-right {
+  flex: 2;
+}
+
+.profile-right h3 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+/* Form styling */
+.profile-form label {
+  font-weight: bold;
+  color: #555;
+  display: block;
+  margin-top: 15px;
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Button styling */
+.save-button {
+  background-color: #BF665E;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #BF665E;
+}
+
+/* Logo container styling */
+.logo-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.logo {
+  width: 150px;
+  cursor: pointer;
+}

@@ -67,15 +67,5 @@ const signOut = async () => {
   if (error) throw error;
 };
 
-const getUserByEmail = async (email) => {
-  const { data, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('email', email)
-    .single();
 
-  if (error) return null;
-  return data;
-};
-
-module.exports = { signUp, signIn, signOut, getUserByEmail };
+module.exports = { signUp, signIn, signOut };

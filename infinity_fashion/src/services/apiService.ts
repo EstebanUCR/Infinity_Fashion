@@ -31,3 +31,33 @@ export const signOut = async (): Promise<any> => {
   });
   return response.json();
 };
+
+export const getUserProfile = async (email: string) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/getProfile?email=${email}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch profile: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+export const updateUserProfile = async (userData: any) => {
+  const response = await fetch('http://localhost:3000/api/updateProfile', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+  return response.json();
+};

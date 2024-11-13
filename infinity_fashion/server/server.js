@@ -5,8 +5,9 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
+const { getUserByEmail, updateUserProfile } = require('./userService');
+const { signUp, signIn, signOut} = require('./authService');
 
-const { signUp, signIn, signOut, getUserByEmail } = require('./authService');
 
 const app = express();
 const PORT = process.env.PORT; // Obtener el puerto desde las variables de entorno o usar 3000 por defecto
@@ -50,6 +51,31 @@ app.post('/api/signup', async (req, res) => {
     console.error('Error en /signup:', error);
     // Responder con el error si ocurre
     return res.status(400).json({ error: error.message });
+  }
+});
+
+// Endpoint to get user profile
+app.get('/api/getProfile', async (req, res) => {
+  try {
+    console.log('dentro de getProfile');
+    const email = req.query.email;
+    const user = await getUserByEmail(email);
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error getting profile:', error);
+    res.status(500).json({ message: 'Error fetching profile' });
+  }
+});
+
+// Endpoint to update user profile
+app.put('/api/Updateprofile', async (req, res) => {
+  try {
+    const updates = req.body;
+    const updatedUser = await updateUserProfile(updates);
+    res.status(200).json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ success: false, message: 'Error updating profile' });
   }
 });
 
