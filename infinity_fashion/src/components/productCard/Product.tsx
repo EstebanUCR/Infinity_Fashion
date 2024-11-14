@@ -1,17 +1,18 @@
 import type { Product } from '../../types/types';
 import './Product.css';
 import { Link } from 'react-router-dom';
+import type { databaseProduct } from '../../types/entities';
 
 type ProductProps = {
-  product: Product,
-  addToCart: (item: Product) => void
+  product: databaseProduct,
+  // addToCart: (item: databaseProduct) => void
 }
 
 export default function ProductCard ({product} : ProductProps)  {
   return (
     <div className="product-card">
       <div className="image-container">
-        <Link to={`/product/${product.id}`}> <img src={product.image[0]} alt={product.name} /> </Link>
+        {/* <Link to={`/product/${product.id}`}> <img src={product.image[0]} alt={product.name} /> </Link> */}
         </div>
       <div className="product-details">
         <h3>{product.name}</h3>
@@ -19,7 +20,7 @@ export default function ProductCard ({product} : ProductProps)  {
           <span className={`price ${product.discount} ? 'price-discount' : 'price-regular'}`}>
             ${product.price}
           </span>{' '}
-          <span className="old-price">{product.oldPrice}</span>{' '}
+          {/* <span className="old-price">{product.price - product.price * product.discount}</span>{' '} */}
           <span className="discount">{product.discount}</span>
         </p>
       </div>

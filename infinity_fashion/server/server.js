@@ -7,6 +7,7 @@ const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
 const { getUserByEmail, updateUserProfile } = require('./userService');
 const { signUp, signIn, signOut} = require('./authService');
+const { getProductsByCategory } = require('./productService');
 
 
 const app = express();
@@ -128,6 +129,21 @@ app.post('/api/signout', async (req, res) => {
     res.status(200).json({ message: 'Signed out successfully' });
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+});
+
+// Endpoint to get products
+app.get('/api/getProducts', async (req, res) => {
+  try {
+    console.log('dentro de getProducts');
+    const category = req.query.category;
+    const products = await getProductsByCategory(category);
+    console.log(category)
+    console.log(products)
+    res.send(products);
+  } catch (error) {
+    console.error('Error getting products:', error);
+    res.status(500).json({ message: 'Error fetching products' });
   }
 });
 
