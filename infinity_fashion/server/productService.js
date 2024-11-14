@@ -13,6 +13,7 @@ const getProductsByCategory  = async (category) => {
 
 // fetch images by product
 const getImagesByProduct  = async (product_id) => {
+  console.log(product_id)
   const { data, error } = await supabase
     .from('product_images')
     .select('*')

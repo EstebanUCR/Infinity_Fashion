@@ -43,7 +43,7 @@ export default function ShopCategory ({cart, removeFromCart, increaseQuantity, d
       console.log(response)
 
     } catch (err) {
-      console.error('Error fetching servicios', err);
+      console.error('Error fetching products', err);
     } 
   };
   

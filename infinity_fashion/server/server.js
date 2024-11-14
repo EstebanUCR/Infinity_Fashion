@@ -7,7 +7,7 @@ const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
 const { getUserByEmail, updateUserProfile } = require('./userService');
 const { signUp, signIn, signOut} = require('./authService');
-const { getProductsByCategory } = require('./productService');
+const { getProductsByCategory, getImagesByProduct } = require('./productService');
 
 
 const app = express();
@@ -138,12 +138,27 @@ app.get('/api/getProducts', async (req, res) => {
     console.log('dentro de getProducts');
     const category = req.query.category;
     const products = await getProductsByCategory(category);
-    console.log(category)
-    console.log(products)
+    // console.log(category)
+    // console.log(products)
     res.send(products);
   } catch (error) {
     console.error('Error getting products:', error);
     res.status(500).json({ message: 'Error fetching products' });
+  }
+});
+
+// Endpoint to get products
+app.get('/api/getProductImages', async (req, res) => {
+  try {
+    console.log('dentro de getProductImages');
+    const product_id = req.query.product_id;
+    const images = await getImagesByProduct(product_id);
+    console.log(product_id)
+    console.log(images)
+    res.send(images);
+  } catch (error) {
+    console.error('Error getting product images:', error);
+    res.status(500).json({ message: 'Error fetching products images' });
   }
 });
 

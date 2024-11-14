@@ -1,7 +1,9 @@
 import type { Product } from '../../types/types';
+import { useEffect, useState } from 'react';
 import './Product.css';
 import { Link } from 'react-router-dom';
-import type { databaseProduct } from '../../types/entities';
+import { getProductImages } from '../../services/apiService';
+import type { databaseProduct, productImage } from '../../types/entities';
 
 type ProductProps = {
   product: databaseProduct,
@@ -9,10 +11,33 @@ type ProductProps = {
 }
 
 export default function ProductCard ({product} : ProductProps)  {
+
+  const [images, setImages] = useState<productImage[]>([])
+
+  // on render
+  useEffect(() => {
+    fetchImages()
+    console.log(images)
+  }, []);
+
+  const fetchImages = async () => {
+    try {
+      const response: productImage[] = await getProductImages(product.id);
+      setImages(response)
+      
+      console.log(response)
+
+    } catch (err) {
+      console.error('Error fetching product images', err);
+    } 
+  };
+
   return (
     <div className="product-card">
       <div className="image-container">
-        {/* <Link to={`/product/${product.id}`}> <img src={product.image[0]} alt={product.name} /> </Link> */}
+        <Link to={`/product/${product.id}`}>
+          {images?.length > 0 ? <img src={images[0].image_data} alt={product.name} /> : null }
+        </Link>
         </div>
       <div className="product-details">
         <h3>{product.name}</h3>
