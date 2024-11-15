@@ -62,9 +62,9 @@ export const updateUserProfile = async (userData: any) => {
   return response.json();
 };
 
-export const getProducts = async (category: number) => {
+export const getProducts = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/api/getProducts?category=${category}`, {
+    const response = await fetch(`http://localhost:3000/api/getProducts`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

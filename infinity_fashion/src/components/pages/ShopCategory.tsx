@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
 import { getProducts } from '../../services/apiService';
 import type { databaseProduct } from '../../types/entities';
+import type { productWithCategory } from '../../types/entities';
 
 type ShopCategoryProps = {
   cart: CartItem[]
@@ -27,7 +28,7 @@ type ShopCategoryProps = {
 
 export default function ShopCategory ({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, data, addToCart, filterName, category} : ShopCategoryProps) {
   
-  const [products, setProducts] = useState<databaseProduct[]>([])
+  const [products, setProducts] = useState<productWithCategory[]>([])
 
   // on render
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function ShopCategory ({cart, removeFromCart, increaseQuantity, d
 
   const fetchProducts = async () => {
     try {
-      const response: databaseProduct[] = await getProducts(1);
+      const response: productWithCategory[] = await getProducts();
       setProducts(response)
       
       console.log(response)
@@ -82,20 +83,19 @@ export default function ShopCategory ({cart, removeFromCart, increaseQuantity, d
           <Col>
             <div className='shopcategory-products'>
             
-            { 
-              Array.isArray(products) ? products.map(product => <ProductCard key={product.id} product={product} />) : null}
-              {/* products.map((product)=> {
-                // if (category===item.category) {
-                  return <ProductCard key={product.id} product={product} />
-                  //  addToCart={addToCart} 
-                // }
-                // else {
-                //   return null;
-                // }
-              })
-            
-            }
-           */}
+              { 
+                Array.isArray(products) ? 
+                  products.map(product => {
+                    if (category===product.categories.name.toLowerCase()) {
+                      return <ProductCard key={product.id} product={product} />
+                      //  addToCart={addToCart} 
+                    } else {
+                      return null;
+                    }
+                  })
+                  :
+                  null
+              }
             </div>
           </Col>
         </Row>

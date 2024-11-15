@@ -1,5 +1,14 @@
 const { supabase } = require('./supabaseClient');
 
+// Fetch all products
+const getProducts  = async () => {
+  const { data, error } = await supabase
+    .from('products')
+    .select('id, name, description, price, categories (id, name), discount, is_exclusive, arrival_date');
+  if (error) return null;
+  return data;
+};
+
 // Fetch products by category
 const getProductsByCategory  = async (category) => {
   const { data, error } = await supabase
@@ -13,7 +22,6 @@ const getProductsByCategory  = async (category) => {
 
 // fetch images by product
 const getImagesByProduct  = async (product_id) => {
-  console.log(product_id)
   const { data, error } = await supabase
     .from('product_images')
     .select('*')
@@ -45,6 +53,7 @@ const getSizesByProduct  = async (product_id) => {
 // };
 
 module.exports = {
+  getProducts,
   getProductsByCategory,
   getImagesByProduct,
   getSizesByProduct,

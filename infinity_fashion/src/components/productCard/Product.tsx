@@ -1,12 +1,12 @@
 import type { Product } from '../../types/types';
 import { useEffect, useState } from 'react';
 import './Product.css';
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 import { getProductImages } from '../../services/apiService';
-import type { databaseProduct, productImage } from '../../types/entities';
+import type { databaseProduct, productWithCategory, productImage } from '../../types/entities';
 
 type ProductProps = {
-  product: databaseProduct,
+  product: productWithCategory,
   // addToCart: (item: databaseProduct) => void
 }
 
@@ -50,7 +50,11 @@ export default function ProductCard ({product} : ProductProps)  {
         </p>
       </div>
       <div className='d-flex justify-content-end'>
-        <Link className='w-100 mt-3 p-2' to={`/product/${product.id}`}>
+        <Link
+          className="w-100 mt-3 p-2"
+          to={`/product/${product.id}`}
+          state={{product: product, images: images}}
+        >
           <button
             className='w-100 mt-3 p-2'
           >Quick view</button>

@@ -7,7 +7,7 @@ const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
 const { getUserByEmail, updateUserProfile } = require('./userService');
 const { signUp, signIn, signOut} = require('./authService');
-const { getProductsByCategory, getImagesByProduct } = require('./productService');
+const { getProductsByCategory, getProducts, getImagesByProduct } = require('./productService');
 
 
 const app = express();
@@ -135,9 +135,8 @@ app.post('/api/signout', async (req, res) => {
 // Endpoint to get products
 app.get('/api/getProducts', async (req, res) => {
   try {
-    console.log('dentro de getProducts');
-    const category = req.query.category;
-    const products = await getProductsByCategory(category);
+    // console.log('dentro de getProducts');
+    const products = await getProducts();
     // console.log(category)
     // console.log(products)
     res.send(products);
@@ -147,14 +146,14 @@ app.get('/api/getProducts', async (req, res) => {
   }
 });
 
-// Endpoint to get products
+// Endpoint to get product images
 app.get('/api/getProductImages', async (req, res) => {
   try {
-    console.log('dentro de getProductImages');
+    // console.log('dentro de getProductImages');
     const product_id = req.query.product_id;
     const images = await getImagesByProduct(product_id);
-    console.log(product_id)
-    console.log(images)
+    // console.log(product_id)
+    // console.log(images)
     res.send(images);
   } catch (error) {
     console.error('Error getting product images:', error);
