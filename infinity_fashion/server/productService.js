@@ -9,7 +9,7 @@ const getProducts  = async () => {
   return data;
 };
 
-// Fetch products by category
+// Fetch products by category (not in use)
 const getProductsByCategory  = async (category) => {
   const { data, error } = await supabase
     .from('products')
@@ -42,20 +42,31 @@ const getSizesByProduct  = async (product_id) => {
   return data;
 };
 
+const getNewestProducts  = async () => {
+  const { data, error } = await supabase
+    .from('products')
+    .select('id, name, description, price, categories (id, name), discount, is_exclusive, arrival_date')
+    .order('arrival_date', { ascending: false })
+    .limit(8);
+  if (error) return null;
+  return data;
+};
+
 // Update stock by size
-// const updateStockBySize = async (product_id, quantity) => {
-//   const { data, error } = await supabase
-//     .from('sizes')
-//     .update()
-//     .eq('products_id', product_id);
-//   if (error) throw error;
-//   return data;
-// };
+const updateStockBySize = async (product_id, quantity) => {
+  const { data, error } = await supabase
+    .from('sizes')
+    .update({ stock: supabase.raw('stock - ?', [quantity]) })  // Decrease the stock by the quantity
+    .eq('products_id', product_id);
+  if (error) throw error;
+  return data;
+};
 
 module.exports = {
   getProducts,
   getProductsByCategory,
   getImagesByProduct,
   getSizesByProduct,
-  // updateStockBySize
+  getNewestProducts,
+  updateStockBySize
 };

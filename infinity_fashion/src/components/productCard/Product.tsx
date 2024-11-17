@@ -42,11 +42,22 @@ export default function ProductCard ({product} : ProductProps)  {
       <div className="product-details">
         <h3>{product.name}</h3>
         <p>
-          <span className={`price ${product.discount} ? 'price-discount' : 'price-regular'}`}>
-            ${product.price}
-          </span>{' '}
-          {/* <span className="old-price">{product.price - product.price * product.discount}</span>{' '} */}
-          <span className="discount">{product.discount}</span>
+          {
+            product.discount ? 
+            <div>
+              <span className='price-discount'>
+              ${(product.price - product.price * product.discount).toFixed(2)}
+              </span>{' '}
+              <span className="old-price">${product.price.toFixed(2)}</span>{' '}
+              <span className="discount">{product.discount * 100}% OFF</span>
+            </div>
+            :
+            <div>
+              <span className='price-regular'>
+              ${product.price.toFixed(2)}
+              </span>{' '}
+            </div>
+          }
         </p>
       </div>
       <div className='d-flex justify-content-end'>
