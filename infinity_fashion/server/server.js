@@ -5,7 +5,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
-const { getUserByEmail, updateUserProfile } = require('./userService');
+const { getUserByEmail, updateUserProfile, getAllUsers } = require('./userService');
 const { signUp, signIn, signOut} = require('./authService');
 const { getProductsByCategory, getProducts, getImagesByProduct } = require('./productService');
 
@@ -36,7 +36,7 @@ app.post('/api/signup', async (req, res) => {
     // Crear el nuevo usuario en Supabase
     const user = await signUp(email, password, name);
 
-    
+  
     // Generar tokens después de que el usuario se haya registrado
     const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
     const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
@@ -53,6 +53,16 @@ app.post('/api/signup', async (req, res) => {
     console.error('Error en /signup:', error);
     // Responder con el error si ocurre
     return res.status(400).json({ error: error.message });
+  }
+});
+
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await getAllUsers();
+    res.status(200).json(users); // Devuelve los usuarios como JSON
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Failed to fetch users' });
   }
 });
 

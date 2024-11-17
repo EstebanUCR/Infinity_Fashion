@@ -12,6 +12,19 @@ const getUserByEmail  = async (email) => {
   return data;
 };
 
+const getAllUsers = async () => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('*'); // Obtiene todas las columnas de todos los usuarios
+
+  if (error) {
+    console.error('Error fetching users:', error);
+    throw error; // Opcional: lanza el error para manejarlo en el controlador
+  }
+
+  return data; // Devuelve el array de usuarios
+};
+
 // Update user profile
 const updateUserProfile = async (userData) => {
   const { email, ...updates } = userData;
@@ -52,9 +65,11 @@ const deleteUser = async (id) => {
   return true;
 };
 
+
 module.exports = {
   getUserByEmail ,
+  getAllUsers,
   updateUserProfile,
   createUser,
-  deleteUser,
+  deleteUser
 };
