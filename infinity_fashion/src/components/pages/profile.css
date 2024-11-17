@@ -107,31 +107,78 @@
   cursor: pointer;
 }
 
-/* Modal styling */
+/* Modal Overlay */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
 
+/* Modal Content Styling */
 .modal-content {
   background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
+  padding: 30px;
+  border-radius: 15px;
+  width: 400px;
+  max-width: 90%;
   text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Slight shadow */
 }
 
-.modal-content h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
+
+/* Modal Message */
+.modal-content p {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.modal-close {
+  position: absolute;
+  bottom: 70px; /* Adjust distance from the bottom */
+  right: 5px; /* Adjust distance from the right */
+  background: #bf665e;
+  border: none;
+  font-size: 18px;
+  color: #fff !important; /* Set the "X" to white */
+  cursor: pointer;
+  border-radius: 50%; /* Make it circular */
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #a14f4b; /* Darker on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+
+/* Buttons inside the modal */
+.modal-content button {
+  background-color: #bf665e; /* Main color */
+  color: #fff;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #a14f4b; /* Darker hover color */
 }
 .button-container {
   display: flex;
@@ -144,8 +191,8 @@
   background-color: #BF665E;
   color: white;
   padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
+  border: none !important;
+  border-radius: 5px !important;;
   cursor: pointer;
   font-weight: bold;
   margin-top: -20px;
@@ -153,7 +200,7 @@
 }
 
 .close-button {
-  background-color: #666;
+  background-color: #666 !important;;
   margin-left: 10px;
 }
 
@@ -163,4 +210,9 @@
 
 .close-button:hover {
   background-color: #444;
+}
+
+.error {
+  border: 2px solid red;
+  background-color: #ffe6e6;
 }

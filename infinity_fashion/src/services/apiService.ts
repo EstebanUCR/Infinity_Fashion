@@ -1,3 +1,5 @@
+import { userData } from "../types/types";
+
 export const signUp = async (email: string, password: string, name: string): Promise<any> => {
   const response = await fetch('http://localhost:3000/api/signup', {
     method: 'POST',
@@ -51,6 +53,24 @@ export const getUserProfile = async (email: string) => {
     throw error;
   }
 };
+
+
+export const getExistingUsers = async (): Promise<userData[]> => {
+  const response = await fetch('http://localhost:3000/api/users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch users: ${response.statusText}`);
+  }
+
+  return response.json(); // Devuelve los datos como `userData[]`
+};
+
+
 export const updateUserProfile = async (userData: any) => {
   const response = await fetch('http://localhost:3000/api/updateProfile', {
     method: 'PUT',

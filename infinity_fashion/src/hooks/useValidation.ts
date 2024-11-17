@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { userData } from '../types/types';
+import { getExistingUsers } from '../services/apiService';
 
-// Cargar los datos desde el archivo JSON
-import existingUsersData from '../assets/users/existing_users.json'; // Ruta al archivo JSON con los datos de usuarios existentes
 
 const useValidation = () => {
   const [errors, setErrors] = useState<{
@@ -9,23 +9,42 @@ const useValidation = () => {
     email: string;
     password: string | string[];
     confirmPassword?: string;
+    phone?: string;
+    shipping_address?: string;
+    billing_address?: string;
   }>({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
+    phone: '',
+    shipping_address: '',
+    billing_address: '',
   });
+  const [existingUsers, setExistingUsers] = useState<userData[]>([]);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const users = await getExistingUsers();
+        setExistingUsers(users);
+      } catch (error) {
+        console.error('Error fetching existing users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
   const validateSignUp = (name: string, email: string, password: string, confirmPassword: string) => {
     const errorsTemp: {
       name: string;
       email: string;
       password: string | string[];
       confirmPassword: string;
-    } = { name: '', email: '', password: '',  confirmPassword: '' };
+    } = { name: '', email: '', password: '', confirmPassword: '' };
 
     // Verificar si el email ya están registrados en la lista de usuarios existentes
-    const isEmailTaken = existingUsersData.some((user) => user.email === email);
+    const isEmailTaken = existingUsers.some((user) => user.email === email);
 
     if (!name) {
       errorsTemp.name = 'Name is required';
@@ -68,7 +87,7 @@ const useValidation = () => {
 
     }
 
-      if (confirmPassword !== password) {
+    if (confirmPassword !== password) {
       errorsTemp.confirmPassword = 'Passwords do not match';
     } else {
       errorsTemp.confirmPassword = ''; // Sin errores
@@ -105,15 +124,70 @@ const useValidation = () => {
       password: string | string[];
     } = { name: '', email: '', password: '' };
 
-    const isEmailTaken = existingUsersData.some((user) => user.email === email);
-    if(!isEmailTaken) {
+    const isEmailTaken = existingUsers.some((user) => user.email === email);
+    if (!isEmailTaken) {
       errorsTemp.email = 'This email is not registered';
     }
 
     setErrors(errorsTemp);
     return !errorsTemp.email;
   };
-  return { errors, validateSignUp, validateSignIn, validateGoogleSignIn };
+
+  const validateProfile = (userData: {
+    name: string;
+    phone: string | null;
+    shipping_address: string | null;
+    billing_address: string | null;
+  }) => {
+    const errorsTemp = {
+      name: '',
+      phone: '',
+      shipping_address: '',
+      billing_address: '',
+      email: '', // Agregar email para cumplir con el tipo
+      password: '', // Agregar password para cumplir con el tipo
+      confirmPassword: '', // Agregar confirmPassword para cumplir con el tipo
+    };
+
+    // Validación de `name`
+    if (!userData.name.trim()) {
+      errorsTemp.name = 'Name is required';
+    }
+
+    // Validación de `phone`
+    if (userData.phone) {
+      if (!/^\d{8}$/.test(userData.phone)) {
+        errorsTemp.phone = 'Phone must be exactly 8 digits';
+      }
+    }
+
+    // Validación de `shipping_address`
+    if (userData.shipping_address) {
+      if (userData.shipping_address.length > 50) {
+        errorsTemp.shipping_address = 'Shipping address must not exceed 50 characters';
+      }
+    }
+
+    // Validación de `billing_address`
+    if (userData.billing_address) {
+      if (userData.billing_address.length > 50) {
+        errorsTemp.billing_address = 'Billing address must not exceed 50 characters';
+      }
+    }
+
+    setErrors(errorsTemp);
+
+    // Retorna true si no hay errores
+    return (
+      !errorsTemp.name &&
+      !errorsTemp.phone &&
+      !errorsTemp.shipping_address &&
+      !errorsTemp.billing_address
+    );
+  };
+
+  return { errors, validateSignUp, validateSignIn, validateGoogleSignIn, validateProfile };
+
 };
 
 export default useValidation;

@@ -367,6 +367,63 @@ a {
   transition: all 0.6s ease-in-out;
 }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Content Styling */
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Slight shadow */
+  
+}
+
+
+/* Modal Message */
+.modal-content p {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20px !important;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px; /* Ajusta la distancia desde la parte superior */
+  right: 10px; /* Ajusta la distancia desde la derecha */
+  background: #bf665e;
+  border: none;
+  font-size: 18px;
+  color: #fff !important; /* Establece el "X" en blanco */
+  cursor: pointer;
+  border-radius: 50%; /* Hazlo circular */
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #a14f4b; /* Darker on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
 /* Ocultar overlay en pantallas pequeñas */
 @media (max-width: 768px) {
   .overlayContainer {

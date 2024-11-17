@@ -30,24 +30,14 @@ app.post('/api/signup', async (req, res) => {
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-      return res.status(400).json({ message: 'El usuario ya está registrado.' });
+      return res.status(400).json({ message: 'The user is already registered.' });
     }
 
     // Crear el nuevo usuario en Supabase
     const user = await signUp(email, password, name);
-
-  
-    // Generar tokens después de que el usuario se haya registrado
-    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
-    const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-
-    // Guardar el refresh token en el archivo JSON
-    const refreshTokens = readRefreshTokens();
-    refreshTokens.push(refreshToken);
-    writeRefreshTokens(refreshTokens);
-
+    
     // Responder con éxito sólo una vez aquí
-    return res.status(201).json({ message: 'Registro exitoso', accessToken, refreshToken });
+    return res.status(201).json({ message: 'Registration successful.', accessToken, refreshToken });
 
   } catch (error) {
     console.error('Error en /signup:', error);
@@ -103,16 +93,8 @@ app.post('/api/signin', async (req, res) => {
     if (!password) {
       const user = await getUserByEmail(normalizedEmail);
       if (!user) {
-        return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
+        return res.status(404).json({ message: 'This user is not registered. Please create an account in the registration section.' });
       }
-
-      // Generar tokens para el inicio de sesión con Google
-      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
-      const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-
-      // Guarda el refreshToken en tu base de datos o sistema de almacenamiento de tokens
-
-      return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken, refreshToken });
     }
 
     // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión regular
@@ -124,7 +106,7 @@ app.post('/api/signin', async (req, res) => {
 
     // Guarda el refreshToken en tu base de datos o sistema de almacenamiento de tokens
 
-    return res.status(200).json({ message: 'Inicio de sesión exitoso', userName: user.name, accessToken, refreshToken });
+    return res.status(200).json({ message: 'Login successful.', userName: user.name, accessToken, refreshToken });
   } catch (error) {
     console.error('Error en /signin:', error);
     return res.status(400).json({ message: error.message });

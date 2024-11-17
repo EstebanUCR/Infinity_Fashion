@@ -30,6 +30,19 @@ const SignIn = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { loginUser } = useUserContext();
   const [isMobile, setIsMobile] = useState(false);
+  const [messageModal, setMessageModal] = useState<{ isOpen: boolean; message: string }>({
+    isOpen: false,
+    message: '',
+  });
+
+  const showMessage = (message: string) => {
+    setMessageModal({ isOpen: true, message });
+  };
+
+  const closeMessage = () => {
+    setMessageModal({ isOpen: false, message: '' });
+  };
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     handleResize();
@@ -51,7 +64,7 @@ const SignIn = () => {
 
         const data = await response.json();
         if (response.ok) {
-          alert(data.message); // Inicio de sesión exitoso
+          showMessage(data.message);
           localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
           const storagedCart = JSON.stringify(data.userCart.cart)
           if (typeof (storagedCart) === undefined || storagedCart === undefined) {
@@ -62,10 +75,12 @@ const SignIn = () => {
           loginUser({ name: displayName || '', email: email || '' });
           localStorage.setItem('name', displayName || '');
           localStorage.setItem('email', email || '');
-          navigate('/');
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
           location.reload();
         } else {
-          alert("Este usuario no está registrado. Por favor, regístrese primero.");
+          showMessage("This user is not registered. Please sign up first.");
         }
       } else {
         // Modo Sign Up
@@ -77,19 +92,21 @@ const SignIn = () => {
 
         const data = await response.json();
         if (response.ok) {
-          alert(data.message); // Registro exitoso
+          showMessage(data.message); // Registro exitoso
           localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
           loginUser({ name: displayName || '', email: email || '' });
           localStorage.setItem('name', displayName || '');
           localStorage.setItem('email', email || '');
-          navigate('/');
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
         } else {
-          alert(data.message); // Error en el registro (usuario ya registrado)
+          showMessage(data.message); // Error en el registro (usuario ya registrado)
         }
       }
     } catch (error) {
       console.error("Error con la autenticación de Google:", error);
-      alert("Error con la autenticación de Google. Por favor, inténtelo de nuevo.");
+      showMessage("Error with Google authentication. Please try again.");
     }
   };
   const togglePasswordVisibilitySignUp = () => {
@@ -115,7 +132,7 @@ const SignIn = () => {
 
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateSignIn(user.email, user.password)) {
+    if (validateSignIn(user.email, user.password ?? '')) {
       // Lógica para el inicio de sesión si es válido
       try {
         // const response = await fetch('http://localhost:3000/signin', {
@@ -128,7 +145,7 @@ const SignIn = () => {
         // });
         // const data = await response.json();
 
-        const data = await signIn(user.email, user.password);
+        const data = await signIn(user.email, user.password ?? '');
         console.log(data)
         // localStorage.setItem('token', data.accessToken);
         // const storagedCart = JSON.stringify(data.userCart.cart)
@@ -137,15 +154,17 @@ const SignIn = () => {
         // } else {
         //   localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
         // }
-        if(data.message === 'Inicio de sesión exitoso') {
+        if (data.message === 'Login successful.') {
           localStorage.setItem('token', data.accessToken);
           loginUser({ name: data.userName, email: user.email }); // Set user in context
           localStorage.setItem('name', data.userName);
           localStorage.setItem('email', user.email);
-          alert(data.message);
-          navigate('/');
+          showMessage(data.message);
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
         }
-        alert(data.message);
+        showMessage(data.message);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -156,7 +175,7 @@ const SignIn = () => {
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateSignUp(user.name, user.email, user.password, confirmPassword)) {
+    if (validateSignUp(user.name, user.email, user.password ?? '', confirmPassword)) {
       // Lógica para el registro si es válido
       try {
         // const response = await fetch('http://localhost:3000/signup', {
@@ -169,13 +188,15 @@ const SignIn = () => {
         //   }),
         // });
         // const data = await response.json();
-        const data = await signUp(user.email, user.password, user.name)
+        const data = await signUp(user.email, user.password ?? '', user.name)
         localStorage.setItem('token', data.accessToken);
         loginUser({ name: data.userName, email: user.email }); // Set user in context
         localStorage.setItem('name', user.name);
         localStorage.setItem('email', user.email);
-        alert(data.message);
-        navigate('/');
+        showMessage(data.message);
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -241,7 +262,7 @@ const SignIn = () => {
                     type={showPasswordSignUp ? "text" : "password"}
                     placeholder="Password"
                     name="password"
-                    value={user.password}
+                    value={user.password ?? ''}
                     onChange={handleInputChange}
                     className={signUpErrors.password ? `${styles.inputError}` : ''}
                   />
@@ -296,7 +317,7 @@ const SignIn = () => {
                     type={showPasswordSignIn ? "text" : "password"}
                     placeholder="Password"
                     name="password"
-                    value={user.password}
+                    value={user.password ?? ''}
                     onChange={handleInputChange}
                     className={signInErrors.password ? `${styles.inputError}` : ''}
                   />
@@ -347,7 +368,7 @@ const SignIn = () => {
                     type={showPasswordSignUp ? "text" : "password"}
                     placeholder="Password"
                     name="password"
-                    value={user.password}
+                    value={user.password ?? ''}
                     onChange={handleInputChange}
                     className={signUpErrors.password && isRightPanelActive ? `${styles.inputError}` : ''}
                   />
@@ -401,7 +422,7 @@ const SignIn = () => {
                     type={showPasswordSignIn ? "text" : "password"}
                     placeholder="Password"
                     name="password"
-                    value={user.password}
+                    value={user.password ?? ''}
                     onChange={handleInputChange}
                     className={signInErrors.password && !isRightPanelActive ? `${styles.inputError}` : ''}
                   />
@@ -433,6 +454,18 @@ const SignIn = () => {
           </>
         )}
       </div>
+
+      {messageModal.isOpen && (
+        <div className="modal">
+          <div className={"modal-content"}>
+            <p>{messageModal.message}</p>
+            <button className="modal-close" onClick={closeMessage}>
+              X
+            </button>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </>
   );

@@ -17,3 +17,6 @@ export type productWithCategory = {
 }
 
 export type productImage = Tables<'product_images'>
+
+// Define the type for the `users` table
+export type User = Tables<'users'>;
