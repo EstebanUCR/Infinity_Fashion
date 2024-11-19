@@ -35,9 +35,10 @@ app.post('/api/signup', async (req, res) => {
 
     // Crear el nuevo usuario en Supabase
     const user = await signUp(email, password, name);
-    
+    if (user) {
     // Responder con éxito sólo una vez aquí
-    return res.status(201).json({ message: 'Registration successful.', accessToken, refreshToken });
+      return res.status(201).json({ message: 'Registration successful.'});
+    }
 
   } catch (error) {
     console.error('Error en /signup:', error);
