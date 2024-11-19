@@ -3,25 +3,17 @@ import { useLocation } from 'react-router-dom';
 import './ProductDisplay.css'
 import { Product } from '../../types/types';
 import AutoCloseModal from '../pages/messageModal';
-import type { databaseProduct, productWithCategory, productImage } from '../../types/entities';
+import { getProductSizesAndStock } from '../../services/apiService';
+import type { productImage } from '../../types/entities';
 
 /* TODO agregar los datos faltantes para mejorar la descripcion y el stock*/
 interface ProductDisplayProps {
-    id: number;
-    image: string[];
-    name: string;
-    price: number;
-    description?: string;
-    isExclusive: boolean;
-    oldPrice?: string;
-    discount?: string;
-    category: string;
     addToCart: (item: Product) => void;
     product: Product
 }
 
-// TODO continuar con cambios para q use los datos de la base, revisar los tamanos de imagen
-const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category, addToCart, product }) => {
+// TODO revisar porque despliega las imagenes con tamanos diferentes
+const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart, product }) => {
    
     const location = useLocation();
     const displayProduct = location.state?.product;
@@ -32,6 +24,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
         return <div>Product not found</div>;
     } else {
         console.log(displayProductImages)
+        console.log(displayProduct)
     }
    
     const [showModal, setShowModal] = useState(false)
@@ -82,13 +75,13 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
         <div className="productDisplay">
             <div className="productDisplayLeft">
                 <div className='productDisplayImgList'>
-                    {image.slice(0, 4).map((image, index) => (
+                    {displayProductImages.slice(0, 4).map((image: productImage, index: number) => (
                         <img
                             key={index}
-                            src={image}
+                            src={image.image_data}
                             alt={`Product thumbnail ${index}`}
                             className="img-thumbnail"
-                            onClick={() => handleImageClick(image)} // Agregar el controlador de eventos
+                            onClick={() => handleImageClick(image.image_data)} // Agregar el controlador de eventos
                             style={{ cursor: 'pointer' }} // Cambiar el cursor para indicar que es clicable
                         />
                     ))}
@@ -101,9 +94,16 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
             <div className="productDisplayRight">
                 <h1>{displayProduct.name}</h1>
                 <div className="productDisplayRightPrices">
-                    <div className="productDisplayRightPriceNew">Price: ${displayProduct.price}</div>
-                    <div className="productDisplayRightPriceOld">{oldPrice}</div>
-                    <div className="productDisplayRightPriceDiscount">{discount}</div>
+                    {
+                        displayProduct.discount ? 
+                            <div>
+                                <div className="productDisplayRightPriceNew">Price: ${(displayProduct.price - displayProduct.price * displayProduct.discount).toFixed(2)}</div>
+                                <div className="productDisplayRightPriceOld">${displayProduct.price.toFixed(2)}</div>
+                                <div className="productDisplayRightPriceDiscount">{displayProduct.discount * 100}% OFF</div>
+                            </div>
+                        : 
+                        <div className="productDisplayRightPriceNew">Price: ${displayProduct.price}</div>
+                    }
                 </div>
 
                 <div className="productDisplayRightDetails">

@@ -97,7 +97,7 @@ export const getProducts = async () => {
 
     return await response.json();
   } catch (error) {
-    console.error('Error fetching user products:', error);
+    console.error('Error fetching products:', error);
     throw error;
   }
 };
@@ -119,7 +119,49 @@ export const getProductImages = async (product_id: number) => {
 
     return await response.json();
   } catch (error) {
-    console.error('Error fetching user product images:', error);
+    console.error('Error fetching product images:', error);
+    throw error;
+  }
+};
+
+export const getProductSizesAndStock = async (product_id: number) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/getSizesAndStock?product_id=${product_id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch product sizes: ${response.statusText}`);
+    }
+
+    console.log(response)
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching product sizes:', error);
+    throw error;
+  }
+};
+
+export const getNewestProducts = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/getNewestProducts`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch newest products: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching newest products:', error);
     throw error;
   }
 };

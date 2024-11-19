@@ -50,7 +50,7 @@
 
 .productDisplayImgMain {
     max-width: 50%;
-    max-height: auto;
+    max-height: auto; 
     border-radius: 4px;
 }
 
@@ -87,7 +87,6 @@
 
 .productDisplayRightPrices {
     display: flex;
-    align-items: center;
     margin: 20px 0px;
     gap: 30px;
     font-size: 24px;
@@ -98,7 +97,8 @@
     color: #000000;
     text-decoration: line-through;
     font-size: 20px;
-    
+    display: flex;
+    align-items: start;
 }
 
 .productDisplayRightPriceNew {
@@ -109,6 +109,8 @@
 .productDisplayRightPriceDiscount {
     color: #ff4141;
     font-size: 20px;
+    display: flex;
+    align-items: start;
 }
 
 .productDisplayRightSize h1{

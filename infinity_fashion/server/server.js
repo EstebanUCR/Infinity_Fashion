@@ -7,7 +7,7 @@ const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
 const { getUserByEmail, updateUserProfile, getAllUsers } = require('./userService');
 const { signUp, signIn, signOut} = require('./authService');
-const { getProductsByCategory, getProducts, getImagesByProduct } = require('./productService');
+const { getProductsByCategory, getProducts, getImagesByProduct, getSizesByProduct, getNewestProducts } = require('./productService');
 
 
 const app = express();
@@ -151,6 +151,32 @@ app.get('/api/getProductImages', async (req, res) => {
   } catch (error) {
     console.error('Error getting product images:', error);
     res.status(500).json({ message: 'Error fetching products images' });
+  }
+});
+
+// Endpoint to get products
+app.get('/api/getSizesAndStock', async (req, res) => {
+  try {
+    // console.log('dentro de getProducts');
+    const product_id = req.query.product_id;
+    const products = await getSizesByProduct(product_id);
+    // console.log(category)
+    // console.log(products)
+    res.send(products);
+  } catch (error) {
+    console.error('Error getting product sizes and stock:', error);
+    res.status(500).json({ message: 'Error fetching product sizes and stock' });
+  }
+});
+
+// Endpoint to get newest products
+app.get('/api/getNewestProducts', async (req, res) => {
+  try {
+    const products = await getNewestProducts();
+    res.send(products);
+  } catch (error) {
+    console.error('Error getting newest products:', error);
+    res.status(500).json({ message: 'Error fetching newest products' });
   }
 });
 
