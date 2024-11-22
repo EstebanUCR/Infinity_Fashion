@@ -36,7 +36,9 @@ const getSizesByProduct  = async (product_id) => {
   const { data, error } = await supabase
     .from('sizes')
     .select('*')
-    .eq('product_id', product_id);
+    .eq('products_id', product_id);
+
+    console.log(data)
 
   if (error) return null;
   return data;

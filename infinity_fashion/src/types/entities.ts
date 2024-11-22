@@ -16,6 +16,8 @@ export type productWithCategory = {
   price: number
 }
 
+export type sizeWithStock = Tables<'sizes'>
+
 export type productImage = Tables<'product_images'>
 
 // Define the type for the `users` table
