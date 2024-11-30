@@ -9,6 +9,7 @@ import './index.css'
 import useCart from './hooks/useCart';
 import Product from './components/pages/Product';
 import { UserProvider } from './components/Context/userContext';
+import History from './components/pages/historyScreen';
 
 function App() {
   const {data, cart, addToCart, removeFromCart, decreaseQuantity, increaseQuantity, clearCart, isEmpty, cartTotal, shipping, shippingValue} = useCart()
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/shoppingBag" element={<ShoppingBag cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} shipping={shipping} shippingValue={shippingValue}/>} />
           <Route path="/product/:productId" element={<Product cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} data={data} addToCart={addToCart} filterName="" category=""/>} />
+          <Route path="/history" element={<History cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} addToCart={addToCart} data={data}/>} />
         </Routes>
       </Router>}
        </UserProvider>
