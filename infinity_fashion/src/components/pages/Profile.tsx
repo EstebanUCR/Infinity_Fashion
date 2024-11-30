@@ -119,7 +119,7 @@ const Profile = () => {
 
   return (
     <>
-      <Container fluid className="logo-container">
+      <Container fluid className="logo-container-profile">
         <img className="logo" src={img1} alt="Logo" onClick={() => navigate('/')} />
       </Container>
       <div className="profile-container">
