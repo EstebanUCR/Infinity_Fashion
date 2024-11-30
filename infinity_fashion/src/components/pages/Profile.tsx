@@ -174,6 +174,9 @@ const Profile = () => {
             <button onClick={handleSave} className="save-button">
               Save Profile
             </button>
+            <button onClick={() => navigate('/history')} className="history-button">
+              Purchase history
+            </button>
           </div>
         </div>
       </div>
