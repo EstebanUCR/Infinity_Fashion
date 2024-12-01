@@ -8,6 +8,7 @@ require('dotenv').config(); // Cargar las variables de entorno desde el archivo 
 const { getUserByEmail, updateUserProfile, getAllUsers } = require('./userService');
 const { signUp, signIn, signOut} = require('./authService');
 const { getProductsByCategory, getProducts, getImagesByProduct, getSizesByProduct, getNewestProducts } = require('./productService');
+const { createToken } = require('./tokenService');
 
 
 const app = express();
@@ -37,7 +38,10 @@ app.post('/api/signup', async (req, res) => {
     const user = await signUp(email, password, name);
     if (user) {
     // Responder con éxito sólo una vez aquí
-      return res.status(201).json({ message: 'Registration successful.'});
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+      const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+      createToken(refreshToken);
+      return res.status(201).json({ message: 'Registration successful.', accessToken});
     }
 
   } catch (error) {
@@ -96,7 +100,10 @@ app.post('/api/signin', async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'This user is not registered. Please create an account in the registration section.' });
       } else {
-        return res.status(200).json({ message: 'Login successful.'});
+        const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+        const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+        createToken(refreshToken);
+        return res.status(200).json({ message: 'Login successful.', accessToken});
       }
     }
 
@@ -104,12 +111,12 @@ app.post('/api/signin', async (req, res) => {
     const user = await signIn(email, password);
    
     // Generar tokens para el inicio de sesión regular
-    const accessToken = jwt.sign({ email: user.email }, SECRET_KEY, { expiresIn: '1h' });
-    const refreshToken = jwt.sign({ email: user.email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+    createToken(refreshToken);
     // Guarda el refreshToken en tu base de datos o sistema de almacenamiento de tokens
 
-    return res.status(200).json({ message: 'Login successful.', userName: user.name, accessToken, refreshToken });
+    return res.status(200).json({ message: 'Login successful.', userName: user.name, accessToken});
   } catch (error) {
     console.error('Error en /signin:', error);
     return res.status(400).json({ message: error.message });
