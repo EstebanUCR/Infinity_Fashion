@@ -50,19 +50,9 @@ const SignIn = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const executeSignIn = async (email: string, password: string) => {
+  const executeSignIn = async (email: string, password: string, isGoogleAuth: boolean) => {
     try {
-      // const response = await fetch('http://localhost:3000/signin', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     email: user.email,
-      //     password: user.password,
-      //   }),
-      // });
-      // const data = await response.json();
-
-      const data = await signIn(user.email, user.password ?? '');
+      const data = await signIn(email, password ?? '', isGoogleAuth);
       console.log(data)
       // localStorage.setItem('token', data.accessToken);
       // const storagedCart = JSON.stringify(data.userCart.cart)
@@ -75,7 +65,7 @@ const SignIn = () => {
         localStorage.setItem('token', data.accessToken);
         loginUser({ name: data.userName, email: user.email }); // Set user in context
         localStorage.setItem('name', data.userName);
-        localStorage.setItem('email', user.email);
+        localStorage.setItem('email', email);
         showMessage(data.message);
         setTimeout(() => {
           navigate('/');
@@ -84,54 +74,56 @@ const SignIn = () => {
       showMessage(data.message);
     } catch (error) {
       console.error('Error:', error);
-      showMessage('An error occurred during sign-in. Please try again.');
+      showMessage('An error occurred during sign-in.');
     }
   };
 
 
-  const executeSignUp = async (name: string, email: string, password: string) => {
-  // Lógica para el registro si es válido
-      try {
-        // const response = await fetch('http://localhost:3000/signup', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({
-        //     name: user.name,
-        //     email: user.email,
-        //     password: user.password,
-        //   }),
-        // });
-        // const data = await response.json();
-        const data = await signUp(user.email, user.password ?? '', user.name)
-        localStorage.setItem('token', data.accessToken);
-        loginUser({ name: data.userName, email: user.email }); // Set user in context
-        localStorage.setItem('name', user.name);
-        localStorage.setItem('email', user.email);
-        showMessage(data.message);
-        setTimeout(() => {
-          navigate('/');
-        }, 2000);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-      console.log('Sign Up data:', { name: user.name, email: user.email, password: user.password });
+const executeSignUp = async (name: string, email: string, password: string) => {
+  try {
+    const data = await signUp(email, password, name);
+
+    if (data && data.accessToken) {
+      localStorage.setItem('token', data.accessToken);
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+
+      showMessage('Registration successful.');
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    } else {
+      // En caso de que el servidor no devuelva un token
+      showMessage(data.message || 'Unexpected error during registration.');
+    }
+  } catch (error: any) {
+    console.error('Error during signup:', error);
+
+    // Mostrar errores más específicos si están disponibles
+    if (error.response && error.response.data && error.response.data.message) {
+      showMessage(error.response.data.message);
+    } else {
+      showMessage('An unexpected error occurred. Please try again later.');
+    }
+  }
 };
 
   const handleGoogleAuth = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const { displayName, email } = result.user;
-
-      if (email && !isRightPanelActive) {
-         // Modo Sign In
-         await executeSignIn(email ?? '', '');
-      } else {
-        // Modo Sign Up
-         await executeSignUp(displayName ?? '', email ?? '', '');
+      if (displayName && email) {
+        if (!isRightPanelActive) {
+          // Modo Sign In
+          await executeSignIn(email, 'google', true);
+        } else {
+          // Modo Sign Up
+          await executeSignUp(displayName, email, 'google');
+        }
       }
     } catch (error) {
       console.error("Error con la autenticación de Google:", error);
-      showMessage("Error with Google authentication. Please try again.");
+      showMessage("Error with Google authentication.");
     }
   };
   const togglePasswordVisibilitySignUp = () => {
@@ -158,7 +150,7 @@ const SignIn = () => {
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateSignIn(user.email, user.password ?? '')) {
-      await executeSignIn(user.email, user.password ?? '');
+      await executeSignIn(user.email, user.password ?? '', false);
     }
   };
 
