@@ -27,42 +27,50 @@ app.post('/api/signup', async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    // Verificar si el usuario ya existe en la base de datos
+    // Check if the user already exists in the database
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
       return res.status(400).json({ message: 'The user is already registered.' });
     }
 
-    // Crear el nuevo usuario en Supabase
+    // Create the new user in Supabase
     const user = await signUp(email, password, name);
+
     if (user) {
-    // Responder con éxito sólo una vez aquí
+      // Generate access and refresh tokens
       const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
       const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-      const user = await getUserByEmail(email);
-      console.log( 'el id del usuario es ', user.id);
+
+      // Retrieve the user's ID from the database
+      const userData = await getUserByEmail(email);
+
+      // Extract and format the expiration date
       let expired_date;
       jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
         if (err) {
-          return res.status(401).json({ message: 'Error en obtener la fecha.' });
+          return res.status(401).json({ message: 'Error in obtaining the expiration date.' });
         }
 
-        expired_date = decoded.exp.toISOString().toLocaleString();
+        // Convert `exp` to ISO date string
+        const expirationDate = new Date(decoded.exp * 1000); // Convert seconds to milliseconds
+        expired_date = expirationDate.toISOString();
       });
+
+      // Save the refresh token in the database
       const tokenData = {
         expires_at: expired_date,
         token: refreshToken,
-        user_id: userData.id
+        user_id: userData.id,
       };
       createToken(tokenData);
-      return res.status(201).json({ message: 'Registration successful.', accessToken});
-    }
 
+      // Respond with success and the access token
+      return res.status(201).json({ message: 'Registration successful.', accessToken });
+    }
   } catch (error) {
-    console.error('Error en /signup:', error);
-    // Responder con el error si ocurre
-    return res.status(400).json({ error: error.message });
+    console.error('Error in /signup:', error);
+    return res.status(400).json({ message: error.message });
   }
 });
 
@@ -104,70 +112,79 @@ app.put('/api/Updateprofile', async (req, res) => {
 // TODO falta implementar y probar este
 // API route for sign in
 app.post('/api/signin', async (req, res) => {
-  console.log("dentro de api signIn");
-  const { email, password } = req.body;
-  const normalizedEmail = email.toLowerCase();
+  console.log("Dentro de API /signin");
+  const { email, password, isGoogleAuth } = req.body;
 
   try {
-    // Verificar si es un inicio de sesión de Google (sin contraseña)
-    if (password == '') {
-      const user = await getUserByEmail(email);
-      if (!user) {
-        return res.status(404).json({ message: 'This user is not registered. Please create an account in the registration section.' });
-      } else {
-        const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
-        const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-        // fecha de expiración del token
-        const user = await getUserByEmail(email);
-        console.log( 'el id del usuario es ', user.id);
-        let expired_date;
-        jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
-          if (err) {
-            return res.status(401).json({ message: 'Error en obtener la fecha.' });
-          }
+    // Verificar si es un inicio de sesión de Google
+    if (isGoogleAuth) {
+      console.log("Dentro de inicio de sesión de Google");
 
-          expired_date = new Date(decoded.exp * 1000).toISOString();
+      const userData = await getUserByEmail(email);
+
+      if (!userData) {
+        // Usuario no registrado
+        return res.status(404).json({
+          message: 'This user is not registered. Please create an account in the registration section.',
         });
-
-        const tokenData = {
-          expires_at: expired_date,
-          token: refreshToken,
-          user_id: userData.id
-        };
-        createToken(tokenData);
-        return res.status(200).json({ message: 'Login successful.', accessToken});
       }
+
+      // Generar tokens
+      const accessToken = jwt.sign({ email: email }, SECRET_KEY, { expiresIn: '15m' });
+      const refreshToken = jwt.sign({ email: email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+
+      // Calcular fecha de expiración del token
+      const decoded = jwt.decode(refreshToken);
+      const expired_date = new Date(decoded.exp * 1000).toISOString();
+
+      const tokenData = {
+        expires_at: expired_date,
+        token: refreshToken,
+        user_id: userData.id,
+      };
+
+      // Crear y guardar el token en la base de datos
+      await createToken(tokenData);
+
+      return res.status(200).json({
+        message: 'Login successful.',
+        userName: userData.name,
+        accessToken,
+      });
     }
 
-    // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión regular
+    // Inicio de sesión regular (con contraseña)
     const user = await signIn(email, password);
-   
-    // Generar tokens para el inicio de sesión regular
-    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
-    const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-    // fecha de expiración del token
-    const userData = await getUserByEmail(email);
-    console.log( 'el id del usuario es ', userData.id);
-    let expired_date;
-    jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
-      if (err) {
-        return res.status(401).json({ message: 'Error en obtener la fecha.' });
-      }
 
-      expired_date = new Date(decoded.exp * 1000).toISOString();
-    });
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+
+    // Generar tokens
+    const accessToken = jwt.sign({ email: email }, SECRET_KEY, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ email: email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+
+    // Calcular fecha de expiración del token
+    const decoded = jwt.decode(refreshToken);
+    const expired_date = new Date(decoded.exp * 1000).toISOString();
+
     const tokenData = {
       expires_at: expired_date,
       token: refreshToken,
-      user_id: userData.id
+      user_id: user.id,
     };
-    createToken(tokenData);
-    // Guarda el refreshToken en tu base de datos o sistema de almacenamiento de tokens
 
-    return res.status(200).json({ message: 'Login successful.', userName: user.name, accessToken});
+    // Crear y guardar el token en la base de datos
+    await createToken(tokenData);
+
+    return res.status(200).json({
+      message: 'Login successful.',
+      userName: user.name,
+      accessToken,
+    });
   } catch (error) {
     console.error('Error en /signin:', error);
-    return res.status(400).json({ message: error.message });
+    return res.status(500).json({ message: 'Email or password wrong.' });
   }
 });
 
