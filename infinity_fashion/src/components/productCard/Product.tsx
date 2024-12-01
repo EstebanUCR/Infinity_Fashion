@@ -41,7 +41,7 @@ export default function ProductCard ({product} : ProductProps)  {
         </div>
       <div className="product-details">
         <h3>{product.name}</h3>
-        <p>
+        <div className='product-info'>
           {
             product.discount ? 
             <div>
@@ -58,7 +58,7 @@ export default function ProductCard ({product} : ProductProps)  {
               </span>{' '}
             </div>
           }
-        </p>
+        </div>
       </div>
       <div className='d-flex justify-content-end'>
         <Link
