@@ -49,60 +49,85 @@ const SignIn = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const executeSignIn = async (email: string, password: string) => {
+    try {
+      // const response = await fetch('http://localhost:3000/signin', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     email: user.email,
+      //     password: user.password,
+      //   }),
+      // });
+      // const data = await response.json();
+
+      const data = await signIn(user.email, user.password ?? '');
+      console.log(data)
+      // localStorage.setItem('token', data.accessToken);
+      // const storagedCart = JSON.stringify(data.userCart.cart)
+      // if (typeof (storagedCart) === undefined || storagedCart === undefined) {
+      //   localStorage.setItem('cart', JSON.stringify([]));
+      // } else {
+      //   localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
+      // }
+      if (data.message === 'Login successful.') {
+        localStorage.setItem('token', data.accessToken);
+        loginUser({ name: data.userName, email: user.email }); // Set user in context
+        localStorage.setItem('name', data.userName);
+        localStorage.setItem('email', user.email);
+        showMessage(data.message);
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      }
+      showMessage(data.message);
+    } catch (error) {
+      console.error('Error:', error);
+      showMessage('An error occurred during sign-in. Please try again.');
+    }
+  };
+
+
+  const executeSignUp = async (name: string, email: string, password: string) => {
+  // Lógica para el registro si es válido
+      try {
+        // const response = await fetch('http://localhost:3000/signup', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     name: user.name,
+        //     email: user.email,
+        //     password: user.password,
+        //   }),
+        // });
+        // const data = await response.json();
+        const data = await signUp(user.email, user.password ?? '', user.name)
+        localStorage.setItem('token', data.accessToken);
+        loginUser({ name: data.userName, email: user.email }); // Set user in context
+        localStorage.setItem('name', user.name);
+        localStorage.setItem('email', user.email);
+        showMessage(data.message);
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      console.log('Sign Up data:', { name: user.name, email: user.email, password: user.password });
+};
+
   const handleGoogleAuth = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const { displayName, email } = result.user;
 
-      if (!isRightPanelActive) {
-        // Modo Sign In
-        const response = await fetch('http://localhost:3000/signin', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }), // Solo enviamos el email en el caso de Google
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-          showMessage(data.message);
-          localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
-          const storagedCart = JSON.stringify(data.userCart.cart)
-          if (typeof (storagedCart) === undefined || storagedCart === undefined) {
-            localStorage.setItem('cart', JSON.stringify([]));
-          } else {
-            localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
-          }
-          loginUser({ name: displayName || '', email: email || '' });
-          localStorage.setItem('name', displayName || '');
-          localStorage.setItem('email', email || '');
-          setTimeout(() => {
-            navigate('/');
-          }, 2000);
-          location.reload();
-        } else {
-          showMessage("This user is not registered. Please sign up first.");
-        }
+      if (email && !isRightPanelActive) {
+         // Modo Sign In
+         await executeSignIn(email ?? '', '');
       } else {
         // Modo Sign Up
-        const response = await fetch('http://localhost:3000/signup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: displayName, email, password: '' }),
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-          showMessage(data.message); // Registro exitoso
-          localStorage.setItem('token', data.accessToken); // Guardamos el token en el localStorage
-          loginUser({ name: displayName || '', email: email || '' });
-          localStorage.setItem('name', displayName || '');
-          localStorage.setItem('email', email || '');
-          setTimeout(() => {
-            navigate('/');
-          }, 2000);
-        } else {
-          showMessage(data.message); // Error en el registro (usuario ya registrado)
-        }
+         await executeSignUp(displayName ?? '', email ?? '', '');
       }
     } catch (error) {
       console.error("Error con la autenticación de Google:", error);
@@ -133,74 +158,14 @@ const SignIn = () => {
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateSignIn(user.email, user.password ?? '')) {
-      // Lógica para el inicio de sesión si es válido
-      try {
-        // const response = await fetch('http://localhost:3000/signin', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({
-        //     email: user.email,
-        //     password: user.password,
-        //   }),
-        // });
-        // const data = await response.json();
-
-        const data = await signIn(user.email, user.password ?? '');
-        console.log(data)
-        // localStorage.setItem('token', data.accessToken);
-        // const storagedCart = JSON.stringify(data.userCart.cart)
-        // if (typeof (storagedCart) === undefined || storagedCart === undefined) {
-        //   localStorage.setItem('cart', JSON.stringify([]));
-        // } else {
-        //   localStorage.setItem('cart', JSON.stringify(data.userCart.cart));
-        // }
-        if (data.message === 'Login successful.') {
-          localStorage.setItem('token', data.accessToken);
-          loginUser({ name: data.userName, email: user.email }); // Set user in context
-          localStorage.setItem('name', data.userName);
-          localStorage.setItem('email', user.email);
-          showMessage(data.message);
-          setTimeout(() => {
-            navigate('/');
-          }, 2000);
-        }
-        showMessage(data.message);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-
-      console.log('Sign In data:', { email: user.email, password: user.password });
+      await executeSignIn(user.email, user.password ?? '');
     }
   };
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateSignUp(user.name, user.email, user.password ?? '', confirmPassword)) {
-      // Lógica para el registro si es válido
-      try {
-        // const response = await fetch('http://localhost:3000/signup', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({
-        //     name: user.name,
-        //     email: user.email,
-        //     password: user.password,
-        //   }),
-        // });
-        // const data = await response.json();
-        const data = await signUp(user.email, user.password ?? '', user.name)
-        localStorage.setItem('token', data.accessToken);
-        loginUser({ name: data.userName, email: user.email }); // Set user in context
-        localStorage.setItem('name', user.name);
-        localStorage.setItem('email', user.email);
-        showMessage(data.message);
-        setTimeout(() => {
-          navigate('/');
-        }, 2000);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-      console.log('Sign Up data:', { name: user.name, email: user.email, password: user.password });
+      await executeSignUp(user.name, user.email, user.password ?? '');
     }
   };
 

@@ -121,6 +121,14 @@ input {
   margin-bottom: 20px;
 }
 
+/* Botones fantasma (transparente) */
+button.ghost {
+  background-color: transparent !important;
+  border-color: #FFFFFF !important;
+  border: 2px solid #ffffff; 
+  border-radius: 15px;
+  padding: 10px 40px !important;
+}
 /* Botones */
 button {
   border-radius: 20px;
@@ -146,12 +154,6 @@ button:focus {
   outline: none;
 }
 
-/* Botones fantasma (transparente) */
-button.ghost {
-  background-color: transparent;
-  border-color: #FFFFFF;
-  padding: 10px 40px;
-}
 
 /* Contenedor de íconos sociales */
 .socialContainer {

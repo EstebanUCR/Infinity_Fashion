@@ -163,14 +163,14 @@ const useValidation = () => {
 
     // Validación de `shipping_address`
     if (userData.shipping_address) {
-      if (userData.shipping_address.length > 50) {
+      if (userData.shipping_address.length > 100) {
         errorsTemp.shipping_address = 'Shipping address must not exceed 50 characters';
       }
     }
 
     // Validación de `billing_address`
     if (userData.billing_address) {
-      if (userData.billing_address.length > 50) {
+      if (userData.billing_address.length > 100) {
         errorsTemp.billing_address = 'Billing address must not exceed 50 characters';
       }
     }

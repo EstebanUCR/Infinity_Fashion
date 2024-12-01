@@ -1,110 +1,124 @@
-/* General container styling */
+/* General styling for the profile container */
 .profile-container {
   display: flex;
   flex-direction: row;
   max-width: 900px;
   margin: 40px auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border: 1px solid #ffffff;
+  position: relative;
 }
 
-/* Left section styling */
+/* Gradient background */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Profile left section */
 .profile-left {
   text-align: center;
-  margin-right: 30px;
-  margin-top: 150px;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  padding: 20px;
+  border-right: 1px solid #ddd;
 }
 
 .profile-image {
-  width: 250px; /* Fixed width */
-  height: 250px; /* Fixed height */
-  border-radius: 50%; /* Makes the image circular */
-  object-fit: cover; /* Ensures the image covers the container */
-  object-position: center; /* Centers the image */
-  cursor: pointer;
-  margin-bottom: 100px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow */
-  transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
+  width: 250px !important;
+  height: 250px !important; 
+  border-radius: 50% !important;
+  margin-top: 150px !important;
+  object-fit: cover !important;
+  margin-bottom: 10px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
 }
 
-/* Optional: Hover effect for a deeper shadow */
 .profile-image:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Adds a larger shadow on hover */
+  transform: scale(1.1);
 }
+
 .profile-left h2 {
   font-size: 24px;
-  margin-top: -50px;
+  font-weight: bold;
+  margin: 10px 0;
   color: #333;
 }
 
 .profile-left p {
-  color: #666;
   font-size: 14px;
+  color: #666;
 }
 
-/* Right section styling */
+/* Profile right section */
 .profile-right {
   flex: 2;
+  padding: 20px;
 }
 
 .profile-right h3 {
   font-size: 22px;
-  color: #333;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 8px;
-}
-
-/* Form styling */
-.profile-form label {
   font-weight: bold;
-  color: #555;
-  display: block;
-  margin-top: 15px;
+  color: #333;
+  margin-bottom: 20px !important;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
 }
 
-.profile-form input {
+.profile-field {
+  margin-bottom: 20px;
+}
+
+.profile-field label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #555;
+}
+
+.profile-field input {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
+  margin-top: 5px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Button styling */
-.save-button {
-  background-color: #BF665E;
-  color: white;
+/* Button styles */
+button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
   margin-top: 20px;
+  display: inline-block;
   transition: background-color 0.3s ease;
 }
 
+.save-button {
+  background-color: #bf665e;
+  color: white;
+}
+
 .save-button:hover {
-  background-color: #BF665E;
+  background-color: #a14f4b;
 }
 
-/* Logo container styling */
-.logo-container {
-  text-align: center;
-  margin: 20px 0;
+.cancel-button {
+  background-color: #ccc;
+  color: #333;
+  margin-left: 10px;
 }
 
-.logo {
-  width: 150px;
-  cursor: pointer;
+.cancel-button:hover {
+  background-color: #aaa;
 }
 
 /* Modal Overlay */
@@ -215,4 +229,70 @@
 .error {
   border: 2px solid red;
   background-color: #ffe6e6;
+}
+
+.phone-input-wrapper {
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: flex-start; /* Alinea el contenido horizontalmente */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 45px; /* Asegura una altura consistente */
+  padding: 0 10px; /* Espaciado interno para evitar que el contenido esté pegado al borde */
+}
+
+.prefix {
+  background-color: #ffffff;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  align-items: center; /* Centra verticalmente el prefijo */
+  justify-content: center; /* Centra horizontalmente el prefijo */
+}
+
+.separator {
+  width: 1px;
+  background-color: #ccc;
+  height: 60%; /* Ajusta la altura de la línea separadora */
+  margin: 0 10px; /* Espaciado horizontal entre el prefijo y el input */
+}
+
+.phone-input-wrapper input {
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  flex: 1;
+  outline: none;
+  height: 100%; /* Ajusta el input para que llene el espacio vertical */
+  margin-top: 40px;
+  box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
+}
+
+.phone-input-wrapper input:disabled {
+  background-color: #ffffff;
+}
+
+.phone-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.textarea-input {
+  width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+  min-height: 50px; /* Altura mínima */
+  resize: none; /* Evita que el usuario cambie el tamaño del textarea manualmente */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde estándar */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño del texto */
+  box-sizing: border-box; /* Incluye padding y border en el ancho total */
 }
