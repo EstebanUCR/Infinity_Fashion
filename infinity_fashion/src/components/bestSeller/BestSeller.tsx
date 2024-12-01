@@ -4,16 +4,24 @@ import { Carousel } from 'react-bootstrap';
 import ProductCard from '../productCard/Product';
 import { Product } from '../../types/types';
 import { useState, useEffect } from 'react';
+import { getProducts } from '../../services/apiService';
+import type { productWithCategory } from '../../types/entities';
 
 type BestSellerProps = {
   addToCart: (item: Product) => void
 }
 
+// currently returns all products
 export default function BestSeller({ addToCart }: BestSellerProps) {
   const [groupSize, setGroupSize] = useState(3);
   const [carouselKey, setCarouselKey] = useState(0); // Para forzar re-renderizado
 
+  const [products, setProducts] = useState<productWithCategory[]>([])
+
   useEffect(() => {
+    fetchProducts()
+    console.log(products)
+
     const handleResize = () => {
       let newGroupSize = 4;
 
@@ -33,15 +41,27 @@ export default function BestSeller({ addToCart }: BestSellerProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const fetchProducts = async () => {
+    try {
+      const response: productWithCategory[] = await getProducts();
+      setProducts(response)
+      
+      console.log(response)
+
+    } catch (err) {
+      console.error('Error fetching products', err);
+    } 
+  };
+
   // Agrupar productos según el tamaño del grupo
-  const groupedProducts = bestsellers_products.reduce((acc, curr, index) => {
+  const groupedProducts = products.reduce((acc, curr, index) => {
     if (index % groupSize === 0) {
       acc.push([curr]);
     } else {
       acc[acc.length - 1].push(curr);
     }
     return acc;
-  }, [] as Product[][]);
+  }, [] as productWithCategory[][]);
 
   return (
     <div className="bestseller-section">
@@ -50,15 +70,19 @@ export default function BestSeller({ addToCart }: BestSellerProps) {
       </div>
 
       <Carousel key={carouselKey}> {/* Nuevo key para forzar re-renderizado */}
-        {groupedProducts.map((group, i) => (
-          <Carousel.Item key={i}>
-            <div className="carousel-container">
-              {group.map((item) => (
-                <ProductCard key={item.id} product={item} addToCart={addToCart} />
-              ))}
-            </div>
-          </Carousel.Item>
-        ))}
+        { products ?
+          groupedProducts.map((group, i) => (
+            <Carousel.Item key={i}>
+              <div className="carousel-container">
+                {group.map((item) => (
+                  <ProductCard key={item.id} product={item} /* addToCart={addToCart} */ />
+                ))}
+              </div>
+            </Carousel.Item>
+          ))
+          :
+          null
+        }
       </Carousel>
     </div>
   );

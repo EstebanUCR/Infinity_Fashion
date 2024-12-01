@@ -7,14 +7,17 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-types": "supabase gen types typescript --project-id zwrhxbdjjtgyzbgyvwvx > ./supabase/database.types.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@react-oauth/google": "^0.12.1",
+    "@supabase/supabase-js": "^2.46.1",
     "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
     "firebase": "^11.0.1",
     "infinity_fashion": "file:",
@@ -33,6 +36,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "supabase": "^1.219.2",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"

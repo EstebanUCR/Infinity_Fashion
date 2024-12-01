@@ -1,0 +1,315 @@
+/* General styling for the profile container */
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border: 1px solid #ffffff;
+  position: relative;
+}
+
+/* Gradient background */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Profile left section */
+.profile-left {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.profile-image {
+  width: 250px !important;
+  height: 250px !important; 
+  border-radius: 50% !important;
+  margin-top: 150px !important;
+  object-fit: cover !important;
+  margin-bottom: 10px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.profile-image:hover {
+  transform: scale(1.1);
+}
+
+.profile-left h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #333;
+}
+
+.profile-left p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Profile right section */
+.profile-right {
+  flex: 2;
+  padding: 20px;
+}
+
+.profile-right h3 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px !important;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.profile-field {
+  margin-bottom: 20px;
+}
+
+.profile-field label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #555;
+}
+
+.profile-field input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 5px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styles */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.save-button {
+  background-color: #bf665e;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #a14f4b;
+}
+
+.cancel-button {
+  background-color: #ccc;
+  color: #333;
+  margin-left: 10px;
+}
+
+.cancel-button:hover {
+  background-color: #aaa;
+}
+
+/* Modal Overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  /* Dark overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Content Styling */
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  /* Slight shadow */
+}
+
+
+/* Modal Message */
+.modal-content p {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.modal-close {
+  position: absolute;
+  bottom: 70px;
+  /* Adjust distance from the bottom */
+  right: 5px;
+  /* Adjust distance from the right */
+  background: #bf665e;
+  border: none;
+  font-size: 18px;
+  color: #fff !important;
+  /* Set the "X" to white */
+  cursor: pointer;
+  border-radius: 50%;
+  /* Make it circular */
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #a14f4b;
+  /* Darker on hover */
+  transform: scale(1.1);
+  /* Slight zoom effect */
+}
+
+
+/* Buttons inside the modal */
+.modal-content button {
+  background-color: #bf665e;
+  /* Main color */
+  color: #fff;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #a14f4b;
+  /* Darker hover color */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  /* Space between buttons */
+  margin-top: 15px;
+  /* Space between buttons and input */
+}
+
+.save-button,
+.close-button,
+.history-button {
+  background-color: #BF665E;
+  color: white;
+  padding: 8px 16px;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: -20px;
+  flex: 1;
+  /* Makes buttons take equal width */
+  margin: 10px;
+}
+
+.close-button {
+  background-color: #666 !important;
+  margin-left: 10px;
+}
+
+.save-button:hover {
+  background-color: #a14f4b;
+}
+
+.close-button:hover {
+  background-color: #444;
+}
+
+.error {
+  border: 2px solid red;
+  background-color: #ffe6e6;
+}
+
+.phone-input-wrapper {
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: flex-start; /* Alinea el contenido horizontalmente */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 45px; /* Asegura una altura consistente */
+  padding: 0 10px; /* Espaciado interno para evitar que el contenido esté pegado al borde */
+}
+
+.prefix {
+  background-color: #ffffff;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  align-items: center; /* Centra verticalmente el prefijo */
+  justify-content: center; /* Centra horizontalmente el prefijo */
+}
+
+.separator {
+  width: 1px;
+  background-color: #ccc;
+  height: 60%; /* Ajusta la altura de la línea separadora */
+  margin: 0 10px; /* Espaciado horizontal entre el prefijo y el input */
+}
+
+.phone-input-wrapper input {
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  flex: 1;
+  outline: none;
+  height: 100%; /* Ajusta el input para que llene el espacio vertical */
+  margin-top: 40px;
+  box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
+}
+
+.phone-input-wrapper input:disabled {
+  background-color: #ffffff;
+}
+
+.phone-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.textarea-input {
+  width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+  min-height: 50px; /* Altura mínima */
+  resize: none; /* Evita que el usuario cambie el tamaño del textarea manualmente */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde estándar */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 14px; /* Tamaño del texto */
+  box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}

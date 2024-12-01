@@ -10,6 +10,7 @@ import useCart from './hooks/useCart';
 import Product from './components/pages/Product';
 import { UserProvider } from './components/Context/userContext';
 import History from './components/pages/historyScreen';
+import Profile from './components/pages/Profile';
 
 function App() {
   const {data, cart, addToCart, removeFromCart, decreaseQuantity, increaseQuantity, clearCart, isEmpty, cartTotal, shipping, shippingValue} = useCart()
@@ -27,6 +28,7 @@ function App() {
           <Route path='/accessories' element={<ShopCategory cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} data={data} addToCart={addToCart} filterName="Accessories" category="accessories"/>} />
           <Route path='/shoes' element={<ShopCategory cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} data={data} addToCart={addToCart} filterName="Shoes" category="shoes"/>} />
           <Route path="/signIn" element={<SignIn />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/shoppingBag" element={<ShoppingBag cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} shipping={shipping} shippingValue={shippingValue}/>} />
           <Route path="/product/:productId" element={<Product cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} data={data} addToCart={addToCart} filterName="" category=""/>} />
           <Route path="/history" element={<History cart={cart} removeFromCart={removeFromCart} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} clearCart={clearCart} isEmpty={isEmpty} cartTotal={cartTotal} addToCart={addToCart} data={data}/>} />

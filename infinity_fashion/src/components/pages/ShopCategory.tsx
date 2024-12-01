@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { Product, CartItem, ProductID } from '../../types/types';
 import './shopCategory.css';
 import ProductCard from '../productCard/Product';
@@ -6,6 +7,9 @@ import Footer from '../footer/Footer';
 import { Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
+import { getProducts } from '../../services/apiService';
+import type { databaseProduct } from '../../types/entities';
+import type { productWithCategory } from '../../types/entities';
 
 type ShopCategoryProps = {
   cart: CartItem[]
@@ -23,6 +27,27 @@ type ShopCategoryProps = {
 
 
 export default function ShopCategory ({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal, data, addToCart, filterName, category} : ShopCategoryProps) {
+  
+  const [products, setProducts] = useState<productWithCategory[]>([])
+
+  // on render
+  useEffect(() => {
+    fetchProducts()
+    console.log(products)
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response: productWithCategory[] = await getProducts();
+      setProducts(response)
+      
+      console.log(response)
+
+    } catch (err) {
+      console.error('Error fetching products', err);
+    } 
+  };
+  
   return (
     <div className='shop-category'>
       <Header 
@@ -58,15 +83,19 @@ export default function ShopCategory ({cart, removeFromCart, increaseQuantity, d
           <Col>
             <div className='shopcategory-products'>
             
-            {data.map((item)=>{
-              if (category===item.category) {
-                return <ProductCard key={item.id} product={item} addToCart={addToCart}  />
+              { 
+                Array.isArray(products) ? 
+                  products.map(product => {
+                    if (category===product.categories.name.toLowerCase()) {
+                      return <ProductCard key={product.id} product={product} />
+                      //  addToCart={addToCart} 
+                    } else {
+                      return null;
+                    }
+                  })
+                  :
+                  null
               }
-              else {
-                return null;
-              }
-            })}
-          
             </div>
           </Col>
         </Row>

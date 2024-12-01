@@ -241,7 +241,7 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
               
                 { userToken.length > 0 ? (
                   <div className='carrito'>
-                    <Link className="nav-link" to='#'>
+                    <Link className="nav-link" to='/profile'>
                       <FontAwesomeIcon icon={faUser} size="xl" />
                     </Link>
                     <div id='carrito' className='bg-white p-3'>

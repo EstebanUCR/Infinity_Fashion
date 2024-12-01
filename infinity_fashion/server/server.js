@@ -5,14 +5,237 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config(); // Cargar las variables de entorno desde el archivo .env
+const { getUserByEmail, updateUserProfile, getAllUsers } = require('./userService');
+const { signUp, signIn, signOut} = require('./authService');
+const { getProductsByCategory, getProducts, getImagesByProduct, getSizesByProduct, getNewestProducts } = require('./productService');
+const { createToken } = require('./tokenService');
+const { supabase } = require('./supabaseClient');
 
 const app = express();
 const PORT = process.env.PORT; // Obtener el puerto desde las variables de entorno o usar 3000 por defecto
 const SECRET_KEY = process.env.SECRET_KEY; // Obtener la clave secreta desde las variables de entorno
 const REFRESH_SECRET_KEY = process.env.REFRESH_SECRET_KEY; // Clave secreta para el refresh token
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors());
+
+app.use(express.json());
+
+// API route for sign up
+app.post('/api/signup', async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    // Verificar si el usuario ya existe en la base de datos
+    const existingUser = await getUserByEmail(email);
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'The user is already registered.' });
+    }
+
+    // Crear el nuevo usuario en Supabase
+    const user = await signUp(email, password, name);
+    if (user) {
+    // Responder con éxito sólo una vez aquí
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+      const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+      const user = await getUserByEmail(email);
+      console.log( 'el id del usuario es ', user.id);
+      let expired_date;
+      jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+        if (err) {
+          return res.status(401).json({ message: 'Error en obtener la fecha.' });
+        }
+
+        expired_date = decoded.exp.toISOString().toLocaleString();
+      });
+      const tokenData = {
+        expires_at: expired_date,
+        token: refreshToken,
+        user_id: userData.id
+      };
+      createToken(tokenData);
+      return res.status(201).json({ message: 'Registration successful.', accessToken});
+    }
+
+  } catch (error) {
+    console.error('Error en /signup:', error);
+    // Responder con el error si ocurre
+    return res.status(400).json({ error: error.message });
+  }
+});
+
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await getAllUsers();
+    res.status(200).json(users); // Devuelve los usuarios como JSON
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
+// Endpoint to get user profile
+app.get('/api/getProfile', async (req, res) => {
+  try {
+    console.log('dentro de getProfile');
+    const email = req.query.email;
+    const user = await getUserByEmail(email);
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error getting profile:', error);
+    res.status(500).json({ message: 'Error fetching profile' });
+  }
+});
+
+// Endpoint to update user profile
+app.put('/api/Updateprofile', async (req, res) => {
+  try {
+    const updates = req.body;
+    const updatedUser = await updateUserProfile(updates);
+    res.status(200).json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ success: false, message: 'Error updating profile' });
+  }
+});
+
+// TODO falta implementar y probar este
+// API route for sign in
+app.post('/api/signin', async (req, res) => {
+  console.log("dentro de api signIn");
+  const { email, password } = req.body;
+  const normalizedEmail = email.toLowerCase();
+
+  try {
+    // Verificar si es un inicio de sesión de Google (sin contraseña)
+    if (password == '') {
+      const user = await getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ message: 'This user is not registered. Please create an account in the registration section.' });
+      } else {
+        const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+        const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+        // fecha de expiración del token
+        const user = await getUserByEmail(email);
+        console.log( 'el id del usuario es ', user.id);
+        let expired_date;
+        jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+          if (err) {
+            return res.status(401).json({ message: 'Error en obtener la fecha.' });
+          }
+
+          expired_date = new Date(decoded.exp * 1000).toISOString();
+        });
+
+        const tokenData = {
+          expires_at: expired_date,
+          token: refreshToken,
+          user_id: userData.id
+        };
+        createToken(tokenData);
+        return res.status(200).json({ message: 'Login successful.', accessToken});
+      }
+    }
+
+    // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión regular
+    const user = await signIn(email, password);
+   
+    // Generar tokens para el inicio de sesión regular
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+    // fecha de expiración del token
+    const userData = await getUserByEmail(email);
+    console.log( 'el id del usuario es ', userData.id);
+    let expired_date;
+    jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: 'Error en obtener la fecha.' });
+      }
+
+      expired_date = new Date(decoded.exp * 1000).toISOString();
+    });
+    const tokenData = {
+      expires_at: expired_date,
+      token: refreshToken,
+      user_id: userData.id
+    };
+    createToken(tokenData);
+    // Guarda el refreshToken en tu base de datos o sistema de almacenamiento de tokens
+
+    return res.status(200).json({ message: 'Login successful.', userName: user.name, accessToken});
+  } catch (error) {
+    console.error('Error en /signin:', error);
+    return res.status(400).json({ message: error.message });
+  }
+});
+
+// TODO falta implementar y probar este
+// API route for sign out
+app.post('/api/signout', async (req, res) => {
+  try {
+    await signOut();
+    res.status(200).json({ message: 'Signed out successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Endpoint to get products
+app.get('/api/getProducts', async (req, res) => {
+  try {
+    // console.log('dentro de getProducts');
+    const products = await getProducts();
+    // console.log(category)
+    // console.log(products)
+    res.send(products);
+  } catch (error) {
+    console.error('Error getting products:', error);
+    res.status(500).json({ message: 'Error fetching products' });
+  }
+});
+
+// Endpoint to get product images
+app.get('/api/getProductImages', async (req, res) => {
+  try {
+    // console.log('dentro de getProductImages');
+    const product_id = req.query.product_id;
+    const images = await getImagesByProduct(product_id);
+    // console.log(product_id)
+    // console.log(images)
+    res.send(images);
+  } catch (error) {
+    console.error('Error getting product images:', error);
+    res.status(500).json({ message: 'Error fetching products images' });
+  }
+});
+
+// Endpoint to get products
+app.get('/api/getSizesAndStock', async (req, res) => {
+  try {
+    // console.log('dentro de getProducts');
+    const product_id = req.query.product_id;
+    const products = await getSizesByProduct(product_id);
+    // console.log(category)
+    // console.log(products)
+    res.send(products);
+  } catch (error) {
+    console.error('Error getting product sizes and stock:', error);
+    res.status(500).json({ message: 'Error fetching product sizes and stock' });
+  }
+});
+
+// Endpoint to get newest products
+app.get('/api/getNewestProducts', async (req, res) => {
+  try {
+    const products = await getNewestProducts();
+    res.send(products);
+  } catch (error) {
+    console.error('Error getting newest products:', error);
+    res.status(500).json({ message: 'Error fetching newest products' });
+  }
+});
 
 const refreshTokensFilePath = path.join(__dirname, 'refreshTokens.json');
 
@@ -74,164 +297,190 @@ const writeOrders = (orders) => {
   fs.writeFileSync(userOrdersFile, JSON.stringify(orders, null, 2));
 }
 
-// Endpoint para registrar un usuario
 app.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
   const users = readUsers();
-
-  // Verificar si el email ya está registrado
-  const existingUser = users.find(user => user.email === email);
-  if (existingUser) {
-    return res.status(400).json({ message: 'El usuario ya está registrado.' });
-  }
-
-  const newUser = { name, email, password };
-  users.push(newUser);
-  writeUsers(users);
-
-  const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
-  const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-  const refreshTokens = readRefreshTokens();
-  refreshTokens.push(refreshToken);
-  writeRefreshTokens(refreshTokens);
-  res.status(201).json({ message: 'Registro exitoso', accessToken });
-});
-
-// Endpoint para iniciar sesión
-app.post('/signin', (req, res) => {
-  const { email, password } = req.body;
-  const users = readUsers();
-  const normalizedEmail = email.toLowerCase();
-
-  // Verificar si es un inicio de sesión de Google (sin contraseña)
-  if (!password) {
-    const user = users.find(user => user.email.toLowerCase() === normalizedEmail);
-    if (!user) {
-      return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
+  try {
+    // Verificar si el email ya está registrado
+      const existingUser = users.find(user => user.email === email);
+    if (existingUser) {
+      return res.status(400).json({ message: 'El usuario ya está registrado.' });
     }
+
+    const newUser = { name, email, password };
+    users.push(newUser);
+    writeUsers(users);
+
     const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
     const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
     const refreshTokens = readRefreshTokens();
     refreshTokens.push(refreshToken);
     writeRefreshTokens(refreshTokens);
-    const carts = readCarts();
-    const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
+    res.status(201).json({ message: 'Registro exitoso', accessToken });
+  } catch (error) {
+    console.error('Error en /signup:', error);
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Endpoint para iniciar sesión
+app.post('/signin', async (req, res) => {
+  const { email, password } = req.body;
+  const users = readUsers();
+  const normalizedEmail = email.toLowerCase();
+
+  try {
+    // Verificar si es un inicio de sesión de Google (sin contraseña)
+    if (!password) {
+      const user = await getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
+      }
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+      const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+      const refreshTokens = readRefreshTokens();
+      refreshTokens.push(refreshToken);
+      writeRefreshTokens(refreshTokens);
+      const carts = readCarts();
+      const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
+      userCart = []
+      if (cart) {
+        userCart = cart
+      }
+      return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken, userCart });
+    }
+
+    // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión normal
+    const user = users.find(user => user.email.toLowerCase() === normalizedEmail && user.password === password);
+
+    if (!user) {
+      return res.status(400).json({ message: 'Correo o contraseña incorrectos.' });
+    }
+
+    const userName = user.name
+    const carts = readCarts()
     userCart = []
-    if(cart) {
+    const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
+    if (cart) {
       userCart = cart
     }
-    return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken, userCart });
+
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
+    res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, accessToken, userCart });
+  } catch (error) {
+    console.error('Error en /signin:', error);
+    res.status(400).json({ message: error.message });
   }
-
-  // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión normal
-  const user = users.find(user => user.email.toLowerCase() === normalizedEmail && user.password === password);
-
-  if (!user) {
-    return res.status(400).json({ message: 'Correo o contraseña incorrectos.' });
-  }
-
-  const userName = user.name
-  const carts = readCarts()
-  userCart = []
-  const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
-  if(cart) {
-    userCart = cart
-  }
-
-  const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
-  res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, accessToken, userCart });
 });
 
 //Endpoint para cerrar sesion
 app.post('/signout', (req, res) => {
-  const {email, cart} = req.body;
-  if(email) {
-    const data = readCarts()
-    const user = data.find(user => user.email.toLowerCase() === email.toLowerCase())
-    if(user) {
-      user.cart = cart
+  try {
+    const { email, cart } = req.body;
+    if (email) {
+      const data = readCarts()
+      const user = data.find(user => user.email.toLowerCase() === email.toLowerCase())
+      if (user) {
+        user.cart = cart
+      } else {
+        data.push({ email, cart })
+      }
+      writeCars(data)
+      res.status(201).json({ message: 'Carrito guardado' });
     } else {
-      data.push({email, cart})
-    }
-    writeCars(data)
-    res.status(201).json({ message: 'Carrito guardado'});
-  } else {
-    res.status(400).json({ message: 'Debe iniciar sesion'});
+      res.status(400).json({ message: 'Debe iniciar sesion' });
+    } 
+  } catch (error) {
+    console.error('Error en /signout:', error);
+    res.status(400).json({ message: error.message });
   }
 })
 
 //Endpont para guardar ordenes
 app.post('/pay', (req, res) => {
-  const {email, cart, shipping} = req.body;
-  if(email) {
-    const data = readOrders();
-    const currentDate = new Date().toISOString();
-    const orderDetails = cart.map(({id, name, price, quantity}) => ({
-      id,
-      name,
-      price,
-      quantity,
-    }))
-    const newOrder = {
-      email: email,
-      date: currentDate,
-      shipping: shipping,
-      product: orderDetails
+  const { email, cart, shipping } = req.body;
+  try {  
+    if (email) {
+      const data = readOrders();
+      const currentDate = new Date().toISOString();
+      const orderDetails = cart.map(({ id, name, price, quantity }) => ({
+        id,
+        name,
+        price,
+        quantity,
+      }))
+      const newOrder = {
+        email: email,
+        date: currentDate,
+        shipping: shipping,
+        product: orderDetails
+      }
+      data.push(newOrder)
+      writeOrders(data)
+      res.status(201).json({ message: 'Orden realizada!' });
+    } else {
+      res.status(400).json({ message: 'Debe iniciar sesion' });
     }
-    data.push(newOrder)
-    writeOrders(data)
-    res.status(201).json({message: 'Orden realizada!'});
-  } else {
-    res.status(400).json({ message: 'Debe iniciar sesion'});
+  } catch (error) {
+    console.error('Error en /pay:', error);
+    res.status(400).json({ message: error.message });
   }
 })
 
 // Endpoint para renovar el access token
 app.post('/refresh-token', (req, res) => {
-  const { refreshToken } = req.body;
-
-  if (!refreshToken) {
-    return res.status(403).json({ message: 'No se proporcionó un refresh token.' });
-  }
-
-  if (!refreshTokens.includes(refreshToken)) {
-    return res.status(403).json({ message: 'Refresh token inválido.' });
-  }
-
-  jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: 'Refresh token inválido.' });
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+      return res.status(403).json({ message: 'No se proporcionó un refresh token.' });
     }
 
-    const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '15m' });
-    res.status(200).json({ accessToken });
-  });
+    if (!refreshTokens.includes(refreshToken)) {
+      return res.status(403).json({ message: 'Refresh token inválido.' });
+    }
+
+    jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: 'Refresh token inválido.' });
+      }
+
+      const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '15m' });
+      res.status(200).json({ accessToken });
+    });
+  } catch (error) {
+    console.error('Error en /refresh-token:', error);
+    res.status(400).json({ message: error.message });
+  }
 });
 
 // Middleware para verificar el access token
 const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'].substr(6);
+  try {
+    const token = req.headers['authorization'].substr(6);
 
-  if (!token) {
-    return res.status(403).json({ message: 'No se proporcionó un token.' });
-  }
-  //console.log(token)
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    if (err) {
-      console.log(err)
-      return res.status(401).json({ message: 'Token inválido.' });
+    if (!token) {
+      return res.status(403).json({ message: 'No se proporcionó un token.' });
     }
-    
-    res.email = decoded.email;
-    const users = readUsers();
-    const user = users.find(user => user.email.toLowerCase() === req.email);
-    next();
-  });
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+      if (err) {
+        console.log(err)
+        return res.status(401).json({ message: 'Token inválido.' });
+      }
+
+      res.email = decoded.email;
+      const users = readUsers();
+      const user = users.find(user => user.email.toLowerCase() === req.email);
+      next();
+    });
+  } catch (error) {
+    console.error('Error en verifyToken:', error);
+    res.status(400).json({ message: error.message });
+  }
 };
 
 // Ejemplo de un endpoint protegido
 app.get('/protected', verifyToken, (req, res) => {
-  res.status(200).json({ message: 'Acceso autorizado:', email: req.email});
+  res.status(200).json({ message: 'Acceso autorizado:', email: req.email });
 });
 
 // Iniciar el servidor

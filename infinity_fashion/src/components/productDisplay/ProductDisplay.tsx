@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import './ProductDisplay.css'
 import { Product } from '../../types/types';
 import AutoCloseModal from '../pages/messageModal';
+import { getProductSizesAndStock } from '../../services/apiService';
+import type { productImage } from '../../types/entities';
 
 /* TODO agregar los datos faltantes para mejorar la descripcion y el stock*/
 interface ProductDisplayProps {
-    id: number;
-    image: string[];
-    name: string;
-    price: number;
-    description?: string;
-    isExclusive: boolean;
-    oldPrice?: string;
-    discount?: string;
-    category: string;
     addToCart: (item: Product) => void;
     product: Product
 }
 
-const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, description, price, oldPrice, discount, isExclusive, category, addToCart, product }) => {
+// TODO revisar porque despliega las imagenes con tamanos diferentes
+const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart, product }) => {
+   
+    const location = useLocation();
+    const displayProduct = location.state?.product;
+    const displayProductImages = location.state?.images;
+  
+    if (!displayProductImages) {
+        console.log(displayProductImages)
+        return <div>Product not found</div>;
+    } else {
+        console.log(displayProductImages)
+        console.log(displayProduct)
+    }
+   
     const [showModal, setShowModal] = useState(false)
 
     const [userToken, setUserToken] = useState('');
-    const [mainImage, setMainImage] = useState<string>(image[0]);
+    const [mainImage, setMainImage] = useState<string>(displayProductImages[0].image_data);
     const handleImageClick = (image: string) => {
         setMainImage(image); // Actualizar el estado de la imagen principal
     };
@@ -67,13 +75,13 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
         <div className="productDisplay">
             <div className="productDisplayLeft">
                 <div className='productDisplayImgList'>
-                    {image.slice(0, 4).map((image, index) => (
+                    {displayProductImages.slice(0, 4).map((image: productImage, index: number) => (
                         <img
                             key={index}
-                            src={image}
+                            src={image.image_data}
                             alt={`Product thumbnail ${index}`}
                             className="img-thumbnail"
-                            onClick={() => handleImageClick(image)} // Agregar el controlador de eventos
+                            onClick={() => handleImageClick(image.image_data)} // Agregar el controlador de eventos
                             style={{ cursor: 'pointer' }} // Cambiar el cursor para indicar que es clicable
                         />
                     ))}
@@ -84,16 +92,23 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
             </div>
 
             <div className="productDisplayRight">
-                <h1>{name}</h1>
+                <h1>{displayProduct.name}</h1>
                 <div className="productDisplayRightPrices">
-                    <div className="productDisplayRightPriceNew">Price: ${price}</div>
-                    <div className="productDisplayRightPriceOld">{oldPrice}</div>
-                    <div className="productDisplayRightPriceDiscount">{discount}</div>
+                    {
+                        displayProduct.discount ? 
+                            <div>
+                                <div className="productDisplayRightPriceNew">Price: ${(displayProduct.price - displayProduct.price * displayProduct.discount).toFixed(2)}</div>
+                                <div className="productDisplayRightPriceOld">${displayProduct.price.toFixed(2)}</div>
+                                <div className="productDisplayRightPriceDiscount">{displayProduct.discount * 100}% OFF</div>
+                            </div>
+                        : 
+                        <div className="productDisplayRightPriceNew">Price: ${displayProduct.price}</div>
+                    }
                 </div>
 
                 <div className="productDisplayRightDetails">
                     <h1>Product details</h1>
-                    <h2 >{description}</h2>
+                    <h2 >{displayProduct.description}</h2>
                 </div>
 
                 <div className="productDisplayRightSize">
@@ -106,9 +121,9 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ id, image, name, descri
                     </div>
                 </div>
                 <button className='btn-add' onClick={() => addToBag(product)} >ADD TO CART</button>
-                <div className='productDisplayRightCategory'>Category: {category}</div>
-                <div className='productDisplayRightProductCode'> Product code: {id}</div>
-                {isExclusive && <div className='productDisplayRightExclusive'>WEB EXCLUSIVE</div>}
+                <div className='productDisplayRightCategory'>Category: {displayProduct.categories.name}</div>
+                <div className='productDisplayRightProductCode'> Product code: {displayProduct.id}</div>
+                {displayProduct.is_exclusive && <div className='productDisplayRightExclusive'>WEB EXCLUSIVE</div>}
             </div>
 
             <AutoCloseModal
