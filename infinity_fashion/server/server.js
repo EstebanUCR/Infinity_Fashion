@@ -252,23 +252,27 @@ const writeOrders = (orders) => {
 app.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
   const users = readUsers();
+  try {
+    // Verificar si el email ya está registrado
+      const existingUser = users.find(user => user.email === email);
+    if (existingUser) {
+      return res.status(400).json({ message: 'El usuario ya está registrado.' });
+    }
 
-  // Verificar si el email ya está registrado
-  const existingUser = users.find(user => user.email === email);
-  if (existingUser) {
-    return res.status(400).json({ message: 'El usuario ya está registrado.' });
+    const newUser = { name, email, password };
+    users.push(newUser);
+    writeUsers(users);
+
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+    const refreshTokens = readRefreshTokens();
+    refreshTokens.push(refreshToken);
+    writeRefreshTokens(refreshTokens);
+    res.status(201).json({ message: 'Registro exitoso', accessToken });
+  } catch (error) {
+    console.error('Error en /signup:', error);
+    res.status(400).json({ message: error.message });
   }
-
-  const newUser = { name, email, password };
-  users.push(newUser);
-  writeUsers(users);
-
-  const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
-  const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-  const refreshTokens = readRefreshTokens();
-  refreshTokens.push(refreshToken);
-  writeRefreshTokens(refreshTokens);
-  res.status(201).json({ message: 'Registro exitoso', accessToken });
 });
 
 // Endpoint para iniciar sesión
@@ -277,130 +281,154 @@ app.post('/signin', async (req, res) => {
   const users = readUsers();
   const normalizedEmail = email.toLowerCase();
 
-  // Verificar si es un inicio de sesión de Google (sin contraseña)
-  if (!password) {
-    const user = await getUserByEmail(email);
-    if (!user) {
-      return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
+  try {
+    // Verificar si es un inicio de sesión de Google (sin contraseña)
+    if (!password) {
+      const user = await getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
+      }
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+      const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+      const refreshTokens = readRefreshTokens();
+      refreshTokens.push(refreshToken);
+      writeRefreshTokens(refreshTokens);
+      const carts = readCarts();
+      const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
+      userCart = []
+      if (cart) {
+        userCart = cart
+      }
+      return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken, userCart });
     }
-    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
-    const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-    const refreshTokens = readRefreshTokens();
-    refreshTokens.push(refreshToken);
-    writeRefreshTokens(refreshTokens);
-    const carts = readCarts();
-    const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
+
+    // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión normal
+    const user = users.find(user => user.email.toLowerCase() === normalizedEmail && user.password === password);
+
+    if (!user) {
+      return res.status(400).json({ message: 'Correo o contraseña incorrectos.' });
+    }
+
+    const userName = user.name
+    const carts = readCarts()
     userCart = []
+    const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
     if (cart) {
       userCart = cart
     }
-    return res.status(200).json({ message: 'Inicio de sesión exitoso con Google', accessToken, userCart });
+
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
+    res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, accessToken, userCart });
+  } catch (error) {
+    console.error('Error en /signin:', error);
+    res.status(400).json({ message: error.message });
   }
-
-  // Verificar si el usuario existe y la contraseña es correcta para inicio de sesión normal
-  const user = users.find(user => user.email.toLowerCase() === normalizedEmail && user.password === password);
-
-  if (!user) {
-    return res.status(400).json({ message: 'Correo o contraseña incorrectos.' });
-  }
-
-  const userName = user.name
-  const carts = readCarts()
-  userCart = []
-  const cart = carts.find(user => user.email.toLowerCase() === normalizedEmail)
-  if (cart) {
-    userCart = cart
-  }
-
-  const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
-  res.status(200).json({ message: 'Inicio de sesión exitoso', userName: userName, accessToken, userCart });
 });
 
 //Endpoint para cerrar sesion
 app.post('/signout', (req, res) => {
-  const { email, cart } = req.body;
-  if (email) {
-    const data = readCarts()
-    const user = data.find(user => user.email.toLowerCase() === email.toLowerCase())
-    if (user) {
-      user.cart = cart
+  try {
+    const { email, cart } = req.body;
+    if (email) {
+      const data = readCarts()
+      const user = data.find(user => user.email.toLowerCase() === email.toLowerCase())
+      if (user) {
+        user.cart = cart
+      } else {
+        data.push({ email, cart })
+      }
+      writeCars(data)
+      res.status(201).json({ message: 'Carrito guardado' });
     } else {
-      data.push({ email, cart })
-    }
-    writeCars(data)
-    res.status(201).json({ message: 'Carrito guardado' });
-  } else {
-    res.status(400).json({ message: 'Debe iniciar sesion' });
+      res.status(400).json({ message: 'Debe iniciar sesion' });
+    } 
+  } catch (error) {
+    console.error('Error en /signout:', error);
+    res.status(400).json({ message: error.message });
   }
 })
 
 //Endpont para guardar ordenes
 app.post('/pay', (req, res) => {
   const { email, cart, shipping } = req.body;
-  if (email) {
-    const data = readOrders();
-    const currentDate = new Date().toISOString();
-    const orderDetails = cart.map(({ id, name, price, quantity }) => ({
-      id,
-      name,
-      price,
-      quantity,
-    }))
-    const newOrder = {
-      email: email,
-      date: currentDate,
-      shipping: shipping,
-      product: orderDetails
+  try {  
+    if (email) {
+      const data = readOrders();
+      const currentDate = new Date().toISOString();
+      const orderDetails = cart.map(({ id, name, price, quantity }) => ({
+        id,
+        name,
+        price,
+        quantity,
+      }))
+      const newOrder = {
+        email: email,
+        date: currentDate,
+        shipping: shipping,
+        product: orderDetails
+      }
+      data.push(newOrder)
+      writeOrders(data)
+      res.status(201).json({ message: 'Orden realizada!' });
+    } else {
+      res.status(400).json({ message: 'Debe iniciar sesion' });
     }
-    data.push(newOrder)
-    writeOrders(data)
-    res.status(201).json({ message: 'Orden realizada!' });
-  } else {
-    res.status(400).json({ message: 'Debe iniciar sesion' });
+  } catch (error) {
+    console.error('Error en /pay:', error);
+    res.status(400).json({ message: error.message });
   }
 })
 
 // Endpoint para renovar el access token
 app.post('/refresh-token', (req, res) => {
-  const { refreshToken } = req.body;
-
-  if (!refreshToken) {
-    return res.status(403).json({ message: 'No se proporcionó un refresh token.' });
-  }
-
-  if (!refreshTokens.includes(refreshToken)) {
-    return res.status(403).json({ message: 'Refresh token inválido.' });
-  }
-
-  jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: 'Refresh token inválido.' });
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+      return res.status(403).json({ message: 'No se proporcionó un refresh token.' });
     }
 
-    const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '15m' });
-    res.status(200).json({ accessToken });
-  });
+    if (!refreshTokens.includes(refreshToken)) {
+      return res.status(403).json({ message: 'Refresh token inválido.' });
+    }
+
+    jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: 'Refresh token inválido.' });
+      }
+
+      const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '15m' });
+      res.status(200).json({ accessToken });
+    });
+  } catch (error) {
+    console.error('Error en /refresh-token:', error);
+    res.status(400).json({ message: error.message });
+  }
 });
 
 // Middleware para verificar el access token
 const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'].substr(6);
+  try {
+    const token = req.headers['authorization'].substr(6);
 
-  if (!token) {
-    return res.status(403).json({ message: 'No se proporcionó un token.' });
-  }
-  //console.log(token)
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    if (err) {
-      console.log(err)
-      return res.status(401).json({ message: 'Token inválido.' });
+    if (!token) {
+      return res.status(403).json({ message: 'No se proporcionó un token.' });
     }
+    console.log(token)
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+      if (err) {
+        console.log(err)
+        return res.status(401).json({ message: 'Token inválido.' });
+      }
 
-    res.email = decoded.email;
-    const users = readUsers();
-    const user = users.find(user => user.email.toLowerCase() === req.email);
-    next();
-  });
+      res.email = decoded.email;
+      const users = readUsers();
+      const user = users.find(user => user.email.toLowerCase() === req.email);
+      next();
+    });
+  } catch (error) {
+    console.error('Error en verifyToken:', error);
+    res.status(400).json({ message: error.message });
+  }
 };
 
 // Ejemplo de un endpoint protegido
