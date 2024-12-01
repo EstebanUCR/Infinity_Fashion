@@ -128,7 +128,8 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  background: rgba(0, 0, 0, 0.5);
+  /* Dark overlay */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,7 +144,8 @@ button {
   width: 400px;
   max-width: 90%;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Slight shadow */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  /* Slight shadow */
 }
 
 
@@ -157,14 +159,18 @@ button {
 
 .modal-close {
   position: absolute;
-  bottom: 70px; /* Adjust distance from the bottom */
-  right: 5px; /* Adjust distance from the right */
+  bottom: 70px;
+  /* Adjust distance from the bottom */
+  right: 5px;
+  /* Adjust distance from the right */
   background: #bf665e;
   border: none;
   font-size: 18px;
-  color: #fff !important; /* Set the "X" to white */
+  color: #fff !important;
+  /* Set the "X" to white */
   cursor: pointer;
-  border-radius: 50%; /* Make it circular */
+  border-radius: 50%;
+  /* Make it circular */
   width: 32px;
   height: 32px;
   display: flex;
@@ -174,14 +180,17 @@ button {
 }
 
 .modal-close:hover {
-  background: #a14f4b; /* Darker on hover */
-  transform: scale(1.1); /* Slight zoom effect */
+  background: #a14f4b;
+  /* Darker on hover */
+  transform: scale(1.1);
+  /* Slight zoom effect */
 }
 
 
 /* Buttons inside the modal */
 .modal-content button {
-  background-color: #bf665e; /* Main color */
+  background-color: #bf665e;
+  /* Main color */
   color: #fff;
   padding: 10px 10px;
   border: none;
@@ -192,29 +201,37 @@ button {
 }
 
 .modal-content button:hover {
-  background-color: #a14f4b; /* Darker hover color */
+  background-color: #a14f4b;
+  /* Darker hover color */
 }
+
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 10px; /* Space between buttons */
-  margin-top: 15px; /* Space between buttons and input */
+  gap: 10px;
+  /* Space between buttons */
+  margin-top: 15px;
+  /* Space between buttons and input */
 }
+
 .save-button,
-.close-button {
+.close-button,
+.history-button {
   background-color: #BF665E;
   color: white;
   padding: 8px 16px;
   border: none !important;
-  border-radius: 5px !important;;
+  border-radius: 5px !important;
   cursor: pointer;
   font-weight: bold;
   margin-top: -20px;
-  flex: 1; /* Makes buttons take equal width */
+  flex: 1;
+  /* Makes buttons take equal width */
+  margin: 10px;
 }
 
 .close-button {
-  background-color: #666 !important;;
+  background-color: #666 !important;
   margin-left: 10px;
 }
 

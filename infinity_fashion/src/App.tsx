@@ -9,7 +9,7 @@ import './index.css'
 import useCart from './hooks/useCart';
 import Product from './components/pages/Product';
 import { UserProvider } from './components/Context/userContext';
-import Profile from './components/pages/profile';
+import Profile from './components/pages/Profile';
 
 function App() {
   const {data, cart, addToCart, removeFromCart, decreaseQuantity, increaseQuantity, clearCart, isEmpty, cartTotal, shipping, shippingValue} = useCart()
