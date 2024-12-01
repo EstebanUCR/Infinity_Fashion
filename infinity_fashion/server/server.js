@@ -9,7 +9,7 @@ const { getUserByEmail, updateUserProfile, getAllUsers } = require('./userServic
 const { signUp, signIn, signOut} = require('./authService');
 const { getProductsByCategory, getProducts, getImagesByProduct, getSizesByProduct, getNewestProducts } = require('./productService');
 const { createToken } = require('./tokenService');
-
+const { supabase } = require('./supabaseClient');
 
 const app = express();
 const PORT = process.env.PORT; // Obtener el puerto desde las variables de entorno o usar 3000 por defecto
@@ -40,7 +40,22 @@ app.post('/api/signup', async (req, res) => {
     // Responder con éxito sólo una vez aquí
       const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
       const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-      createToken(refreshToken);
+      const user = await getUserByEmail(email);
+      console.log( 'el id del usuario es ', user.id);
+      let expired_date;
+      jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+        if (err) {
+          return res.status(401).json({ message: 'Error en obtener la fecha.' });
+        }
+
+        expired_date = decoded.exp.toISOString().toLocaleString();
+      });
+      const tokenData = {
+        expires_at: expired_date,
+        token: refreshToken,
+        user_id: userData.id
+      };
+      createToken(tokenData);
       return res.status(201).json({ message: 'Registration successful.', accessToken});
     }
 
@@ -102,7 +117,24 @@ app.post('/api/signin', async (req, res) => {
       } else {
         const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
         const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-        createToken(refreshToken);
+        // fecha de expiración del token
+        const user = await getUserByEmail(email);
+        console.log( 'el id del usuario es ', user.id);
+        let expired_date;
+        jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+          if (err) {
+            return res.status(401).json({ message: 'Error en obtener la fecha.' });
+          }
+
+          expired_date = new Date(decoded.exp * 1000).toISOString();
+        });
+
+        const tokenData = {
+          expires_at: expired_date,
+          token: refreshToken,
+          user_id: userData.id
+        };
+        createToken(tokenData);
         return res.status(200).json({ message: 'Login successful.', accessToken});
       }
     }
@@ -113,7 +145,23 @@ app.post('/api/signin', async (req, res) => {
     // Generar tokens para el inicio de sesión regular
     const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
     const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
-    createToken(refreshToken);
+    // fecha de expiración del token
+    const userData = await getUserByEmail(email);
+    console.log( 'el id del usuario es ', userData.id);
+    let expired_date;
+    jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: 'Error en obtener la fecha.' });
+      }
+
+      expired_date = new Date(decoded.exp * 1000).toISOString();
+    });
+    const tokenData = {
+      expires_at: expired_date,
+      token: refreshToken,
+      user_id: userData.id
+    };
+    createToken(tokenData);
     // Guarda el refreshToken en tu base de datos o sistema de almacenamiento de tokens
 
     return res.status(200).json({ message: 'Login successful.', userName: user.name, accessToken});
@@ -413,7 +461,6 @@ const verifyToken = (req, res, next) => {
     if (!token) {
       return res.status(403).json({ message: 'No se proporcionó un token.' });
     }
-    console.log(token)
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
       if (err) {
         console.log(err)

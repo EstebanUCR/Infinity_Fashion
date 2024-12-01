@@ -9,12 +9,17 @@ const getTokens = async () => {
 };
 
 const createToken = async (tokenData) => {
-  const { data, error } = await supabase
-    .from('tokens')
-    .insert(tokenData)
-    .single();
-  if (error) throw error;
-  return data;
+  try {
+    const { data, error } = await supabase
+      .from('tokens')
+      .insert(tokenData)
+      .single();
+    if (error) throw error;
+    console.log('Token created');
+    return data; 
+  } catch (error) {
+    console.log('Error in createToken:', error.message);
+  }
 };
 
 const deleteToken = async (id) => {
