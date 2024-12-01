@@ -91,10 +91,12 @@ app.post('/api/signin', async (req, res) => {
 
   try {
     // Verificar si es un inicio de sesión de Google (sin contraseña)
-    if (!password) {
-      const user = await getUserByEmail(normalizedEmail);
+    if (password == '') {
+      const user = await getUserByEmail(email);
       if (!user) {
         return res.status(404).json({ message: 'This user is not registered. Please create an account in the registration section.' });
+      } else {
+        return res.status(200).json({ message: 'Login successful.'});
       }
     }
 

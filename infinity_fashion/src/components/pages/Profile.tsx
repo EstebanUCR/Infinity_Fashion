@@ -24,8 +24,8 @@ const Profile = () => {
   });
 
   const [tempUser, setTempUser] = useState<userData>({ ...user });
-
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isImageEditing, setIsImageEditing] = useState(false);
   const [newImage, setNewImage] = useState<File | null>(null);
 
   const [messageModal, setMessageModal] = useState<{
@@ -45,6 +45,8 @@ const Profile = () => {
         setUser(data);
         setTempUser(data);
       }
+      // localStorage.setItem('name', 'bri');
+      //   localStorage.setItem('email', 'brita@gmail.com');
     };
     fetchUserData();
   }, []);
@@ -57,14 +59,13 @@ const Profile = () => {
     setMessageModal({ isOpen: false, message: '', type: 'success' });
   };
 
-  const handleImageClick = () => {
-    setModalOpen(true);
-  };
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setNewImage(e.target.files[0]);
-      setTempUser({ ...tempUser, profile_picture: URL.createObjectURL(e.target.files[0]) });
+      setTempUser({
+        ...tempUser,
+        profile_picture: URL.createObjectURL(e.target.files[0]),
+      });
     }
   };
 
@@ -74,30 +75,40 @@ const Profile = () => {
       reader.onloadend = async () => {
         const base64Image = reader.result;
         if (typeof base64Image === 'string') {
-          const response = await updateUserProfile({ ...user, profile_picture: base64Image });
-          if (response.success) {
-            showMessage('Profile image updated successfully!', 'success');
-            setUser({ ...user, profile_picture: base64Image });
-          } else {
-            showMessage('Failed to update profile image.', 'error');
+          try {
+            const response = await updateUserProfile({
+              ...user,
+              profile_picture: base64Image,
+            });
+            if (response.success) {
+              showMessage('Profile image updated successfully!', 'success');
+              setUser({ ...user, profile_picture: base64Image });
+            } else {
+              showMessage(response.message || 'Failed to update profile image.', 'error');
+            }
+          } catch (error) {
+            showMessage('Error updating image. Check console for details.', 'error');
+            console.error('Error updating image:', error);
           }
-          setModalOpen(false);
         } else {
-          showMessage('Failed to process image.', 'error');
+          showMessage('Invalid image format.', 'error');
         }
+        setIsImageEditing(false);
       };
       reader.readAsDataURL(newImage);
+    } else {
+      showMessage('No image selected.', 'error');
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setTempUser({ ...tempUser, [name]: value });
   };
 
   const handleSave = async () => {
     const isValid = validateProfile({
-      name: tempUser.name,
+      name: tempUser.name || '',
       phone: tempUser.phone || '',
       shipping_address: tempUser.shipping_address || '',
       billing_address: tempUser.billing_address || '',
@@ -112,11 +123,21 @@ const Profile = () => {
     if (response.success) {
       showMessage('Profile updated successfully!', 'success');
       setUser(tempUser);
+      localStorage.setItem('name', tempUser.name);
+      localStorage.setItem('email', tempUser.email);
+      setIsEditing(false);
     } else {
       showMessage('Failed to update profile.', 'error');
     }
   };
 
+  const toggleEdit = () => {
+    if (isEditing) {
+      // Si el usuario cancela, restablece tempUser al valor original
+      setTempUser({ ...user });
+    }
+    setIsEditing(!isEditing);
+  };
   return (
     <>
       <Container fluid className="logo-container-profile">
@@ -124,15 +145,17 @@ const Profile = () => {
       </Container>
       <div className="profile-container">
         <div className="profile-left">
-          <img
-            src={
-              user.profile_picture ||
-              'https://static.vecteezy.com/system/resources/previews/018/765/757/non_2x/user-profile-icon-in-flat-style-member-avatar-illustration-on-isolated-background-human-permission-sign-business-concept-vector.jpg'
-            }
-            alt="Profile"
-            className="profile-image"
-            onClick={handleImageClick}
-          />
+          <div className="image-container">
+            <img
+              src={
+                tempUser.profile_picture ||
+                'https://static.vecteezy.com/system/resources/previews/018/765/757/non_2x/user-profile-icon-in-flat-style-member-avatar-illustration-on-isolated-background-human-permission-sign-business-concept-vector.jpg'
+              }
+              alt="Profile"
+              className="profile-image"
+              onClick={() => setIsImageEditing(true)}
+            />
+          </div>
           <h2>{user.name}</h2>
           <p>{user.email}</p>
         </div>
@@ -145,54 +168,65 @@ const Profile = () => {
               name="name"
               value={tempUser.name}
               onChange={handleChange}
+              disabled={!isEditing}
             />
-            {errors.name && <p className="error">{errors.name}</p>}
-            <label>Phone</label>
-            <input
-              type="text"
-              name="phone"
-              value={tempUser.phone || ''}
-              onChange={handleChange}
-            />
-            {errors.phone && <p className="error">{errors.phone}</p>}
+            {isEditing && errors.name && <p className="error">{errors.name}</p>}
+
+            <div className="phone-input-container">
+              <label>Phone</label>
+              <div className="phone-input-wrapper">
+                <span className="prefix">+506</span>
+                <div className="separator"></div>
+                <input
+                  type="text"
+                  name="phone"
+                  value={tempUser.phone || ''}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                />
+              </div>
+              {isEditing && errors.phone && <p className="error">{errors.phone}</p>}
+            </div>
+
             <label>Shipping Address</label>
-            <input
-              type="text"
+            <textarea
               name="shipping_address"
               value={tempUser.shipping_address || ''}
               onChange={handleChange}
+              disabled={!isEditing}
+              className="textarea-input"
             />
-            {errors.shipping_address && <p className="error">{errors.shipping_address}</p>}
+            {isEditing && errors.shipping_address && <p className="error">{errors.shipping_address}</p>}
+
             <label>Billing Address</label>
-            <input
-              type="text"
+            <textarea
               name="billing_address"
               value={tempUser.billing_address || ''}
               onChange={handleChange}
+              disabled={!isEditing}
+              className="textarea-input"
             />
-            {errors.billing_address && <p className="error">{errors.billing_address}</p>}
-            <button onClick={handleSave} className="save-button">
-              Save Profile
-            </button>
-            <button onClick={() => navigate('/history')} className="history-button">
-              Purchase history
-            </button>
+            {isEditing && errors.billing_address && <p className="error">{errors.billing_address}</p>}
+
+            {isEditing ? (
+              <>
+                <button onClick={handleSave} className="save-button">
+                  Save Profile
+                </button>
+                <button onClick={toggleEdit} className="cancel-button">
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button onClick={toggleEdit} className="edit-button">
+                Edit Profile
+              </button>
+            )}
           </div>
         </div>
       </div>
 
-      {messageModal.isOpen && (
-        <div className="modal">
-          <div className={`modal-content ${messageModal.type}`}>
-            <p>{messageModal.message}</p>
-            <button className="modal-close" onClick={closeMessage}>
-              X
-            </button>
-          </div>
-        </div>
-      )}
-
-      {isModalOpen && (
+      {isImageEditing && (
         <div className="modal">
           <div className="modal-content">
             <h2>Change Profile Picture</h2>
@@ -201,10 +235,21 @@ const Profile = () => {
               <button onClick={handleSaveImage} className="save-button">
                 Save Image
               </button>
-              <button className="close-button" onClick={() => setModalOpen(false)}>
-                CANCEL
+              <button className="close-button" onClick={() => setIsImageEditing(false)}>
+                Cancel
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {messageModal.isOpen && (
+        <div className="modal">
+          <div className={`modal-content ${messageModal.type}`}>
+            <p>{messageModal.message}</p>
+            <button className="modal-close" onClick={closeMessage}>
+              X
+            </button>
           </div>
         </div>
       )}
