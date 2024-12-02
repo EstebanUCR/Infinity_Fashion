@@ -25,3 +25,11 @@ export type CartItem = Product & {
 }
 
 export type ProductID = Product['id']
+
+export type historyData = {
+  id: string;
+  shopping_cart_id: string;
+  shopping_id: string;
+  purchase_date: string;
+  total: number;
+}
