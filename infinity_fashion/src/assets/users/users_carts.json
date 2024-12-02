@@ -308,5 +308,13 @@
   {
     "email": "testOfi@gmail.com",
     "cart": []
+  },
+  {
+    "email": "hola@gmail.com",
+    "cart": []
+  },
+  {
+    "email": "hola4@gmail.com",
+    "cart": []
   }
 ]

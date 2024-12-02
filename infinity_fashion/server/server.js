@@ -55,7 +55,7 @@ app.post('/api/signup', async (req, res) => {
 
         // Convert `exp` to ISO date string
         const expirationDate = new Date(decoded.exp * 1000); // Convert seconds to milliseconds
-        expired_date = expirationDate.toISOString();
+        expired_date = new Date(decoded.exp * 1000).toISOString();
       });
 
       // Save the refresh token in the database
@@ -136,7 +136,7 @@ app.post('/api/signin', async (req, res) => {
 
       // Calcular fecha de expiración del token
       const decoded = jwt.decode(refreshToken);
-      const expired_date = new Date(decoded.exp * 1000).toISOString();
+      expired_date = new Date(decoded.exp * 1000).toISOString();
 
       const tokenData = {
         expires_at: expired_date,
@@ -167,7 +167,7 @@ app.post('/api/signin', async (req, res) => {
 
     // Calcular fecha de expiración del token
     const decoded = jwt.decode(refreshToken);
-    const expired_date = new Date(decoded.exp * 1000).toISOString();
+    expired_date = new Date(decoded.exp * 1000).toISOString();
 
     const tokenData = {
       expires_at: expired_date,
