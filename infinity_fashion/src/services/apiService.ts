@@ -13,13 +13,14 @@ export const signUp = async (email: string, password: string, name: string): Pro
   return response.json();
 };
 
-export const signIn = async (email: string, password: string): Promise<any> => {
+export const signIn = async (email: string, password: string, isGoogleAuth: boolean): Promise<any> => {
   const response = await fetch('http://localhost:3000/api/signin', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       email: email,
       password: password,
+      isGoogleAuth: isGoogleAuth
     }),
   });
       console.log("dentro de signIn");
