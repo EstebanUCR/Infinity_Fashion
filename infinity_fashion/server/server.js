@@ -9,6 +9,7 @@ const { getUserByEmail, updateUserProfile, getAllUsers } = require('./userServic
 const { signUp, signIn, signOut} = require('./authService');
 const { getProductsByCategory, getProducts, getImagesByProduct, getSizesByProduct, getNewestProducts } = require('./productService');
 const { createToken } = require('./tokenService');
+const { getPurchaseHistoryByUserId } = require('./purchaseHistoryService');
 const { supabase } = require('./supabaseClient');
 
 const app = express();
@@ -38,7 +39,7 @@ app.post('/api/signup', async (req, res) => {
     const user = await signUp(email, password, name);
     if (user) {
     // Responder con éxito sólo una vez aquí
-      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
       const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
       const user = await getUserByEmail(email);
       console.log( 'el id del usuario es ', user.id);
@@ -115,7 +116,7 @@ app.post('/api/signin', async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'This user is not registered. Please create an account in the registration section.' });
       } else {
-        const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+        const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
         const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
         // fecha de expiración del token
         const user = await getUserByEmail(email);
@@ -143,7 +144,7 @@ app.post('/api/signin', async (req, res) => {
     const user = await signIn(email, password);
    
     // Generar tokens para el inicio de sesión regular
-    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
     const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
     // fecha de expiración del token
     const userData = await getUserByEmail(email);
@@ -311,7 +312,7 @@ app.post('/signup', (req, res) => {
     users.push(newUser);
     writeUsers(users);
 
-    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
     const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
     const refreshTokens = readRefreshTokens();
     refreshTokens.push(refreshToken);
@@ -336,7 +337,7 @@ app.post('/signin', async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
       }
-      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
       const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
       const refreshTokens = readRefreshTokens();
       refreshTokens.push(refreshToken);
@@ -430,22 +431,18 @@ app.post('/pay', (req, res) => {
 // Endpoint para renovar el access token
 app.post('/refresh-token', (req, res) => {
   try {
-    const { refreshToken } = req.body;
-    if (!refreshToken) {
+    const accessToken = req.headers['authorization'].substring(6);
+    if (!accessToken) {
       return res.status(403).json({ message: 'No se proporcionó un refresh token.' });
     }
-
-    if (!refreshTokens.includes(refreshToken)) {
-      return res.status(403).json({ message: 'Refresh token inválido.' });
-    }
-
-    jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+    
+    jwt.verify(accessToken, SECRET_KEY, (err, decoded) => {
       if (err) {
         return res.status(401).json({ message: 'Refresh token inválido.' });
       }
 
-      const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '15m' });
-      res.status(200).json({ accessToken });
+      const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '1m' });
+      res.status(200).json({ message: 'Token refreshed', accessToken });
     });
   } catch (error) {
     console.error('Error en /refresh-token:', error);
@@ -477,6 +474,21 @@ const verifyToken = (req, res, next) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+app.get('/api/getPurchaseHistory', async (req, res) => {
+  try {
+    token = req.headers['authorization'].substring(6);
+    const decoded = jwt.verify(token, SECRET_KEY);
+    const email = decoded.email;
+    const user = await getUserByEmail(email);
+    const userId = user.id;
+    const history = await getPurchaseHistoryByUserId(userId);
+    res.status(200).json({message: 'the history has been obtained.', history});
+  } catch (error) {
+    console.error('Error getting purchase history:', error);
+    res.status(500).json({ message: 'Error fetching purchase history' });
+  }
+});
 
 // Ejemplo de un endpoint protegido
 app.get('/protected', verifyToken, (req, res) => {

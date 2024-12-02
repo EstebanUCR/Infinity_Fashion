@@ -165,3 +165,25 @@ export const getNewestProducts = async () => {
     throw error;
   }
 };
+
+export const getPurchaseHistory = async () => {
+  try {
+    const userToken = localStorage.getItem('token');
+    const response = await fetch(`http://localhost:3000/api/getPurchaseHistory`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Basic ' + userToken
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch purchase history: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching purchase history:', error);
+    throw error;
+  }
+}
