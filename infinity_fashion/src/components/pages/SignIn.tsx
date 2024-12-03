@@ -74,7 +74,7 @@ const SignIn = () => {
       showMessage(data.message);
     } catch (error) {
       console.error('Error:', error);
-      showMessage('An error occurred during sign-in. Please try again.');
+      showMessage('An error occurred during sign-in.');
     }
   };
 
@@ -103,7 +103,7 @@ const executeSignUp = async (name: string, email: string, password: string) => {
     if (error.response && error.response.data && error.response.data.message) {
       showMessage(error.response.data.message);
     } else {
-      showMessage('An unexpected error occurred. Please try again later.');
+      showMessage('An unexpected error occurred.');
     }
   }
 };
@@ -123,7 +123,7 @@ const executeSignUp = async (name: string, email: string, password: string) => {
       }
     } catch (error) {
       console.error("Error con la autenticación de Google:", error);
-      showMessage("Error with Google authentication. Please try again.");
+      showMessage("Error with Google authentication.");
     }
   };
   const togglePasswordVisibilitySignUp = () => {

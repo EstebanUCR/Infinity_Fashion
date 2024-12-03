@@ -11,6 +11,8 @@ const { getProductsByCategory, getProducts, getImagesByProduct, getSizesByProduc
 const { createToken } = require('./tokenService');
 const { getPurchaseHistoryByUserId } = require('./purchaseHistoryService');
 const { supabase } = require('./supabaseClient');
+const { createShoppingCart, getShoppingCarts } = require('./shoppingCartService');
+const { createCartItem } = require('./cartItemService');
 
 const app = express();
 const PORT = process.env.PORT; // Obtener el puerto desde las variables de entorno o usar 3000 por defecto
@@ -126,7 +128,7 @@ app.post('/api/signin', async (req, res) => {
       if (!userData) {
         // Usuario no registrado
         return res.status(404).json({
-          message: 'This user is not registered. Please create an account in the registration section.',
+          message: 'This user is not registered.',
         });
       }
 
@@ -193,7 +195,40 @@ app.post('/api/signin', async (req, res) => {
 // API route for sign out
 app.post('/api/signout', async (req, res) => {
   try {
+      console.log('Dentro de logout')
+      token = req.headers['authorization'].substring(6);
+      const decoded = jwt.verify(token, SECRET_KEY);
+      const email = decoded.email;
+      console.log('Email: ' + email)
+      const user = await getUserByEmail(email);
+      const userId = user.id;
+      console.log(userId)
+      const date = new Date()
+      const added_date = date.toISOString()
+      const randomID = Math.floor(Math.random() * (999999999 - 99999999) + 99999999);
+      const shoppingCart = {
+        added_date: added_date,
+        id: randomID,
+        user_id: userId
+      }
+      console.log(randomID)
+      await createShoppingCart(shoppingCart)
+
+      cart.forEach(async (item) => {
+        console.log('Guardando elemento del carrito')
+        const randomID2 = Math.floor(Math.random() * (99999 - 9999) + 9999);
+        const cardItem = {
+          id: randomID2,
+          product_id: item.id,
+          quantity: item.quantity,
+          shopping_cart_id: randomID,
+          size: null,
+          subtotal: (item.price * item.quantity)
+        }
+        await createCartItem(cardItem)
+      })
     await signOut();
+    console.log('Cerrando sesion')
     res.status(200).json({ message: 'Signed out successfully' });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -329,7 +364,7 @@ app.post('/signup', (req, res) => {
     users.push(newUser);
     writeUsers(users);
 
-    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
     const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
     const refreshTokens = readRefreshTokens();
     refreshTokens.push(refreshToken);
@@ -354,7 +389,7 @@ app.post('/signin', async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
       }
-      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
       const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
       const refreshTokens = readRefreshTokens();
       refreshTokens.push(refreshToken);
@@ -396,6 +431,31 @@ app.post('/signout', (req, res) => {
   try {
     const { email, cart } = req.body;
     if (email) {
+      console.log('Dentro de logout')
+      const date = new Date()
+      const added_date = date.toISOString()
+      const randomID = Math.floor(Math.random() * (999999999 - 99999999) + 99999999);
+      const shoppingCart = {
+        added_date: added_date,
+        id: randomID,
+        user_id: email
+      }
+
+      createShoppingCart(shoppingCart)
+
+      cart.forEach((item) => {
+        console.log('Guardando elemento del carrito')
+        const randomID2 = Math.floor(Math.random() * (99999 - 9999) + 9999);
+        const cardItem = {
+          id: randomID2,
+          product_id: item.id,
+          quantity: item.quantity,
+          shopping_cart_id: randomID,
+          size: null,
+          subtotal: (item.price * item.quantity)
+        }
+        createCartItem(cardItem)
+      })
       const data = readCarts()
       const user = data.find(user => user.email.toLowerCase() === email.toLowerCase())
       if (user) {
@@ -414,7 +474,7 @@ app.post('/signout', (req, res) => {
   }
 })
 
-//Endpont para guardar ordenes
+//Endpoint para guardar ordenes
 app.post('/pay', (req, res) => {
   const { email, cart, shipping } = req.body;
   try {  
@@ -458,7 +518,7 @@ app.post('/refresh-token', (req, res) => {
         return res.status(401).json({ message: 'Refresh token inválido.' });
       }
 
-      const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '1m' });
+      const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '15m' });
       res.status(200).json({ message: 'Token refreshed', accessToken });
     });
   } catch (error) {

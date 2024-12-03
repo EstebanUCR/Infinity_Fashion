@@ -188,3 +188,4 @@ export const getPurchaseHistory = async () => {
     throw error;
   }
 }
+
