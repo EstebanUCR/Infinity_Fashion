@@ -128,7 +128,7 @@ app.post('/api/signin', async (req, res) => {
       if (!userData) {
         // Usuario no registrado
         return res.status(404).json({
-          message: 'This user is not registered. Please create an account in the registration section.',
+          message: 'This user is not registered.',
         });
       }
 

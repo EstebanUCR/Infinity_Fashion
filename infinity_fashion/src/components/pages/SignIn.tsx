@@ -103,7 +103,7 @@ const executeSignUp = async (name: string, email: string, password: string) => {
     if (error.response && error.response.data && error.response.data.message) {
       showMessage(error.response.data.message);
     } else {
-      showMessage('An unexpected error occurred. Please try again later.');
+      showMessage('An unexpected error occurred.');
     }
   }
 };
