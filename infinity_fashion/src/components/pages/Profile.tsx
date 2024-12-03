@@ -222,6 +222,9 @@ const Profile = () => {
                 Edit Profile
               </button>
             )}
+            <button onClick={() => navigate('/history')} className="history-button">
+                History of purchases
+            </button>
           </div>
         </div>
       </div>

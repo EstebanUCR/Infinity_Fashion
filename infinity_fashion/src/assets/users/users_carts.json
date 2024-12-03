@@ -20,33 +20,18 @@
         "quantity": 1
       },
       {
-        "id": 10,
-        "category": "accessories",
+        "id": 14,
+        "category": "shoes",
         "image": [
-          "/src/assets/productImages/pearl-bow-pendant-necklace.jpg",
-          "/src/assets/productImages/pearl-bow-pendant-necklace-1.jpg",
-          "/src/assets/productImages/pearl-bow-pendant-necklace-2.jpg",
-          "/src/assets/productImages/pearl-bow-pendant-necklace-3.jpg"
+          "/src/assets/productImages/mary-jane-pumps.jpg",
+          "/src/assets/productImages/mary-jane-pumps-1.jpg",
+          "/src/assets/productImages/mary-jane-pumps-2.jpg",
+          "/src/assets/productImages/mary-jane-pumps-3.jpg"
         ],
-        "name": "Pearl Bow-Pendant Necklace",
-        "price": 24.5,
-        "isExclusive": false,
-        "description": "A delicate and simple necklace with an eye-catching bow charm.",
-        "quantity": 1
-      },
-      {
-        "id": 2,
-        "category": "tops",
-        "image": [
-          "/src/assets/productImages/crinkled-tie-sleeve-shirt.jpg",
-          "/src/assets/productImages/crinkled-tie-sleeve-shirt-1.jpg",
-          "/src/assets/productImages/crinkled-tie-sleeve-shirt-2.jpg",
-          "/src/assets/productImages/crinkled-tie-sleeve-shirt-3.jpg"
-        ],
-        "name": "Crinkled Tie-Sleeve Shirt",
-        "price": 9.49,
-        "isExclusive": false,
-        "description": "This fashionably crinckled shirt is casual yet elegant.",
+        "name": "Mary Jane Pumps",
+        "price": 17.49,
+        "isExclusive": true,
+        "description": "Casual shoes that are perfect for everyday wear.",
         "quantity": 1
       }
     ]
@@ -307,6 +292,14 @@
   },
   {
     "email": "testOfi@gmail.com",
+    "cart": []
+  },
+  {
+    "email": "hola@gmail.com",
+    "cart": []
+  },
+  {
+    "email": "hola4@gmail.com",
     "cart": []
   }
 ]

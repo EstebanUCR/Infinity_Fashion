@@ -9,7 +9,10 @@ const { getUserByEmail, updateUserProfile, getAllUsers } = require('./userServic
 const { signUp, signIn, signOut} = require('./authService');
 const { getProductsByCategory, getProducts, getImagesByProduct, getSizesByProduct, getNewestProducts } = require('./productService');
 const { createToken } = require('./tokenService');
+const { getPurchaseHistoryByUserId } = require('./purchaseHistoryService');
 const { supabase } = require('./supabaseClient');
+const { createShoppingCart, getShoppingCarts } = require('./shoppingCartService');
+const { createCartItem } = require('./cartItemService');
 
 const app = express();
 const PORT = process.env.PORT; // Obtener el puerto desde las variables de entorno o usar 3000 por defecto
@@ -54,7 +57,7 @@ app.post('/api/signup', async (req, res) => {
 
         // Convert `exp` to ISO date string
         const expirationDate = new Date(decoded.exp * 1000); // Convert seconds to milliseconds
-        expired_date = expirationDate.toISOString();
+        expired_date = new Date(decoded.exp * 1000).toISOString();
       });
 
       // Save the refresh token in the database
@@ -125,7 +128,7 @@ app.post('/api/signin', async (req, res) => {
       if (!userData) {
         // Usuario no registrado
         return res.status(404).json({
-          message: 'This user is not registered',
+          message: 'This user is not registered. Please create an account in the registration section.',
         });
       }
 
@@ -135,7 +138,7 @@ app.post('/api/signin', async (req, res) => {
 
       // Calcular fecha de expiración del token
       const decoded = jwt.decode(refreshToken);
-      const expired_date = new Date(decoded.exp * 1000).toISOString();
+      expired_date = new Date(decoded.exp * 1000).toISOString();
 
       const tokenData = {
         expires_at: expired_date,
@@ -166,7 +169,7 @@ app.post('/api/signin', async (req, res) => {
 
     // Calcular fecha de expiración del token
     const decoded = jwt.decode(refreshToken);
-    const expired_date = new Date(decoded.exp * 1000).toISOString();
+    expired_date = new Date(decoded.exp * 1000).toISOString();
 
     const tokenData = {
       expires_at: expired_date,
@@ -192,7 +195,31 @@ app.post('/api/signin', async (req, res) => {
 // API route for sign out
 app.post('/api/signout', async (req, res) => {
   try {
+      console.log('Dentro de logout')
+      const date = new Date()
+      const added_date = date.toISOString()
+      const randomID = Math.floor(Math.random() * (999999999 - 99999999) + 99999999);
+      const shoppingCart = {
+        added_date: added_date,
+        id: randomID,
+        user_id: email
+      }
+
+      cart.forEach(async (item) => {
+        console.log('Guardando elemento del carrito')
+        const randomID2 = Math.floor(Math.random() * (99999 - 9999) + 9999);
+        const cardItem = {
+          id: randomID2,
+          product_id: item.id,
+          quantity: item.quantity,
+          shopping_cart_id: randomID,
+          size: null,
+          subtotal: (item.price * item.quantity)
+        }
+        await createCartItem(cardItem)
+      })
     await signOut();
+    console.log('Cerrando sesion')
     res.status(200).json({ message: 'Signed out successfully' });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -328,7 +355,7 @@ app.post('/signup', (req, res) => {
     users.push(newUser);
     writeUsers(users);
 
-    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+    const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
     const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
     const refreshTokens = readRefreshTokens();
     refreshTokens.push(refreshToken);
@@ -353,7 +380,7 @@ app.post('/signin', async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'Este usuario no está registrado. Por favor, cree una cuenta en la sección de registro.' });
       }
-      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '15m' });
+      const accessToken = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1m' });
       const refreshToken = jwt.sign({ email }, REFRESH_SECRET_KEY, { expiresIn: '7d' });
       const refreshTokens = readRefreshTokens();
       refreshTokens.push(refreshToken);
@@ -395,6 +422,29 @@ app.post('/signout', (req, res) => {
   try {
     const { email, cart } = req.body;
     if (email) {
+      console.log('Dentro de logout')
+      const date = new Date()
+      const added_date = date.toISOString()
+      const randomID = Math.floor(Math.random() * (999999999 - 99999999) + 99999999);
+      const shoppingCart = {
+        added_date: added_date,
+        id: randomID,
+        user_id: email
+      }
+
+      cart.forEach((item) => {
+        console.log('Guardando elemento del carrito')
+        const randomID2 = Math.floor(Math.random() * (99999 - 9999) + 9999);
+        const cardItem = {
+          id: randomID2,
+          product_id: item.id,
+          quantity: item.quantity,
+          shopping_cart_id: randomID,
+          size: null,
+          subtotal: (item.price * item.quantity)
+        }
+        createCartItem(cardItem)
+      })
       const data = readCarts()
       const user = data.find(user => user.email.toLowerCase() === email.toLowerCase())
       if (user) {
@@ -413,7 +463,7 @@ app.post('/signout', (req, res) => {
   }
 })
 
-//Endpont para guardar ordenes
+//Endpoint para guardar ordenes
 app.post('/pay', (req, res) => {
   const { email, cart, shipping } = req.body;
   try {  
@@ -447,22 +497,18 @@ app.post('/pay', (req, res) => {
 // Endpoint para renovar el access token
 app.post('/refresh-token', (req, res) => {
   try {
-    const { refreshToken } = req.body;
-    if (!refreshToken) {
+    const accessToken = req.headers['authorization'].substring(6);
+    if (!accessToken) {
       return res.status(403).json({ message: 'No se proporcionó un refresh token.' });
     }
-
-    if (!refreshTokens.includes(refreshToken)) {
-      return res.status(403).json({ message: 'Refresh token inválido.' });
-    }
-
-    jwt.verify(refreshToken, REFRESH_SECRET_KEY, (err, decoded) => {
+    
+    jwt.verify(accessToken, SECRET_KEY, (err, decoded) => {
       if (err) {
         return res.status(401).json({ message: 'Refresh token inválido.' });
       }
 
-      const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '15m' });
-      res.status(200).json({ accessToken });
+      const accessToken = jwt.sign({ email: decoded.email }, SECRET_KEY, { expiresIn: '1m' });
+      res.status(200).json({ message: 'Token refreshed', accessToken });
     });
   } catch (error) {
     console.error('Error en /refresh-token:', error);
@@ -494,6 +540,21 @@ const verifyToken = (req, res, next) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+app.get('/api/getPurchaseHistory', async (req, res) => {
+  try {
+    token = req.headers['authorization'].substring(6);
+    const decoded = jwt.verify(token, SECRET_KEY);
+    const email = decoded.email;
+    const user = await getUserByEmail(email);
+    const userId = user.id;
+    const history = await getPurchaseHistoryByUserId(userId);
+    res.status(200).json({message: 'the history has been obtained.', history});
+  } catch (error) {
+    console.error('Error getting purchase history:', error);
+    res.status(500).json({ message: 'Error fetching purchase history' });
+  }
+});
 
 // Ejemplo de un endpoint protegido
 app.get('/protected', verifyToken, (req, res) => {

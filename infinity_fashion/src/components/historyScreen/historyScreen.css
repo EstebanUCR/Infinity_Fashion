@@ -1,0 +1,36 @@
+/* General styling for the profile container */
+.history-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ffffff;
+    position: relative;
+    min-height: 700px;
+}
+
+.history-header,
+.history-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.column-header,
+.column {
+    flex: 1;
+    text-align: center;
+}
+
+.column-header {
+    font-weight: bold;
+}
+
+.history-row:nth-child(even) {
+    background-color: #f9f9f9;
+}
