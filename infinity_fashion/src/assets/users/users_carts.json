@@ -3,35 +3,18 @@
     "email": "prodriguez1491@gmail.com",
     "cart": [
       {
-        "id": 11,
-        "category": "accessories",
-        "image": [
-          "/src/assets/productImages/rhinestone-hoop-earrings.jpg",
-          "/src/assets/productImages/rhinestone-hoop-earrings-1.jpg",
-          "/src/assets/productImages/rhinestone-hoop-earrings-2.jpg",
-          "/src/assets/productImages/rhinestone-hoop-earrings-3.jpg"
-        ],
-        "name": "Rhinestone Hoop Earrings",
-        "price": 21.6,
-        "oldPrice": "$27.00",
-        "discount": "20% OFF",
-        "isExclusive": false,
-        "description": "These hoop earrings make the perfect statement piece.",
-        "quantity": 1
-      },
-      {
-        "id": 14,
+        "id": 13,
         "category": "shoes",
         "image": [
-          "/src/assets/productImages/mary-jane-pumps.jpg",
-          "/src/assets/productImages/mary-jane-pumps-1.jpg",
-          "/src/assets/productImages/mary-jane-pumps-2.jpg",
-          "/src/assets/productImages/mary-jane-pumps-3.jpg"
+          "/src/assets/productImages/suede-stiletto-boots.jpg",
+          "/src/assets/productImages/suede-stiletto-boots-1.jpg",
+          "/src/assets/productImages/suede-stiletto-boots-2.jpg",
+          "/src/assets/productImages/suede-stiletto-boots-3.jpg"
         ],
-        "name": "Mary Jane Pumps",
-        "price": 17.49,
+        "name": "Suede Stiletto Boots",
+        "price": 29.49,
         "isExclusive": true,
-        "description": "Casual shoes that are perfect for everyday wear.",
+        "description": "These boots offer a sturdy, classic look.",
         "quantity": 1
       }
     ]
