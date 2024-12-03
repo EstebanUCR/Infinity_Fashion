@@ -67,22 +67,31 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ show, onClose, cart, clearC
                 //Validar numero de tarjeta
                 const binCard = card.cardNumber.substring(0, 6);
                 if(!validBinsCR.includes(binCard)){
+                    console.log('Validando numero')
                     setResult("Wrong card number!")
                 } else {
                     //Validar fecha de expiracion
                     const expirationDate = card.expiration.split('/')
                     if(expirationDate.length < 2) {
-                        setResult("Invalid expiration date!")
+                        setResult("Invalid expiration date year!")
                     } else {
+                        console.log('Validando expiracion')
                         const today = new Date();
                         const year = today.getFullYear();
                         const month = String(today.getMonth() + 1).padStart(2, '0'); // +1 porque los meses van de 0 a 11
                         if(parseInt(expirationDate[1]) == year % 100) {
                             if(parseInt(expirationDate[0]) <= parseInt(month)) {
-                                setResult('Invalid expiration date!')
+                                setResult('Invalid expiration date month!')
                             } else {
-                                if(!/^[0-9]+$/.test(card.cvv)) {
+                                if(!(/^[0-9]+$/.test(card.cvv))) {
                                     setResult('Invalid CVV!')
+                                }
+                            }
+                        } else {
+                            if(parseInt(expirationDate[1]) > year % 100) {
+                                if(!(/^[0-9]+$/.test(card.cvv))) {
+                                        console.log('Validando cvv')
+                                        setResult('Invalid CVV!')
                                 }
                             }
                         }

@@ -30,12 +30,16 @@ const getCartItemsByUserId = async (userId) => {
 };
 
 const createCartItem = async (cartItem) => {
-  const { data, error } = await supabase
+  try {
+    const { data, error } = await supabase
     .from('cart_items')
     .insert(cartItem)
     .single();
-  if (error) throw error;
-  return data;
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 const updateCartItem = async (id, updates) => {
