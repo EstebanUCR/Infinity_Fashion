@@ -61,5 +61,95 @@
         "quantity": 1
       }
     ]
+  },
+  {
+    "email": "prodriguez1491@gmail.com",
+    "date": "2024-12-03T12:53:51.355Z",
+    "shipping": 5,
+    "product": [
+      {
+        "id": 11,
+        "name": "Rhinestone Hoop Earrings",
+        "price": 21.6,
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "email": "prodriguez1491@gmail.com",
+    "date": "2024-12-03T13:59:47.145Z",
+    "shipping": 5,
+    "product": [
+      {
+        "id": 12,
+        "name": "Wrap Hinge Bracelet",
+        "price": 26,
+        "quantity": 1
+      },
+      {
+        "id": 9,
+        "name": "Open-Front Knit Cardigan",
+        "price": 17.99,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "email": "prodriguez1491@gmail.com",
+    "date": "2024-12-03T17:47:38.687Z",
+    "shipping": 8,
+    "product": [
+      {
+        "id": 11,
+        "name": "Rhinestone Hoop Earrings",
+        "price": 21.6,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "email": "prodriguez1491@gmail.com",
+    "date": "2024-12-03T17:48:24.621Z",
+    "shipping": 5,
+    "product": [
+      {
+        "id": 12,
+        "name": "Wrap Hinge Bracelet",
+        "price": 26,
+        "quantity": 1
+      },
+      {
+        "id": 13,
+        "name": "Suede Stiletto Boots",
+        "price": 29.49,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "email": "prodriguez1491@gmail.com",
+    "date": "2024-12-03T17:52:44.871Z",
+    "shipping": 0,
+    "product": [
+      {
+        "id": 7,
+        "name": "Dolman Sleeve Sweater",
+        "price": 17.49,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "email": "prodriguez1491@gmail.com",
+    "date": "2024-12-03T17:55:28.824Z",
+    "shipping": 0,
+    "product": [
+      {
+        "id": 11,
+        "name": "Rhinestone Hoop Earrings",
+        "price": 21.6,
+        "quantity": 1
+      }
+    ]
   }
 ]

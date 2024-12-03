@@ -205,6 +205,7 @@ export default function  ShoppingBag ({cart, removeFromCart, increaseQuantity, d
         clearCart={clearCart}
         shipping={shipping}
         shippingValue={shippingValue}
+        card={formValues}
       />
 
       <Footer />
