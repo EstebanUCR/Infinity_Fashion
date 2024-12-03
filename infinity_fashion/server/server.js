@@ -267,12 +267,12 @@ app.get('/api/getProductImages', async (req, res) => {
 // Endpoint to get products
 app.get('/api/getSizesAndStock', async (req, res) => {
   try {
-    // console.log('dentro de getProducts');
+    console.log('dentro de getSizesAndStock');
     const product_id = req.query.product_id;
-    const products = await getSizesByProduct(product_id);
-    // console.log(category)
-    // console.log(products)
-    res.send(products);
+    const sizes = await getSizesByProduct(product_id);
+    console.log(product_id)
+    console.log(sizes)
+    res.send(sizes);
   } catch (error) {
     console.error('Error getting product sizes and stock:', error);
     res.status(500).json({ message: 'Error fetching product sizes and stock' });

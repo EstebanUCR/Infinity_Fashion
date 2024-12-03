@@ -107,7 +107,7 @@
 }
 
 .productDisplayRightPriceDiscount {
-    color: #ff4141;
+    color: #b63729;
     font-size: 20px;
     display: flex;
     align-items: start;
@@ -123,6 +123,14 @@
     display: flex;
     margin: 20px 0px;
     gap: 20px;
+}
+
+.productOutOfStock {
+    display: flex;
+    color: #b63729;
+    font-weight: 700;
+    font-size: 30px;
+    font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
 }
 
 .productDisplayRightSizes div {

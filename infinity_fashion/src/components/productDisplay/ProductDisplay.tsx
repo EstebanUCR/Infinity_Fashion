@@ -4,7 +4,7 @@ import './ProductDisplay.css'
 import { Product } from '../../types/types';
 import AutoCloseModal from '../pages/messageModal';
 import { getProductSizesAndStock } from '../../services/apiService';
-import type { productImage } from '../../types/entities';
+import type { productImage, sizeWithStock } from '../../types/entities';
 
 /* TODO agregar los datos faltantes para mejorar la descripcion y el stock*/
 interface ProductDisplayProps {
@@ -20,11 +20,11 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart, product }) =
     const displayProductImages = location.state?.images;
   
     if (!displayProductImages) {
-        console.log(displayProductImages)
+        // console.log(displayProductImages)
         return <div>Product not found</div>;
     } else {
-        console.log(displayProductImages)
-        console.log(displayProduct)
+        // console.log(displayProductImages)
+        // console.log(displayProduct)
     }
    
     const [showModal, setShowModal] = useState(false)
@@ -35,7 +35,11 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart, product }) =
         setMainImage(image); // Actualizar el estado de la imagen principal
     };
 
+    const [stock, setStock] = useState<sizeWithStock[]>([])
+
     useEffect(() => {
+        fetchSizesAndStock()
+
         window.scrollTo(0, 0);
         const token = localStorage.getItem('token');
         if (token) {
@@ -60,16 +64,40 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart, product }) =
           
           setUserToken(token)
         }
-      } 
-
-      const addToBag = (product: Product) => {
-        if (userToken !== '') {
-            addToCart(product)
-        } else {
-            setShowModal(true)
-        }
       }
 
+    const fetchSizesAndStock = async () => {
+        try {
+          const response: sizeWithStock[] = await getProductSizesAndStock(displayProduct.id);
+          setStock(response)
+          
+          console.log(response)
+    
+        } catch (err) {
+          console.error('Error fetching sizes and their stock', err);
+        } 
+      };
+
+    const addToBag = (product: Product) => {
+    if (userToken !== '') {
+        addToCart(product)
+    } else {
+        setShowModal(true)
+    }
+    }
+
+    const calculateTotalStock = () => {
+        if (stock.length > 0) {
+            const total = stock.reduce((accumulator, stockPerSize) => {
+                return accumulator + (stockPerSize.stock ?? 0); // Add stock to accumulator
+              }, 0); // Initial value of accumulator is 0
+            
+            console.log(total); 
+            return total
+        } else {
+            return 0
+        }
+    }
 
     return (
         <div className="productDisplay">
@@ -110,16 +138,28 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart, product }) =
                     <h1>Product details</h1>
                     <h2 >{displayProduct.description}</h2>
                 </div>
-
-                <div className="productDisplayRightSize">
-                    <h1>Select size</h1>
-                    <div className="productDisplayRightSizes">
-                        <div>S</div>
-                        <div>M</div>
-                        <div>L</div>
-                        <div>XL</div>
+                
+                {
+                    calculateTotalStock() > 0 ? 
+                        <div className="productDisplayRightSize">
+                            <h1>Select size</h1>
+                             <div className="productDisplayRightSizes">
+                                {
+                                stock.map((stockPerSize, index) => {
+                                    if ((stockPerSize.stock ?? 0) > 0) { // Check if there's stock
+                                    return <div key={index}>{stockPerSize.name}</div>;
+                                    }
+                                    return null;
+                                })
+                                }
+                            </div>
+                        </div>
+                    :
+                    <div>
+                        <h2 className="productOutOfStock">Out of stock</h2>
                     </div>
-                </div>
+                }
+
                 <button className='btn-add' onClick={() => addToBag(product)} >ADD TO CART</button>
                 <div className='productDisplayRightCategory'>Category: {displayProduct.categories.name}</div>
                 <div className='productDisplayRightProductCode'> Product code: {displayProduct.id}</div>
