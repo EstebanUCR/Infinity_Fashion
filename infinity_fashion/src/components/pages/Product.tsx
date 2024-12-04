@@ -58,15 +58,6 @@ stock={product?.stock}
           cartTotal={cartTotal}
         />
       <ProductDisplay 
-        id={product.id} 
-        image={product.image} 
-        name={product.name}
-        description={product.description}
-        price={product.price}
-        oldPrice={product.oldPrice}
-        discount={product.discount}
-        isExclusive={product.isExclusive} 
-        category={product.category} 
         addToCart={addToCart}
         product={product}
       />

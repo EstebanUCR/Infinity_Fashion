@@ -50,7 +50,7 @@
 
 .productDisplayImgMain {
     max-width: 50%;
-    max-height: auto;
+    max-height: auto; 
     border-radius: 4px;
 }
 
@@ -87,7 +87,6 @@
 
 .productDisplayRightPrices {
     display: flex;
-    align-items: center;
     margin: 20px 0px;
     gap: 30px;
     font-size: 24px;
@@ -98,7 +97,8 @@
     color: #000000;
     text-decoration: line-through;
     font-size: 20px;
-    
+    display: flex;
+    align-items: start;
 }
 
 .productDisplayRightPriceNew {
@@ -107,8 +107,10 @@
 }
 
 .productDisplayRightPriceDiscount {
-    color: #ff4141;
+    color: #b63729;
     font-size: 20px;
+    display: flex;
+    align-items: start;
 }
 
 .productDisplayRightSize h1{
@@ -121,6 +123,14 @@
     display: flex;
     margin: 20px 0px;
     gap: 20px;
+}
+
+.productOutOfStock {
+    display: flex;
+    color: #b63729;
+    font-weight: 700;
+    font-size: 30px;
+    font-family: 'Playfair Display','Tan Mon Cheri', sans-serif;
 }
 
 .productDisplayRightSizes div {

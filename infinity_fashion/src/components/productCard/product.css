@@ -50,7 +50,7 @@
 
 /* Precio con descuento (rojo) */
 .price-discount {
-  color: red;
+  color: #b63729;
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -70,7 +70,7 @@
 }
 
 .discount {
-  color: #e60023;
+  color: #b63729;
   font-size: 0.9rem;
 }
 
